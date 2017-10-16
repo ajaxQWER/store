@@ -1,6 +1,5 @@
-# store
 
-> A Vue.js project
+> 共享点餐开店流程
 
 ## Build Setup
 
@@ -8,7 +7,7 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:`port`
 npm run dev
 
 # build for production with minification
