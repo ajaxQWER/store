@@ -20,3 +20,9 @@ export default {
 }
 
 </script>
+<style scoped>
+  header a{
+    color: #fff;
+    text-decoration: none;
+  }
+</style>

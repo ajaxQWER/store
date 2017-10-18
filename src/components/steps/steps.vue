@@ -23,9 +23,6 @@ export default {
 		  		title: '资质信息',
 		  		status: 'wait'
 		  	},{
-		  		title: '配送方案',
-		  		status: 'wait'
-		  	},{
 		  		title: '结算信息',
 		  		status: 'wait'
 		  	},]
@@ -53,12 +50,20 @@ export default {
 	}
 }
 </script>
-<style>
+<style scoped>
 	.steps{
-		background-color: #e4e4e4;
+		background-color: #626262;
 	}
 	.step-bar{
 		padding-left: 12.5%;
 		padding-top: 15px;
 	}
+	.el-step__head.is-text.is-finish {
+	    background-color: #0bb745;
+	    border-color: #0bb745;
+	}
+	.el-step__title.is-finish {
+	    color: #0bb745;
+	}
+	
 </style>

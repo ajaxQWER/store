@@ -38,7 +38,7 @@ body {
 header {
     height: 60px;
     line-height: 60px;
-    background-color: #009dec;
+    background-color: #0bb745;
     color: #fff;
 }
 .row{
@@ -53,6 +53,39 @@ header {
 }
 .tar{
 	text-align: right;
+}
+
+.small-item {
+  width: 300px;
+}
+
+.normal-item {
+  width: 400px;
+}
+
+.large-item {
+  width: 500px;
+}
+
+.btn-row{
+	padding: 30px 0 90px;
+}
+.is-checked .el-radio__inner {
+    border-color: #0bb745!important;
+    background: #0bb745!important;
+}
+.el-upload {
+	width: 100%;
+	height: 100%;
+	border-radius: 6px;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+	vertical-align: middle;
+ }
+body .el-button--primary {
+    background-color: #0bb745;
+    border-color: #0bb745;
 }
 img.thumb[lazy=error] {
   background: url(assets/images/default.jpg) no-repeat center center;
