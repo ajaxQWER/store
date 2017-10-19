@@ -12,49 +12,49 @@ import 'moment/locale/zh-cn'
 // import VueLazyload from 'vue-lazyload'
 // 引入vue-amap
 import VueAMap from 'vue-amap';
-import {
-  Input,
-  Radio,
-  RadioGroup,
-  Switch,
-  Select,
-  Option,
-  OptionGroup,
-  Button,
-  DatePicker,
-  TimeSelect,
-  TimePicker,
-  Form,
-  FormItem,
-  Row,
-  Col,
-  Upload,
-  Steps,
-  Step,
-  Scrollbar
-} from 'element-ui'
+// import {
+//   Input,
+//   Radio,
+//   RadioGroup,
+//   Switch,
+//   Select,
+//   Option,
+//   OptionGroup,
+//   Button,
+//   DatePicker,
+//   TimeSelect,
+//   TimePicker,
+//   Form,
+//   FormItem,
+//   Row,
+//   Col,
+//   Upload,
+//   Steps,
+//   Step,
+//   Scrollbar
+// } from 'element-ui'
 
-Vue.use(Input)
-Vue.use(Radio)
-Vue.use(RadioGroup)
-Vue.use(Switch)
-Vue.use(Select)
-Vue.use(Option)
-Vue.use(OptionGroup)
-Vue.use(Button)
-Vue.use(DatePicker)
-Vue.use(TimeSelect)
-Vue.use(TimePicker)
-Vue.use(Form)
-Vue.use(FormItem)
-Vue.use(Row)
-Vue.use(Col)
-Vue.use(Upload)
-Vue.use(Steps)
-Vue.use(Step)
-Vue.use(Scrollbar)
+// Vue.use(Input)
+// Vue.use(Radio)
+// Vue.use(RadioGroup)
+// Vue.use(Switch)
+// Vue.use(Select)
+// Vue.use(Option)
+// Vue.use(OptionGroup)
+// Vue.use(Button)
+// Vue.use(DatePicker)
+// Vue.use(TimeSelect)
+// Vue.use(TimePicker)
+// Vue.use(Form)
+// Vue.use(FormItem)
+// Vue.use(Row)
+// Vue.use(Col)
+// Vue.use(Upload)
+// Vue.use(Steps)
+// Vue.use(Step)
+// Vue.use(Scrollbar)
 
-// Vue.use(ElementUI)
+Vue.use(ElementUI)
 Vue.use(VueRouter)
 // Vue.use(VueLazyload)
 Vue.use(VueAMap);
