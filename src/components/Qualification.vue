@@ -7,7 +7,7 @@
         <el-form :model="license" ref="license" label-width="100px">
           <el-form-item class="normal-item" label="证件类型" prop="">
             <el-select v-model="license.a" placeholder="请选择证件类型">
-              <el-option v-for="item in licenseObj" :key="item.value" :label="item.label" :value="item.value">
+              <el-option v-for="(item,index) in licenseObj" :key="index" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
@@ -17,24 +17,46 @@
           <el-form-item class="normal-item" label="证件号码" prop="idCardNum">
             <el-input v-model="license.idCardNum"></el-input>
           </el-form-item>
-          <el-form-item class="normal-item" label="证件照片" prop="">
-            <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" list-type="picture">
-              <el-button size="small" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-            </el-upload>
-            <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" list-type="picture">
-              <el-button size="small" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-            </el-upload>
+          <el-form-item label="证件照片" prop="licensePhoto">
+            <div class="photo-info">
+              <div class="photo-title">正面照</div>
+              <div class="photo-upload">
+                <el-upload class="upload-demo" ref="fullFacePhotoUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadFullFacePhotoUrl">
+                  <img v-if="license.fullFacePhotoUrl" :src="license.fullFacePhotoUrl" class="avatar">
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+              </div>
+            </div>
+            <div class="photo-info">
+              <div class="photo-title">反面照</div>
+              <div class="photo-upload">
+                <el-upload class="upload-demo" ref="reverseSideAsUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadReverseSideAsUrl">
+                  <img v-if="license.reverseSideAsUrl" :src="license.reverseSideAsUrl" class="avatar">
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+              </div>
+            </div>
+            <div class="photo-info">
+              <div class="photo-title">手持证件正面照</div>
+              <div class="photo-upload">
+                <el-upload class="upload-demo" ref="handFullFacePhotoUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadHandFullFacePhotoUrl">
+                  <img v-if="license.handFullFacePhotoUrl" :src="license.handFullFacePhotoUrl" class="avatar">
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+              </div>
+            </div>
           </el-form-item>
         </el-form>
       </el-row>
       <el-row class="license">
         <el-form :model="license" ref="license" label-width="100px">
           <el-form-item class="normal-item" label="主体资质" prop="">
-            营业执照
+            <el-select v-model="license.c" placeholder="请选择主体资质">
+              <el-option v-for="(item,index) in certificateType" :key="index" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
-          <el-form-item class="normal-item" label="单位名称" prop="">
+          <el-form-item class="large-item" label="单位名称" prop="">
             <el-input v-model="license.a"></el-input>
           </el-form-item>
           <el-form-item class="normal-item" label="法定代表人" prop="">
@@ -43,76 +65,83 @@
           <el-form-item class="normal-item" label="注册号" prop="">
             <el-input v-model="license.a"></el-input>
           </el-form-item>
-          <el-form-item class="normal-item" label="注册地址" prop="">
+          <el-form-item class="large-item" label="注册地址" prop="">
             <el-input v-model="license.a"></el-input>
           </el-form-item>
-          <el-form-item class="normal-item" label="有效期" prop="">
+          <el-form-item label="有效期" prop="">
             <span>是否长期</span>
             <el-switch v-model="license.b" on-text="是" off-text="否">
             </el-switch>
-            <el-date-picker
-			      v-model="license.a"
-			      type="date"
-			      placeholder="选择日期">
-			    </el-date-picker>
+        	<el-date-picker v-model="license.a" type="date" placeholder="选择日期">
+        	</el-date-picker>
           </el-form-item>
-          <el-form-item class="normal-item" label="证件照片" prop="">
-            <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" list-type="picture">
-              <el-button size="small" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-            </el-upload>
+          <el-form-item label="资质照片" prop="">
+            <div class="photo-info">
+              <div class="photo-title">资质照片</div>
+              <div class="photo-upload">
+                <el-upload class="upload-demo" ref="handFullFacePhotoUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadHandFullFacePhotoUrl">
+                  <img v-if="license.handFullFacePhotoUrl" :src="license.handFullFacePhotoUrl" class="avatar">
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+              </div>
+            </div>
           </el-form-item>
         </el-form>
       </el-row>
       <el-row class="license">
         <el-form :model="license" ref="license" label-width="100px">
-          <el-form-item class="normal-item" label="行业资质" prop="">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
+          <el-form-item label="行业资质" prop="">
+            <el-select v-model="license.d" placeholder="请选择行业资质">
+              <el-option v-for="(item,index) in licenseObj" :key="index" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
-          <el-form-item class="normal-item" label="单位名称" prop="">
+          <el-form-item class="large-item" label="单位名称" prop="">
             <el-input v-model="license.a"></el-input>
           </el-form-item>
           <el-form-item class="normal-item" label="法定代表人" prop="">
             <el-input v-model="license.a"></el-input>
           </el-form-item>
-          <el-form-item class="normal-item" label="许可证编号" prop="">
+          <el-form-item class="large-item" label="许可证编号" prop="">
             <el-input v-model="license.a"></el-input>
           </el-form-item>
-          <el-form-item class="normal-item" label="许可证地址" prop="">
+          <el-form-item class="large-item" label="许可证地址" prop="">
             <el-input v-model="license.a"></el-input>
           </el-form-item>
-          <el-form-item class="normal-item" label="有效期" prop="">
+          <el-form-item label="有效期" prop="">
             <span>是否长期</span>
             <el-switch v-model="license.b" on-text="是" off-text="否"></el-switch>
-            <el-date-picker
-			      v-model="license.a"
-			      type="date"
-			      placeholder="选择日期">
-			    </el-date-picker>
+            <el-date-picker v-model="license.a" type="date" placeholder="选择日期">
+            </el-date-picker>
           </el-form-item>
-          <el-form-item class="normal-item" label="资质照片" prop="">
-            <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" list-type="picture">
-              <el-button size="small" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-            </el-upload>
+          <el-form-item label="资质照片" prop="">
+            <div class="photo-info">
+              <div class="photo-title">资质照片</div>
+              <div class="photo-upload">
+                <el-upload class="upload-demo" ref="handFullFacePhotoUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadHandFullFacePhotoUrl">
+                  <img v-if="license.handFullFacePhotoUrl" :src="license.handFullFacePhotoUrl" class="avatar">
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+              </div>
+            </div>
           </el-form-item>
         </el-form>
       </el-row>
     </el-row>
-      <el-row class="btn-row row">
-        <el-col class="tac">
-          <router-link to="/store?step=0">
-            <el-button size="large">返回上一步</el-button>
-          </router-link>
-          <router-link to="/settlement?step=2">
-            <el-button class="small-item" type="primary" size="large">进行下一步</el-button>
-          </router-link>
-        </el-col>
-      </el-row>
+    <el-row class="btn-row row">
+      <el-col class="tac">
+        <router-link to="/store?step=0">
+          <el-button size="large">返回上一步</el-button>
+        </router-link>
+        <router-link to="/settlement?step=2">
+          <el-button class="small-item" type="primary" size="large">进行下一步</el-button>
+        </router-link>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script>
+import { shopCategoryList, getProvinceList, getDistrictList, getCityListByProvinceId, addStoreStepOne, uploadFiles } from '@/api/api'
 import steps from '@/components/steps/steps'
 import headers from '@/components/header/headers'
 export default {
@@ -127,37 +156,173 @@ export default {
         readyName: '',
         idCardNum: '',
         a: '',
-        b: true
+        b: true,
+        c: '',
+        d: '',
+        fullFacePhotoUrl: '',
+        reverseSideAsUrl: '',
+        handFullFacePhotoUrl: ''
       },
       licenseObj: [{
-        value: '身份证',
-        label: 0,
+        label: '身份证',
+        value: 'ID_CARD'
       }, {
-        value: '港澳居民来往内地通行证',
-        label: 1
+        label: '港澳居民来往内地通行证',
+        value: 'HONG_KONG_AND_MACAO_RESIDENTS_TRAVEL_TO_AND_FROM_THE_MAINLAND'
       }, {
-        value: '台胞证',
-        label: 2
+        label: '台胞证',
+        value: 'TAIWAN_COMPATRIOTS_CERTIFICATE'
       }, {
-        value: '护照',
-        label: 3
+        label: '护照',
+        value: 'PASSPORT'
+      }],
+      mainQualifications: [{
+        label: '餐饮服务许可证',
+        value: 'FOOD_SERVICE_LICENSE'
+      }, {
+        label: '食品经营许可证',
+        value: 'FOOD_BUSINESS_LICENSE'
+      }, {
+        label: '食品流通许可证',
+        value: 'FOOD_CIRCULATION_LICENSE'
+      }, {
+        label: '食品摊贩临时经营公示卡',
+        value: 'TEMPORARY_PUBLICITY_CARDS_FOR_FOOD_VENDORS'
+      }, {
+        label: '全国工业产品生产许可证',
+        value: 'NATIONAL_INDUSTRIAL_PRODUCT_PRODUCTION_LICENSE'
+      }, {
+        label: '小微餐饮分级证/登记凭证',
+        value: 'CLASSIFICATION_CERTIFICATE_REGISTRATION_CERTIFICATE_FOR_SMALL_AND_MICRO_CATERING'
+      }, {
+        label: '食品生产加工作坊准许证',
+        value: 'PERMIT_FOR_FOOD_PRODUCTION_AND_PROCESSING_WORKSHOP'
+      }, {
+        label: '食品小作坊生产许可证',
+        value: 'FOOD_WORKSHOP_PRODUCTION_LICENSE'
+      }],
+      certificateType: [{
+        label: '营业执照',
+        value: 'BUSINESS_LICENSE'
+      }, {
+        label: '事业单位法人证书',
+        value: 'LEGAL_PERSON_CERTIFICATE_OF_INSTITUTION'
+      }, {
+        label: '民办非企业单位登记证书',
+        value: 'REGISTRATION_CERTIFICATE_OF_PRIVATE_NON_ENTERPRISE_UNITS'
+      }, {
+        label: '社会团体法人登记证书',
+        value: 'SOCIAL_ORGANIZATION_LEGAL_PERSON_REGISTRATION_CERTIFICATE'
       }]
     }
+  },
+  methods: {
+    //上传身份证正面照
+    uploadFullFacePhotoUrl: function(e) {
+      var file = e.raw;
+      var fd = new FormData();
+      fd.append('file', file);
+      fd.path = '/license';
+      uploadFiles(fd).then(data => {
+        console.log(data)
+        this.license.fullFacePhotoUrl = data.originalUrl;
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    //上传身份证反面照
+    uploadReverseSideAsUrl: function(e) {
+      var file = e.raw;
+      var fd = new FormData();
+      fd.append('file', file);
+      fd.path = '/license';
+      uploadFiles(fd).then(data => {
+        console.log(data)
+        this.license.reverseSideAsUrl = data.originalUrl;
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    //上传手持证件正面照
+    uploadHandFullFacePhotoUrl: function(e) {
+      var file = e.raw;
+      var fd = new FormData();
+      fd.append('file', file);
+      fd.path = '/license';
+      uploadFiles(fd).then(data => {
+        console.log(data)
+        this.store.handFullFacePhotoUrl = data.originalUrl;
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+  },
+  created: function() {
+
   }
 }
 
 </script>
-<style>
-	.qualification{
-		background-color: #ebebeb;
-	}
-	.qualification a{
-		text-decoration: none;
-		color: #fff;
-	}
-	.qualification-content{
-		background-color: #fff;
-		padding: 40px 50px;
-		min-height: 650px;
-	}
+<style scoped>
+.qualification {
+  background-color: #ebebeb;
+}
+
+.qualification a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.qualification-content {
+  background-color: #fff;
+  padding: 40px 50px;
+  min-height: 650px;
+}
+
+.photo-info {
+	width: 600px;
+  /* height: 80px; */
+  border-bottom: 1px solid #000;
+}
+
+.photo-title,
+.photo-upload {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.photo-title {
+  width: 90px;
+  height: 100%;
+  line-height: 90px;
+  text-align: center;
+  font-size: 12px;
+  background-color: #dedede;
+  color: #666;
+}
+
+.upload-demo {
+  width: 100px;
+  height: 60px;
+  /* height: 90px; */
+  margin-left: 10px;
+  background-color: #dedede;
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 100px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 </style>

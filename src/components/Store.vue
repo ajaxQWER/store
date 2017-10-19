@@ -28,15 +28,13 @@
 			<el-time-picker v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" :picker-options="{selectableRange: '00:00:00 - 23:59:59'}"></el-time-picker>
 			</span>
         </el-form-item>
-        <el-form-item class="large-item" label="店铺类型">
+        <el-form-item label="店铺类型">
           <el-radio-group v-model="store.shopType">
             <el-radio class="radio" label="RESERVE">预定</el-radio>
             <el-radio class="radio" label="TAKEOUT">外卖</el-radio>
             <el-radio class="radio" label="RESERVE_TAKEOUT">预定加外卖</el-radio>
           </el-radio-group>
-          <span v-if="store.shopType != 'RESERVE'">
-          	<el-input class="small-item" v-model="store.fee" placeholder="配送费"></el-input>
-          </span>
+          	<el-input v-if="store.shopType != 'RESERVE'" class="fee" v-model="store.fee" placeholder="配送费"></el-input>
         </el-form-item>
         <el-form-item label="店铺位置">
           <el-select v-model.number="store.provinceId" filterable placeholder="省" prop="type" @change="selectCity">
@@ -355,7 +353,9 @@ export default {
   min-height: 650px;
 }
 
-
+.fee{
+	width: 300px;
+}
 .amap-container {
   position: relative;
   height: 500px;
@@ -367,6 +367,7 @@ export default {
   left: 10px;
 }
 .photo-info{
+	width: 600px;
 	/* height: 80px; */
 	border-bottom: 1px solid #000;
 }
