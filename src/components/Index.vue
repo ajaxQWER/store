@@ -68,7 +68,7 @@
 	  				<el-button class="get-code" @click="getCode" :disabled="isClickGetCode">获取验证码</el-button>
 	  			</div>
 	  			<div class="modal-input">
-	  				<el-button class="modal-btn">立即入驻</el-button>
+	  				<el-button class="modal-btn" @click="login">立即入驻</el-button>
 	  			</div>
 	  			<div class="protocol-tips">
 	  				<label for="protocol"><input type="checkbox" id="protocol" class="protocol-checkbox">我已阅读并已同意<a href="">《共享点餐网上订餐平台服务协议》</a></label>
@@ -144,6 +144,9 @@ export default {
 		  	}
 		  	e.target.innerText = i + 's后重新获取'
   		}, 1000)
+  	},
+  	login: function(){
+  		this.$router.push({ path: 'store', query: { step: '0' }})
   	}
   }
 }
