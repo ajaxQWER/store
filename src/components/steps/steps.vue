@@ -25,7 +25,7 @@ export default {
 		  	},{
 		  		title: '结算信息',
 		  		status: 'wait'
-		  	},]
+		  	}]
 		};
 	},
 	created: function(){

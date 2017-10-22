@@ -3,20 +3,20 @@
     <headers></headers>
     <steps></steps>
     <el-row class="row store-content">
-      <h2>店铺绑定手机号:{{store.phoneNum?store.phoneNum:'13666666666'}}</h2>
+      <h2>店铺绑定手机号:{{loginPhoneNumber}}</h2>
       <el-form :model="store" :rules="rules" ref="store" label-width="100px">
         </el-form-item>
         <el-form-item class="normal-item" label="店铺名称" prop="shopName">
           <el-input v-model="store.shopName"></el-input>
         </el-form-item>
-        <el-form-item class="small-item" label="联系电话" prop="phone">
-          <el-input v-model="store.phone"></el-input>
+        <el-form-item class="small-item" label="联系电话" prop="takeOutPhone">
+          <el-input v-model="store.takeOutPhone"></el-input>
         </el-form-item>
-        <el-form-item class="small-item" label="联系人姓名" prop="boss">
-          <el-input v-model="store.boss"></el-input>
+        <el-form-item class="small-item" label="联系人姓名" prop="name">
+          <el-input v-model="store.name"></el-input>
         </el-form-item>
-        <el-form-item label="店铺分类" prop="shopCategoryId">
-          <el-select class="normal-item" v-model="store.shopCategoryId" multiple :multiple-limit="5" placeholder="请选择店铺分类">
+        <el-form-item label="店铺分类" prop="shopCategoryIdList">
+          <el-select class="normal-item" v-model="store.shopCategoryIdList" multiple :multiple-limit="5" placeholder="请选择店铺分类">
             <el-option v-for="item in shopCategory" :key="item.shopCategoryId" :label="item.shopCategoryName" :value="item.shopCategoryId"></el-option>
           </el-select>
         </el-form-item>
@@ -45,7 +45,7 @@
             <el-option v-for="item in cityList" :key="item.cityId" :label="item.cityName" :value="item.cityId">
             </el-option>
           </el-select>
-          <el-select v-model.number="store.areaId" filterable placeholder="区/县" prop="type">
+          <el-select v-model.number="store.areaId" filterable placeholder="区/县" prop="type" ref="district">
             <el-option v-for="item in districtList" :key="item.areaId" :label="item.areaName" :value="item.areaId">
             </el-option>
           </el-select>
@@ -54,7 +54,7 @@
         <el-form-item class="large-item" label="详细地址" prop="address">
           <el-input v-model="store.address" placeholder="详细至街道和门牌号"></el-input>
         </el-form-item>
-        <el-form-item label="">
+        <el-form-item>
           <div class="amap-container">
             <el-amap-search-box class="search-box" :on-search-result="onSearchResult"></el-amap-search-box>
             <el-amap vid="amapDemo" :plugin="plugin" class="amap" :zoom="zoom" :center="mapCenter" :events="events">
@@ -118,8 +118,8 @@ export default {
     return {
       store: {
         shopName: '',
-        phone: '',
-        boss: '',
+        takeOutPhone: '',
+        name: '',
         provinceId: null,
         cityId: null,
         areaId: null,
@@ -129,12 +129,13 @@ export default {
         longitude: 0,
         latitude: 0,
         shopType: 'RESERVE_TAKEOUT',
-        shopCategoryId: [],
+        shopCategoryIdList: [],
         shopFaceUrl: 'http://photo.gjgxjj.com:8083/xymall/upload/goods_detail_wap/96f70062-b666-4672-af43-f56550320b66.jpg',
         shopInnerUrl: '',
         logoUrl: '',
         fee: ''
       },
+      loginPhoneNumber: '',
       isAllDay: 'true',
       province: [],
       city: [],
@@ -198,13 +199,13 @@ export default {
         shopName: [
           { required: true, message: '请输入店铺名称' }
         ],
-        phone: [
+        takeOutPhone: [
           { required: true, message: '请输入店铺联系电话' }
         ],
-        boss: [
+        name: [
           { required: true, message: '请输入店铺联系人' }
         ],
-        shopCategoryId: [
+        shopCategoryIdList: [
           { type: 'array', required: true, message: '请选择店铺分类' }
         ],
         busBeginTime: [
@@ -266,14 +267,20 @@ export default {
       var that = this;
       if (!that.store.cityId) {
         console.log('no cityId')
+        that.$message({
+        	type: 'error',
+        	message: '请选择店铺所在省-市-区后再搜索'
+        })
         return;
       }
       //行政区域搜索
       var district = new AMap.DistrictSearch({
-        level: 'district'
+      		level: 'district',
+         	subdistrict: 0,
+			showbiz:false
       });
-      console.log(that.store.cityId)
-      district.search(that.store.cityId, function(status, result) {
+
+      district.search(that.$refs.district.query, function(status, result) {
       	console.log(result)
         if (status === 'complete' && result.info === 'OK') {
           var districtList = result.districtList;
@@ -289,6 +296,7 @@ export default {
       console.log(this.store)
       addStoreStepOne(this.store).then(res=>{
       	console.log(res)
+      	this.$router.push({path: 'qualification', query: {step: '1'}})
       })
 
     },
@@ -331,6 +339,7 @@ export default {
 
   },
   created: function() {
+  	this.loginPhoneNumber = sessionStorage.getItem('user')
     shopCategoryList().then(res => {
       this.shopCategory = res.list;
     })

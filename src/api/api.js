@@ -39,7 +39,7 @@ ajax.interceptors.response.use(function(res) {
         throw new Error(res.data.message);
     }
 
-    return res.data.data;
+    return (res.data.data?res.data.data:res.data.status);
 }, function(err) {
     console.error(err);
     ElementUI.Message.error({
@@ -78,6 +78,26 @@ export const getDistrictList = cityId => {
 //根据省id获取市列表
 export const getCityListByProvinceId = provinceId => {
     return ajax.get('commons/region/city/' + provinceId);
+};
+//商家入驻验证码登录
+export const openStoreLoginBySMSCode = params => {
+    return ajax.post('seller/seller/kaidianLogin',params);
+};
+//商家基础信息
+export const saveShopBaseInfo = params => {
+    return ajax.put('seller/shopDetail', params);
+};
+//商家资质信息
+export const saveShopQualificationInfo = params => {
+    return ajax.put('seller/shopDetail/updateQualificationInfo', params);
+};
+//获取银行卡信息
+export const getBankCardInfoByCardId = cardNumber => {
+    return ajax.get('commons/bankCard/' + cardNumber);
+};
+//商家结算信息
+export const saveShopBankInfo = params => {
+    return ajax.put('seller/shopDetail/saveBankInfo', params);
 };
 
 

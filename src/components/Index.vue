@@ -60,25 +60,26 @@
 	  		<div class="modal-body">
 	  			<span class="modal-close" @click="closeModal"></span>
 	  			<h3>申请入驻共享点餐</h3>
-	  			<div class="modal-input">
-	  				<el-input v-model="phoneNumber" placeholder="请输入手机号"></el-input>
-	  			</div>
-	  			<div class="modal-input">
-	  				<el-input class="verification-input" v-model="verificationCode" placeholder="请输入短信验证码"></el-input>
-	  				<el-button class="get-code" @click="getCode" :disabled="isClickGetCode">获取验证码</el-button>
-	  			</div>
-	  			<div class="modal-input">
-	  				<el-button class="modal-btn" @click="login">立即入驻</el-button>
-	  			</div>
-	  			<div class="protocol-tips">
-	  				<label for="protocol"><input type="checkbox" id="protocol" class="protocol-checkbox">我已阅读并已同意<a href="">《共享点餐网上订餐平台服务协议》</a></label>
-	  			</div>
+  					<div class="modal-input">
+  						<el-input v-model="phoneNumber" placeholder="请输入手机号" :maxlength="11" @change="checkValue"></el-input>
+  					</div>
+  					<div class="modal-input">
+  						<el-input class="verification-input" v-model="verificationCode" placeholder="请输入短信验证码" :maxlength="4" @change="checkValue"></el-input>
+  						<el-button class="get-code" @click="getCode" :disabled="isClickGetCode">获取验证码</el-button>
+  					</div>
+  				<div class="modal-input">
+  					<el-button class="modal-btn" @click="login" :disabled="canLogin">立即入驻</el-button>
+  				</div>
+  				<div class="protocol-tips">
+  					<label for="protocol"><input type="checkbox" id="protocol" class="protocol-checkbox" v-model="checked">我已阅读并已同意<a href="">《共享点餐网上订餐平台服务协议》</a></label>
+  				</div>
 	  		</div>
   		</div>
   	</div>
   </el-row>
 </template>
 <script>
+import {openStoreLoginBySMSCode} from '@/api/api'
 export default {
   data: function() {
     return {
@@ -112,11 +113,15 @@ export default {
     		title: '其他',
     		lists: ['餐厅办证流程','餐厅经营卫生标准']
     	}],
+    	loginRules: {
+
+    	},
     	phoneNumber: '',
 		verificationCode: '',
     	checked: true,
     	showDialog: false,
-    	isClickGetCode: false
+    	isClickGetCode: false,
+    	canLogin: true
     }
   },
   methods: {
@@ -128,9 +133,9 @@ export default {
   		this.phoneNumber = '';
   		this.verificationCode = '';
   		this.isClickGetCode = false;
+  		this.canLogin = true;
   	},
   	getCode: function(e){
-  		console.log()
   		var _this = this;
   		_this.isClickGetCode = true;
   		var i = 10;
@@ -145,8 +150,28 @@ export default {
 		  	e.target.innerText = i + 's后重新获取'
   		}, 1000)
   	},
+  	checkValue: function(){
+  		this.canLogin = (this.phoneNumber && this.phoneNumber.length == 11 ? (this.verificationCode && this.verificationCode.length == 4 ? false : true) : true)
+  	},
   	login: function(){
-  		this.$router.push({ path: 'store', query: { step: '0' }})
+  		if(!this.checked){
+  			this.$message({
+  				type: 'info',
+  				message: '请阅读并同意《共享点餐网上订餐平台服务协议》'
+  			})
+  			return;
+  		}
+  		var param = {
+  			code: this.verificationCode, //"8904",
+  			secretkey: "string",
+  			sellerName: this.phoneNumber //"18382130767"
+  		}
+  		openStoreLoginBySMSCode(param).then(res => {
+  			console.log(res)
+  			sessionStorage.setItem('jwt', res.jwt);
+  			sessionStorage.setItem('user', this.phoneNumber);
+			this.$router.push({ path: 'store', query: { step: '0' }})
+  		})
   	}
   }
 }
@@ -410,6 +435,10 @@ export default {
 		background-color: #0bb745;
 		border: none;
 		color: #fff;
+	}
+	.modal-btn.is-disabled{
+		background-color: #eee;
+		color: #999;
 	}
 	.protocol-tips{
 		font-size: 12px;

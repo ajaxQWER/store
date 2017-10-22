@@ -4,25 +4,25 @@
     <steps></steps>
     <el-row class="row qualification-content">
       <el-row class="license">
-        <el-form :model="license" ref="license" label-width="100px">
+        <el-form :model="qualification" ref="license" label-width="100px">
           <el-form-item class="normal-item" label="证件类型" prop="">
-            <el-select v-model="license.a" placeholder="请选择证件类型">
+            <el-select v-model="qualification.document.documentType" placeholder="请选择证件类型">
               <el-option v-for="(item,index) in licenseObj" :key="index" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item class="normal-item" label="真实姓名" prop=" ">
-            <el-input v-model="license.readyName"></el-input>
+            <el-input v-model="qualification.document.readyName"></el-input>
           </el-form-item>
           <el-form-item class="normal-item" label="证件号码" prop="idCardNum">
-            <el-input v-model="license.idCardNum"></el-input>
+            <el-input v-model="qualification.document.documentNum"></el-input>
           </el-form-item>
           <el-form-item label="证件照片" prop="licensePhoto">
             <div class="photo-info">
               <div class="photo-title">正面照</div>
               <div class="photo-upload">
                 <el-upload class="upload-demo" ref="fullFacePhotoUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadFullFacePhotoUrl">
-                  <img v-if="license.fullFacePhotoUrl" :src="license.fullFacePhotoUrl" class="avatar">
+                  <img v-if="qualification.document.fullFacePhotoUrl" :src="qualification.document.fullFacePhotoUrl" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
@@ -31,7 +31,7 @@
               <div class="photo-title">反面照</div>
               <div class="photo-upload">
                 <el-upload class="upload-demo" ref="reverseSideAsUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadReverseSideAsUrl">
-                  <img v-if="license.reverseSideAsUrl" :src="license.reverseSideAsUrl" class="avatar">
+                  <img v-if="qualification.document.reverseSideAsUrl" :src="qualification.document.reverseSideAsUrl" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
@@ -40,7 +40,7 @@
               <div class="photo-title">手持证件正面照</div>
               <div class="photo-upload">
                 <el-upload class="upload-demo" ref="handFullFacePhotoUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadHandFullFacePhotoUrl">
-                  <img v-if="license.handFullFacePhotoUrl" :src="license.handFullFacePhotoUrl" class="avatar">
+                  <img v-if="qualification.document.handFullFacePhotoUrl" :src="qualification.document.handFullFacePhotoUrl" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
@@ -49,38 +49,39 @@
         </el-form>
       </el-row>
       <el-row class="license">
-        <el-form :model="license" ref="license" label-width="100px">
+        <el-form :model="qualification.subject" ref="subject" label-width="100px">
           <el-form-item class="normal-item" label="主体资质" prop="">
-            <el-select v-model="license.c" placeholder="请选择主体资质">
+            <el-select v-model="qualification.subject.subjectDocument" placeholder="请选择主体资质">
               <el-option v-for="(item,index) in certificateType" :key="index" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item class="large-item" label="单位名称" prop="">
-            <el-input v-model="license.a"></el-input>
+            <el-input v-model="qualification.subject.unitName"></el-input>
           </el-form-item>
           <el-form-item class="normal-item" label="法定代表人" prop="">
-            <el-input v-model="license.a"></el-input>
+            <el-input v-model="qualification.subject.legal"></el-input>
           </el-form-item>
           <el-form-item class="normal-item" label="注册号" prop="">
-            <el-input v-model="license.a"></el-input>
+            <el-input v-model="qualification.subject.regNumber"></el-input>
           </el-form-item>
           <el-form-item class="large-item" label="注册地址" prop="">
-            <el-input v-model="license.a"></el-input>
+            <el-input v-model="qualification.subject.regAddress"></el-input>
           </el-form-item>
           <el-form-item label="有效期" prop="">
             <span>是否长期</span>
-            <el-switch v-model="license.b" on-text="是" off-text="否">
-            </el-switch>
-        	<el-date-picker v-model="license.a" type="date" placeholder="选择日期">
-        	</el-date-picker>
+            <el-switch v-model="qualification.subject.longTerm" on-text="是" off-text="否"></el-switch>
+            <span v-if="!qualification.subject.longTerm">
+	            <el-date-picker v-model="qualification.subject.beginTime" type="date" placeholder="开始时间"></el-date-picker>
+	            <el-date-picker v-model="qualification.subject.endTime" type="date" placeholder="到期时间"></el-date-picker>
+            </span>
           </el-form-item>
           <el-form-item label="资质照片" prop="">
             <div class="photo-info">
               <div class="photo-title">资质照片</div>
               <div class="photo-upload">
-                <el-upload class="upload-demo" ref="handFullFacePhotoUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadHandFullFacePhotoUrl">
-                  <img v-if="license.handFullFacePhotoUrl" :src="license.handFullFacePhotoUrl" class="avatar">
+                <el-upload class="upload-demo" ref="handBusinessUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadHandBusinessUrl">
+                  <img v-if="qualification.subject.businessUrl" :src="qualification.subject.businessUrl" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
@@ -89,37 +90,40 @@
         </el-form>
       </el-row>
       <el-row class="license">
-        <el-form :model="license" ref="license" label-width="100px">
+        <el-form :model="qualification.industry" ref="industry" label-width="100px">
           <el-form-item label="行业资质" prop="">
-            <el-select v-model="license.d" placeholder="请选择行业资质">
+            <el-select v-model="qualification.industry.intelligence" placeholder="请选择行业资质">
               <el-option v-for="(item,index) in licenseObj" :key="index" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item class="large-item" label="单位名称" prop="">
-            <el-input v-model="license.a"></el-input>
+            <el-input v-model="qualification.industry.unitName"></el-input>
           </el-form-item>
           <el-form-item class="normal-item" label="法定代表人" prop="">
-            <el-input v-model="license.a"></el-input>
+            <el-input v-model="qualification.industry.legal"></el-input>
           </el-form-item>
           <el-form-item class="large-item" label="许可证编号" prop="">
-            <el-input v-model="license.a"></el-input>
+            <el-input v-model="qualification.industry.licenseNumber"></el-input>
           </el-form-item>
           <el-form-item class="large-item" label="许可证地址" prop="">
-            <el-input v-model="license.a"></el-input>
+            <el-input v-model="qualification.industry.licenseAddress"></el-input>
           </el-form-item>
           <el-form-item label="有效期" prop="">
             <span>是否长期</span>
-            <el-switch v-model="license.b" on-text="是" off-text="否"></el-switch>
-            <el-date-picker v-model="license.a" type="date" placeholder="选择日期">
+            <el-switch v-model="qualification.industry.longTerm" on-text="是" off-text="否"></el-switch>
+            <span v-if="!qualification.industry.longTerm">
+	            <el-date-picker v-model="qualification.industry.beginTime" type="date" placeholder="开始时间"></el-date-picker>
+	            <el-date-picker v-model="qualification.industry.endTime" type="date" placeholder="到期时间"></el-date-picker>
+        	</span>
             </el-date-picker>
           </el-form-item>
           <el-form-item label="资质照片" prop="">
             <div class="photo-info">
               <div class="photo-title">资质照片</div>
               <div class="photo-upload">
-                <el-upload class="upload-demo" ref="handFullFacePhotoUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadHandFullFacePhotoUrl">
-                  <img v-if="license.handFullFacePhotoUrl" :src="license.handFullFacePhotoUrl" class="avatar">
+                <el-upload class="upload-demo" ref="handFoodUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadHandFoodUrl">
+                  <img v-if="qualification.industry.foodUrl" :src="qualification.industry.foodUrl" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
@@ -133,15 +137,13 @@
         <router-link to="/store?step=0">
           <el-button size="large">返回上一步</el-button>
         </router-link>
-        <router-link to="/settlement?step=2">
-          <el-button class="small-item" type="primary" size="large">进行下一步</el-button>
-        </router-link>
+        <el-button class="small-item" type="primary" size="large" @click="submitQualification">进行下一步</el-button>
       </el-col>
     </el-row>
   </div>
 </template>
 <script>
-import { shopCategoryList, getProvinceList, getDistrictList, getCityListByProvinceId, addStoreStepOne, uploadFiles } from '@/api/api'
+import { saveShopQualificationInfo,uploadFiles } from '@/api/api'
 import steps from '@/components/steps/steps'
 import headers from '@/components/header/headers'
 export default {
@@ -152,16 +154,38 @@ export default {
   },
   data() {
     return {
-      license: {
-        readyName: '',
-        idCardNum: '',
-        a: '',
-        b: true,
-        c: '',
-        d: '',
-        fullFacePhotoUrl: '',
-        reverseSideAsUrl: '',
-        handFullFacePhotoUrl: ''
+      qualification: {
+        document: {
+          documentNum: "",
+          documentType: "",
+          fullFacePhotoUrl: "",
+          handFullFacePhotoUrl: "",
+          readyName: "",
+          reverseSideAsUrl: ""
+        },
+        industry: {
+          beginTime: "",
+          endTime: "",
+          foodUrl: "",
+          intelligence: "",
+          legal: "",
+          licenseAddress: "",
+          licenseNumber: "",
+          longTerm: true,
+          unitName: ""
+        },
+        subject: {
+          beginTime: "",
+          businessUrl: "",
+          endTime: "",
+          legal: "",
+          longTerm: true,
+          regAddress: "",
+          regNumber: "",
+          subjectDocument: "",
+          unitName: ""
+        }
+
       },
       licenseObj: [{
         label: '身份证',
@@ -222,10 +246,10 @@ export default {
       var file = e.raw;
       var fd = new FormData();
       fd.append('file', file);
-      fd.path = '/license';
+      fd.path = '/qualification';
       uploadFiles(fd).then(data => {
         console.log(data)
-        this.license.fullFacePhotoUrl = data.originalUrl;
+        this.qualification.document.fullFacePhotoUrl = data.originalUrl;
       }).catch(err => {
         console.log(err)
       })
@@ -235,10 +259,10 @@ export default {
       var file = e.raw;
       var fd = new FormData();
       fd.append('file', file);
-      fd.path = '/license';
+      fd.path = '/qualification';
       uploadFiles(fd).then(data => {
         console.log(data)
-        this.license.reverseSideAsUrl = data.originalUrl;
+        this.qualification.document.reverseSideAsUrl = data.originalUrl;
       }).catch(err => {
         console.log(err)
       })
@@ -248,17 +272,46 @@ export default {
       var file = e.raw;
       var fd = new FormData();
       fd.append('file', file);
-      fd.path = '/license';
+      fd.path = '/qualification';
       uploadFiles(fd).then(data => {
         console.log(data)
-        this.store.handFullFacePhotoUrl = data.originalUrl;
+        this.qualification.document.handFullFacePhotoUrl = data.originalUrl;
       }).catch(err => {
         console.log(err)
       })
+    },
+    //主体资质照片上传
+    uploadHandBusinessUrl: function(e) {
+      var file = e.raw;
+      var fd = new FormData();
+      fd.append('file', file);
+      fd.path = '/qualification';
+      uploadFiles(fd).then(data => {
+        console.log(data)
+        this.qualification.subject.businessUrl = data.originalUrl;
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    uploadHandFoodUrl: function(e) {
+      var file = e.raw;
+      var fd = new FormData();
+      fd.append('file', file);
+      fd.path = '/qualification';
+      uploadFiles(fd).then(data => {
+        console.log(data)
+        this.qualification.industry.foodUrl = data.originalUrl;
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    submitQualification: function(){
+    	console.log(this.qualification)
+    	saveShopQualificationInfo(this.qualification).then(res=>{
+    		console.log(res)
+    		this.$router.push({path: 'settlement', query: {step: '2'}})
+    	})
     }
-  },
-  created: function() {
-
   }
 }
 
@@ -280,7 +333,7 @@ export default {
 }
 
 .photo-info {
-	width: 600px;
+  width: 600px;
   /* height: 80px; */
   border-bottom: 1px solid #000;
 }

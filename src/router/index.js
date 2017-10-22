@@ -4,8 +4,8 @@ import Index from '@/components/Index.vue'
 import HelloWorld from '@/components/HelloWorld.vue'
 import Store from '@/components/Store.vue'
 import Qualification from '@/components/Qualification.vue'
-import Delivery from '@/components/Delivery.vue'
 import Settlement from '@/components/Settlement.vue'
+import Finish from '@/components/Finish.vue'
 let routes = [{
     path: '/index',
     component: Index,
@@ -17,8 +17,7 @@ let routes = [{
 }, {
     path: '/',
     redirect: { path: '/index' },
-    component: HelloWorld,
-    name: 'helloWorld'
+    name: '/'
 }, {
     path: '/store',
     component: Store,
@@ -28,13 +27,13 @@ let routes = [{
     component: Qualification,
     name: 'qualification'
 }, {
-    path: '/delivery',
-    component: Delivery,
-    name: 'delivery'
-}, , {
     path: '/settlement',
     component: Settlement,
     name: 'settlement'
+},  {
+    path: '/waitAduit',
+    component: Finish,
+    name: 'waitAduit'
 }, {
     path: '*',
     redirect: { path: '/404' }
