@@ -58,11 +58,6 @@ export const shopCategoryList = () => {
     return ajax.get('seller/shopCategory');
 };
 
-//关键字定位
-export const addStoreStepOne = params => {
-    return ajax.put('seller/shopDetail', params);
-};
-
 //获取省列表
 export const getProvinceList = () => {
     return ajax.get('commons/region/province');
@@ -87,17 +82,26 @@ export const openStoreLoginBySMSCode = params => {
 export const saveShopBaseInfo = params => {
     return ajax.put('seller/shopDetail', params);
 };
+export const getShopBaseInfo = params => {
+    return ajax.get('seller/shopDetail', params);
+};
 //商家资质信息
 export const saveShopQualificationInfo = params => {
-    return ajax.put('seller/shopDetail/updateQualificationInfo', params);
+    return ajax.put('seller/shopDetail/qualificationInfo', params);
+};
+export const getShopQualificationInfo = params => {
+    return ajax.get('seller/shopDetail/qualificationInfo', params);
 };
 //获取银行卡信息
 export const getBankCardInfoByCardId = cardNumber => {
     return ajax.get('commons/bankCard/' + cardNumber);
 };
 //商家结算信息
-export const saveShopBankInfo = params => {
-    return ajax.put('seller/shopDetail/saveBankInfo', params);
+export const saveShopSettleInfo = params => {
+    return ajax.put('seller/shopDetail/settlement', params);
+};
+export const getShopSettleInfo = params => {
+    return ajax.get('seller/shopDetail/settlement', params);
 };
 
 

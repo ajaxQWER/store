@@ -93,7 +93,7 @@
         <el-form :model="qualification.industry" ref="industry" label-width="100px">
           <el-form-item label="行业资质" prop="">
             <el-select v-model="qualification.industry.intelligence" placeholder="请选择行业资质">
-              <el-option v-for="(item,index) in licenseObj" :key="index" :label="item.label" :value="item.value">
+              <el-option v-for="(item,index) in mainQualifications" :key="index" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
@@ -143,7 +143,7 @@
   </div>
 </template>
 <script>
-import { saveShopQualificationInfo,uploadFiles } from '@/api/api'
+import { saveShopQualificationInfo,getShopQualificationInfo,uploadFiles } from '@/api/api'
 import steps from '@/components/steps/steps'
 import headers from '@/components/header/headers'
 export default {
@@ -185,7 +185,6 @@ export default {
           subjectDocument: "",
           unitName: ""
         }
-
       },
       licenseObj: [{
         label: '身份证',
@@ -312,6 +311,43 @@ export default {
     		this.$router.push({path: 'settlement', query: {step: '2'}})
     	})
     }
+  },
+  created: function(){
+  	getShopQualificationInfo().then(res=>{
+  		console.log(res)
+  		this.qualification = {
+	        document: {
+	          documentNum: res.document.documentNum,
+	          documentType: res.document.documentType,
+	          fullFacePhotoUrl: res.document.fullFacePhotoUrl,
+	          handFullFacePhotoUrl: res.document.handFullFacePhotoUrl,
+	          readyName: res.document.readyName,
+	          reverseSideAsUrl: res.document.reverseSideAsUrl
+	        },
+	        industry: {
+	          beginTime: res.industry.beginTime,
+	          endTime: res.industry.endTime,
+	          foodUrl: res.industry.foodUrl,
+	          intelligence: res.industry.intelligence,
+	          legal: res.industry.legal,
+	          licenseAddress: res.industry.licenseAddress,
+	          licenseNumber: res.industry.licenseNumber,
+	          longTerm: res.industry.longTerm,
+	          unitName: res.industry.unitName
+	        },
+	        subject: {
+	          beginTime: res.subject.beginTime,
+	          businessUrl: res.subject.businessUrl,
+	          endTime: res.subject.endTime,
+	          legal: res.subject.legal,
+	          longTerm: res.subject.longTerm,
+	          regAddress: res.subject.regAddress,
+	          regNumber: res.subject.regNumber,
+	          subjectDocument: res.subject.subjectDocument,
+	          unitName: res.subject.unitName
+	        }
+      	}
+  	})
   }
 }
 

@@ -9,11 +9,11 @@
         </el-form-item>
         <el-form-item label="所属银行" prop="bankNum">{{settlement.bankHouse}}</el-form-item>
         <el-form-item label="开户城市" prop="city">
-          <el-select v-model="provinceId" filterable placeholder="省" prop="type" @change="selectCity">
+          <el-select v-model="settlement.provinceId" filterable placeholder="省" prop="type" @change="selectCity">
             <el-option v-for="item in province" :key="item.provinceId" :label="item.provinceName" :value="item.provinceId">
             </el-option>
           </el-select>
-          <el-select v-model="cityId" filterable placeholder="市" prop="type">
+          <el-select v-model="settlement.cityId" filterable placeholder="市" prop="type">
             <el-option v-for="item in city" :key="item.cityId" :label="item.cityName" :value="item.cityId">
             </el-option>
           </el-select>
@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import { getProvinceList, getCityListByProvinceId, getBankCardInfoByCardId, saveShopBankInfo } from '@/api/api'
+import { getProvinceList, getCityListByProvinceId, getBankCardInfoByCardId, saveShopSettleInfo, getShopSettleInfo } from '@/api/api'
 import steps from '@/components/steps/steps'
 import headers from '@/components/header/headers'
 export default {
@@ -53,38 +53,44 @@ export default {
         cityId: 0
       },
       province: [],
-      city: [],
-      provinceId: 510000,
-      cityId: 510100
+      city: []
     }
   },
   created: function() {
+    getShopSettleInfo().then(res=>{
+        console.log(res)
+        this. settlement = {
+            bankHouse: res.bankHouse,
+            bankNumber: res.bankNumber,
+            openBank: res.openBank,
+            provinceId: res.provinceId,
+            cityId: res.cityId
+        }
+    })
     getProvinceList().then(res => {
         console.log(res)
       this.province = res;
     })
-   getCityListByProvinceId(this.provinceId).then(res => {
+   getCityListByProvinceId(this.settlement.provinceId).then(res => {
        this.city = res;
      })
   },
   methods: {
     selectCity: function(){
-        console.log(this.provinceId)
-        getCityListByProvinceId(this.provinceId).then(res=>{
+        getCityListByProvinceId(this.settlement.provinceId).then(res=>{
             console.log(res)
             this.city = res;
         })
     },
     save: function() {
         console.log(this.settlement)
-        return;
-        saveShopBankInfo(this.settlement).then(res => {
+        // return;
+        saveShopSettleInfo(this.settlement).then(res => {
             console.log(res)
             this.$router.push({path: 'waitAduit', query: {step: '3'}})
         })
     },
     getBankCardInfo: function(){
-        console.log(123)
         getBankCardInfoByCardId(this.settlement.bankNumber).then(res=>{
             console.log(res)
             this.settlement.bankHouse = res.bank

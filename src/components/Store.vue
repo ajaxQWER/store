@@ -104,7 +104,7 @@
   </div>
 </template>
 <script>
-import { shopCategoryList, getProvinceList, getDistrictList, getCityListByProvinceId, addStoreStepOne, uploadFiles } from '@/api/api'
+import { shopCategoryList, getProvinceList, getDistrictList, getCityListByProvinceId, saveShopBaseInfo, getShopBaseInfo, uploadFiles } from '@/api/api'
 import steps from '@/components/steps/steps'
 import headers from '@/components/header/headers'
 export default {
@@ -294,7 +294,7 @@ export default {
       	this.store.busEndTime = '23:59:59'
       }
       console.log(this.store)
-      addStoreStepOne(this.store).then(res=>{
+      saveShopBaseInfo(this.store).then(res=>{
       	console.log(res)
       	this.$router.push({path: 'qualification', query: {step: '1'}})
       })
@@ -346,7 +346,32 @@ export default {
     getProvinceList().then(res => {
       this.provinceList = res;
     })
-
+    getShopBaseInfo().then(res=>{
+    	console.log(res)
+    	this.store = {
+	        shopName: res.shopName,
+	        takeOutPhone: res.takeOutPhone,
+	        name: res.name,
+	        provinceId: res.provinceId,
+	        cityId: res.cityId,
+	        areaId: res.areaId,
+	        busBeginTime: res.busBeginTime,
+	        busEndTime: res.busEndTime,
+	        address: res.address,
+	        longitude: res.longitude,
+	        latitude: res.latitude,
+	        shopType: res.shopType,
+	        shopCategoryIdList: res.shopCategoryIdList,
+	        shopFaceUrl: res.shopFaceUrl,
+	        shopInnerUrl: res.shopInnerUrl,
+	        logoUrl: res.logoUrl,
+	        fee: res.fee
+	      }
+	      this.mapCenter = [res.longitude,res.latitude]
+	      this.markers = [{
+            position: [res.longitude,res.latitude]
+          }];
+    })
   }
 }
 
