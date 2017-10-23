@@ -22,7 +22,7 @@
               <div class="photo-title">正面照</div>
               <div class="photo-upload">
                 <el-upload class="upload-demo" ref="fullFacePhotoUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadFullFacePhotoUrl">
-                  <img v-if="qualification.document.fullFacePhotoUrl" :src="qualification.document.fullFacePhotoUrl" class="avatar">
+                  <img v-if="qualification.document.fullFacePhotoUrl" :src="UPLOADURL + qualification.document.fullFacePhotoUrl" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
@@ -31,7 +31,7 @@
               <div class="photo-title">反面照</div>
               <div class="photo-upload">
                 <el-upload class="upload-demo" ref="reverseSideAsUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadReverseSideAsUrl">
-                  <img v-if="qualification.document.reverseSideAsUrl" :src="qualification.document.reverseSideAsUrl" class="avatar">
+                  <img v-if="qualification.document.reverseSideAsUrl" :src="UPLOADURL + qualification.document.reverseSideAsUrl" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
@@ -40,7 +40,7 @@
               <div class="photo-title">手持证件正面照</div>
               <div class="photo-upload">
                 <el-upload class="upload-demo" ref="handFullFacePhotoUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadHandFullFacePhotoUrl">
-                  <img v-if="qualification.document.handFullFacePhotoUrl" :src="qualification.document.handFullFacePhotoUrl" class="avatar">
+                  <img v-if="qualification.document.handFullFacePhotoUrl" :src="UPLOADURL + qualification.document.handFullFacePhotoUrl" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
@@ -72,16 +72,16 @@
             <span>是否长期</span>
             <el-switch v-model="qualification.subject.longTerm" on-text="是" off-text="否"></el-switch>
             <span v-if="!qualification.subject.longTerm">
-	            <el-date-picker v-model="qualification.subject.beginTime" type="date" placeholder="开始时间"></el-date-picker>
-	            <el-date-picker v-model="qualification.subject.endTime" type="date" placeholder="到期时间"></el-date-picker>
-            </span>
+				<el-date-picker v-model="qualification.subject.beginTime" type="date" placeholder="开始时间" @change="formatBeginTime1(qualification.subject.beginTime)"></el-date-picker>
+				<el-date-picker v-model="qualification.subject.endTime" type="date" placeholder="到期时间" @change="formatEndTime1(qualification.subject.endTime)"></el-date-picker>
+			</span>
           </el-form-item>
           <el-form-item label="资质照片" prop="">
             <div class="photo-info">
               <div class="photo-title">资质照片</div>
               <div class="photo-upload">
                 <el-upload class="upload-demo" ref="handBusinessUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadHandBusinessUrl">
-                  <img v-if="qualification.subject.businessUrl" :src="qualification.subject.businessUrl" class="avatar">
+                  <img v-if="qualification.subject.businessUrl" :src="UPLOADURL + qualification.subject.businessUrl" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
@@ -113,9 +113,9 @@
             <span>是否长期</span>
             <el-switch v-model="qualification.industry.longTerm" on-text="是" off-text="否"></el-switch>
             <span v-if="!qualification.industry.longTerm">
-	            <el-date-picker v-model="qualification.industry.beginTime" type="date" placeholder="开始时间"></el-date-picker>
-	            <el-date-picker v-model="qualification.industry.endTime" type="date" placeholder="到期时间"></el-date-picker>
-        	</span>
+				<el-date-picker v-model="qualification.industry.beginTime" type="date" placeholder="开始时间" @change="formatBeginTime2(qualification.industry.beginTime)"></el-date-picker>
+				<el-date-picker v-model="qualification.industry.endTime" type="date" placeholder="到期时间" @change="formatEndTime2(qualification.industry.endTime)"></el-date-picker>
+			</span>
             </el-date-picker>
           </el-form-item>
           <el-form-item label="资质照片" prop="">
@@ -123,7 +123,7 @@
               <div class="photo-title">资质照片</div>
               <div class="photo-upload">
                 <el-upload class="upload-demo" ref="handFoodUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadHandFoodUrl">
-                  <img v-if="qualification.industry.foodUrl" :src="qualification.industry.foodUrl" class="avatar">
+                  <img v-if="qualification.industry.foodUrl" :src="UPLOADURL + qualification.industry.foodUrl" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
@@ -143,7 +143,7 @@
   </div>
 </template>
 <script>
-import { saveShopQualificationInfo,getShopQualificationInfo,uploadFiles } from '@/api/api'
+import { saveShopQualificationInfo, getShopQualificationInfo, uploadFiles } from '@/api/api'
 import steps from '@/components/steps/steps'
 import headers from '@/components/header/headers'
 export default {
@@ -164,8 +164,8 @@ export default {
           reverseSideAsUrl: ""
         },
         industry: {
-          beginTime: "",
-          endTime: "",
+          beginTime: '',
+          endTime: '',
           foodUrl: "",
           intelligence: "",
           legal: "",
@@ -175,8 +175,8 @@ export default {
           unitName: ""
         },
         subject: {
-          beginTime: "",
-          businessUrl: "",
+          beginTime: '',
+          businessUrl: '',
           endTime: "",
           legal: "",
           longTerm: true,
@@ -304,50 +304,70 @@ export default {
         console.log(err)
       })
     },
-    submitQualification: function(){
-    	console.log(this.qualification)
-    	saveShopQualificationInfo(this.qualification).then(res=>{
-    		console.log(res)
-    		this.$router.push({path: 'settlement', query: {step: '2'}})
-    	})
+    formatBeginTime1: function(time) {
+      this.qualification.subject.beginTime = this.moment(time).format('YYYY-MM-DD')
+    },
+    formatBeginTime2: function(time) {
+      this.qualification.industry.beginTime = this.moment(time).format('YYYY-MM-DD')
+    },
+    formatEndTime1: function(time) {
+      this.qualification.subject.endTime = this.moment(time).format('YYYY-MM-DD')
+    },
+    formatEndTime2: function(time) {
+      this.qualification.industry.endTime = this.moment(time).format('YYYY-MM-DD')
+    },
+    submitQualification: function() {
+      if (this.qualification.industry.longTerm) {
+        delete this.qualification.industry.beginTime;
+        delete this.qualification.industry.endTime;
+      }
+      if (this.qualification.subject.longTerm) {
+        delete this.qualification.subject.beginTime;
+        delete this.qualification.subject.endTime;
+      }
+      console.log(this.qualification)
+      saveShopQualificationInfo(this.qualification).then(res => {
+        console.log(res)
+        this.$router.push({ path: 'settlement', query: { step: '2' } })
+      })
     }
   },
-  created: function(){
-  	getShopQualificationInfo().then(res=>{
-  		console.log(res)
-  		this.qualification = {
-	        document: {
-	          documentNum: res.document.documentNum,
-	          documentType: res.document.documentType,
-	          fullFacePhotoUrl: res.document.fullFacePhotoUrl,
-	          handFullFacePhotoUrl: res.document.handFullFacePhotoUrl,
-	          readyName: res.document.readyName,
-	          reverseSideAsUrl: res.document.reverseSideAsUrl
-	        },
-	        industry: {
-	          beginTime: res.industry.beginTime,
-	          endTime: res.industry.endTime,
-	          foodUrl: res.industry.foodUrl,
-	          intelligence: res.industry.intelligence,
-	          legal: res.industry.legal,
-	          licenseAddress: res.industry.licenseAddress,
-	          licenseNumber: res.industry.licenseNumber,
-	          longTerm: res.industry.longTerm,
-	          unitName: res.industry.unitName
-	        },
-	        subject: {
-	          beginTime: res.subject.beginTime,
-	          businessUrl: res.subject.businessUrl,
-	          endTime: res.subject.endTime,
-	          legal: res.subject.legal,
-	          longTerm: res.subject.longTerm,
-	          regAddress: res.subject.regAddress,
-	          regNumber: res.subject.regNumber,
-	          subjectDocument: res.subject.subjectDocument,
-	          unitName: res.subject.unitName
-	        }
-      	}
-  	})
+  created: function() {
+    getShopQualificationInfo().then(res => {
+      console.log(res)
+      this.qualification = {
+        document: {
+          documentNum: res.document.documentNum,
+          documentType: res.document.documentType,
+          fullFacePhotoUrl: res.document.fullFacePhotoUrl,
+          handFullFacePhotoUrl: res.document.handFullFacePhotoUrl,
+          readyName: res.document.readyName,
+          reverseSideAsUrl: res.document.reverseSideAsUrl
+        },
+        industry: {
+          beginTime: res.industry.beginTime,
+          endTime: res.industry.endTime,
+          foodUrl: res.industry.foodUrl,
+          intelligence: res.industry.intelligence,
+          legal: res.industry.legal,
+          licenseAddress: res.industry.licenseAddress,
+          licenseNumber: res.industry.licenseNumber,
+          longTerm: res.industry.longTerm,
+          unitName: res.industry.unitName
+        },
+        subject: {
+          beginTime: res.subject.beginTime,
+          businessUrl: res.subject.businessUrl,
+          endTime: res.subject.endTime,
+          legal: res.subject.legal,
+          longTerm: res.subject.longTerm,
+          regAddress: res.subject.regAddress,
+          regNumber: res.subject.regNumber,
+          subjectDocument: res.subject.subjectDocument,
+          unitName: res.subject.unitName
+        }
+      }
+    })
   }
 }
 
@@ -371,7 +391,7 @@ export default {
 .photo-info {
   width: 600px;
   /* height: 80px; */
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #eee;
 }
 
 .photo-title,
