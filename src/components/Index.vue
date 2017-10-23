@@ -71,7 +71,7 @@
   					<el-button class="modal-btn" @click="login" :disabled="canLogin">立即入驻</el-button>
   				</div>
   				<div class="protocol-tips">
-  					<label for="protocol"><input type="checkbox" id="protocol" class="protocol-checkbox" v-model="checked">我已阅读并已同意<a href="">《共享点餐网上订餐平台服务协议》</a></label>
+  					<label for="protocol"><input type="checkbox" id="protocol" class="protocol-checkbox" v-model="checked">我已阅读并已同意<a href="" target="_blank">《共享点餐网上订餐平台服务协议》</a></label>
   				</div>
 	  		</div>
   		</div>
