@@ -1,6 +1,6 @@
 import ElementUI from 'element-ui'
 import axios from 'axios';
-import Qs from 'Qs'
+//import Qs from 'Qs'
 
 var ajax = axios.create({
     baseURL: 'http://47.92.68.45:18080',
