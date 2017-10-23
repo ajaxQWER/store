@@ -1,6 +1,6 @@
 import ElementUI from 'element-ui'
 import axios from 'axios';
-import Qs from 'Qs'
+// import Qs from 'Qs'
 
 var ajax = axios.create({
     baseURL: 'http://47.92.68.45:18080',
@@ -33,9 +33,9 @@ ajax.interceptors.response.use(function(res) {
             message: res.data.message,
             type: 'error'
         });
-        // if(res.data.errorCode == 401){
-        //     location.href = '/login'
-        // }
+        if(res.data.errorCode == 401){
+            location.href = '/index'
+        }
         throw new Error(res.data.message);
     }
 

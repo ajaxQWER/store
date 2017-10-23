@@ -8,7 +8,7 @@
   				</div>
   				<div class="right-item">
   					<a href="">客户端下载</a>
-  					<a href="">在线客户</a>
+  					<a href="">在线客服</a>
   				</div>
   			</div>
   			<h2>加入共享点餐 开店赚大钱</h2>
