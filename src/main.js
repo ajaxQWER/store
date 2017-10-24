@@ -59,13 +59,9 @@ const router = new VueRouter({
 })
 
 // router.beforeEach((to, from, next) => {
-//     if (to.path == '/login') {
-//         sessionStorage.removeItem('user');
-//         sessionStorage.removeItem('jwt');
-//     }
 //     let jwt = sessionStorage.getItem('jwt');
-//     if (!jwt && to.path != '/login') {
-//         next({ path: '/login' })
+//     if (!jwt && to.path != '/index') {
+//         next({ path: '/index' })
 //     } else {
 //         next()
 //     }

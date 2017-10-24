@@ -294,7 +294,6 @@ export default {
 		this.store.busEndTime = '24:00'
 	  }
 	  console.log(this.store)
-	  return
 	  saveShopBaseInfo(this.store).then(res => {
 		console.log(res)
 		this.$router.push({ path: 'qualification', query: { step: '1' } })

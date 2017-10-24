@@ -33,9 +33,9 @@ ajax.interceptors.response.use(function(res) {
             message: res.data.message,
             type: 'error'
         });
-        // if(res.data.errorCode == 401){
-        //     location.href = '/login'
-        // }
+        if(res.data.errorCode == 401){
+            location.href = '/index'
+        }
         throw new Error(res.data.message);
     }
 
