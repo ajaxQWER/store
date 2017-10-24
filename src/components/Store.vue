@@ -24,8 +24,8 @@
 		  <el-radio class="radio" v-model="isAllDay" label="true">全天</el-radio>
 		  <el-radio class="radio" v-model="isAllDay" label="false">自定义</el-radio>
 		  <span v-if="isAllDay=='false'">
-	  <el-time-select v-model="store.busBeginTime" placeholder="营业开始时间" prop="busBeginTime" :picker-options="{start: '00:00',end: '24:00',step: '00:30'}"></el-time-select>
-	  <el-time-select v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" :picker-options="{start: '00:00',end: '24:00',step: '00:30'}"></el-time-select>
+	  <el-time-select v-model="store.busBeginTime" placeholder="营业开始时间" prop="busBeginTime" :picker-options="{start: '00:00',end: '24:00',step: '00:30'}" @change="formatStartTime"></el-time-select>
+	  <el-time-select v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" :picker-options="{start: '00:00',end: '24:00',step: '00:30'}" @change="formatEndTime"></el-time-select>
 	  </span>
 		</el-form-item>
 		<el-form-item label="店铺类型">
@@ -288,10 +288,23 @@ export default {
 		}
 	  });
 	},
+	formatStartTime: function(){
+		if(this.store.busBeginTime == '24:00'){
+			this.store.busBeginTime = '00:00';
+		}
+		this.store.busBeginTime += ':00';
+	},
+	formatEndTime: function(){
+		if(this.store.busEndTime == '24:00'){
+			this.store.busEndTime = '00:00';
+		}
+		this.store.busEndTime += ':00';
+
+	},
 	showStore: function() {
 	  if (this.isAllDay == 'true') {
-		this.store.busBeginTime = '00:00';
-		this.store.busEndTime = '24:00'
+		this.store.busBeginTime = '00:00:00';
+		this.store.busEndTime = '00:00:00';
 	  }
 	  console.log(this.store)
 	  saveShopBaseInfo(this.store).then(res => {
