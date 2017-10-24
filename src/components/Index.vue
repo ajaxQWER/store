@@ -169,6 +169,7 @@ export default {
   		openStoreLoginBySMSCode(param).then(res => {
   			console.log(res)
   			sessionStorage.setItem('jwt', res.jwt);
+  			sessionStorage.setItem('shopId', res.seller.shopId);
   			sessionStorage.setItem('user', this.phoneNumber);
 			this.$router.push({ path: 'store', query: { step: '0' }})
   		})

@@ -104,7 +104,10 @@ export const getShopSettleInfo = params => {
     return ajax.get('seller/shopDetail/settlement', params);
 };
 
-
+//店铺logo
+export const setShopLogo = params => {
+    return ajax.post('seller/shopDetail/logo', params);
+};
 
 
 

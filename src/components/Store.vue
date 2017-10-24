@@ -24,8 +24,9 @@
           <el-radio class="radio" v-model="isAllDay" label="true">全天</el-radio>
           <el-radio class="radio" v-model="isAllDay" label="false">自定义</el-radio>
           <span v-if="isAllDay=='false'">
-	  	<el-time-select v-model="store.busBeginTime" placeholder="营业开始时间" prop="busBeginTime" :picker-options="{start: '00:00',end: '23:59',step: '00:01'}" @change="formatStartTime"></el-time-select>
-          <el-time-select v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" :picker-options="{start: '00:00',end: '23:59',step: '00:01'}" @change="formatEndTime"></el-time-select>
+        <el-time-select v-model="store.busBeginTime" placeholder="营业开始时间" prop="busBeginTime" :picker-options="{start: '00:00',end: '23:59',step: '00:30'}" @change="formatStartTime"></el-time-select>
+          <el-time-select v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" :picker-options="{start: '00:00',end: '23:59',step: '00:30'}" @change="formatEndTime"></el-time-select>
+          <b>*店铺营业时间如未包含,请自行输入</b>
           </span>
         </el-form-item>
         <el-form-item label="店铺类型">
@@ -67,7 +68,7 @@
             <div class="photo-title">店铺LOGO</div>
             <div class="photo-upload">
               <el-upload class="upload-demo" ref="logoUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadLogoUrl">
-                <img v-if="store.logoUrl" :src="UPLOADURL + store.logoUrl" class="avatar">
+                <img v-if="logo" :src="logo" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </div>
@@ -104,7 +105,7 @@
   </div>
 </template>
 <script>
-import { shopCategoryList, getProvinceList, getDistrictList, getCityListByProvinceId, saveShopBaseInfo, getShopBaseInfo, uploadFiles } from '@/api/api'
+import { shopCategoryList, getProvinceList, getDistrictList, getCityListByProvinceId, saveShopBaseInfo, getShopBaseInfo, uploadFiles,setShopLogo } from '@/api/api'
 import steps from '@/components/steps/steps'
 import headers from '@/components/header/headers'
 export default {
@@ -117,6 +118,7 @@ export default {
     var that = this;
     return {
       store: {
+        shopId: sessionStorage.getItem('shopId'),
         shopName: '',
         takeOutPhone: '',
         name: '',
@@ -135,6 +137,7 @@ export default {
         logoUrl: '',
         fee: ''
       },
+      logo: '',
       loginPhoneNumber: '',
       isAllDay: 'true',
       province: [],
@@ -311,10 +314,9 @@ export default {
       var file = e.raw;
       var fd = new FormData();
       fd.append('file', file);
-      fd.path = '/store';
-      uploadFiles(fd).then(data => {
-        console.log(data)
-        this.store.logoUrl = data.originalUrl;
+      setShopLogo(fd).then(data => {
+        this.logo = e.url;
+        this.store.logoUrl = "/shopLogo/" + this.store.shopId + '.png';
       }).catch(err => {
         console.log(err)
       })
@@ -356,6 +358,7 @@ export default {
     getShopBaseInfo().then(res => {
       console.log(res)
       this.store = {
+        shopId: res.shopId,
         shopName: res.shopName,
         takeOutPhone: res.takeOutPhone,
         name: res.name,
@@ -374,6 +377,7 @@ export default {
         logoUrl: res.logoUrl,
         fee: res.fee
       }
+      this.logo = this.UPLOADURL + '/shopLogo/' + res.shopId + '.png'
       if (res.busBeginTime != '00:00' & res.busEndTime != '24:00') {
         this.isAllDay = 'false';
       }
