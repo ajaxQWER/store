@@ -1,6 +1,5 @@
 import ElementUI from 'element-ui'
 import axios from 'axios';
-//import Qs from 'Qs'
 
 var ajax = axios.create({
     baseURL: 'http://api.sf.chinagjgx.com',
@@ -25,6 +24,7 @@ ajax.interceptors.request.use(function(config) {
     //Do something with request error
     return Promise.reject(err);
 });
+
 //添加一个响应拦截器
 ajax.interceptors.response.use(function(res) {
     //在这里对返回的数据进行处理
@@ -39,7 +39,7 @@ ajax.interceptors.response.use(function(res) {
         throw new Error(res.data.message);
     }
 
-    return (res.data.data?res.data.data:res.data.status);
+    return (res.data.data ? res.data.data : res.data.status);
 }, function(err) {
     console.error(err);
     ElementUI.Message.error({
@@ -49,9 +49,6 @@ ajax.interceptors.response.use(function(res) {
     //Do something with response error
     return Promise.reject(err);
 })
-
-
-
 
 //获取店铺分类
 export const shopCategoryList = () => {
