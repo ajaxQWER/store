@@ -24,8 +24,8 @@
           <el-radio class="radio" v-model="isAllDay" label="true">全天</el-radio>
           <el-radio class="radio" v-model="isAllDay" label="false">自定义</el-radio>
           <span v-if="isAllDay=='false'">
-        <el-time-select v-model="store.busBeginTime" placeholder="营业开始时间" prop="busBeginTime" :picker-options="{start: '00:00',end: '23:30',step: '00:30'}" @change="formatStartTime"></el-time-select>
-          <el-time-select v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" :picker-options="{start: '00:00',end: '23:30',step: '00:30'}" @change="formatEndTime"></el-time-select>
+        <el-time-select v-model="store.busBeginTime" placeholder="营业开始时间" prop="busBeginTime" :picker-options="{start: '00:00',end: '23:30',step: '00:30'}"></el-time-select>
+          <el-time-select v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" :picker-options="{start: '00:00',end: '23:30',step: '00:30'}"></el-time-select>
           <b>*店铺营业时间如未包含,请自行输入</b>
           </span>
         </el-form-item>
@@ -119,23 +119,23 @@ export default {
     return {
       store: {
         address: "",
-		areaId: '',
-		audit: "WAIT_AUDIT",
-		busBeginTime: '',
-		busEndTime: '',
-		cityId: '',
-		fee: 0,
-		latitude: 0,
-		logoUrl: "",
-		longitude: 0,
-		name: "",
-		provinceId: '',
-		shopCategoryIdList: [],
-		shopFaceUrl: "",
-		shopInnerUrl: "",
-		shopName: "",
-		shopType: "",
-		takeOutPhone: ""
+        areaId: '',
+        audit: "WAIT_AUDIT",
+        busBeginTime: '',
+        busEndTime: '',
+        cityId: '',
+        fee: 0,
+        latitude: 0,
+        logoUrl: "",
+        longitude: 0,
+        name: "",
+        provinceId: '',
+        shopCategoryIdList: [],
+        shopFaceUrl: "",
+        shopInnerUrl: "",
+        shopName: "",
+        shopType: "",
+        takeOutPhone: ""
       },
       logo: '',
       loginPhoneNumber: '',
@@ -288,19 +288,13 @@ export default {
         }
       });
     },
-    formatStartTime: function() {
-      this.store.busBeginTime += ':00';
-    },
-    formatEndTime: function() {
-      this.store.busEndTime += ':00';
-
-    },
     showStore: function() {
       if (this.isAllDay == 'true') {
         this.store.busBeginTime = '00:00:00';
         this.store.busEndTime = '23:59:59';
       }
       console.log(this.store)
+      return
       saveShopBaseInfo(this.store).then(res => {
         console.log(res)
         this.$router.push({ path: 'qualification', query: { step: '1' } })
@@ -347,7 +341,7 @@ export default {
   created: function() {
     this.loginPhoneNumber = sessionStorage.getItem('user')
     shopCategoryList().then(res => {
-    	console.log(res)
+      console.log(res)
       this.shopCategory = res.list;
     })
     getProvinceList().then(res => {
@@ -357,23 +351,23 @@ export default {
       console.log(res)
       this.store = {
         address: res.detail.address || '',
-		areaId: res.detail.areaId || '',
-		audit: res.detail.audit,
-		busBeginTime: res.detail.busBeginTime || '',
-		busEndTime: res.detail.busEndTime || '',
-		cityId: res.detail.cityId ||'',
-		fee: res.detail.fee || 0,
-		latitude: res.detail.latitude || 0,
-		logoUrl: res.detail.logoUrl,
-		longitude: res.detail.longitude || 0,
-		name: res.detail.name || '',
-		provinceId: res.detail.provinceId || '',
-		shopCategoryIdList: res.shopCategoryIdList || [],
-		shopFaceUrl: res.detail.shopFaceUrl || '',
-		shopInnerUrl: res.detail.shopInnerUrl || '',
-		shopName: res.detail.shopName || '',
-		shopType: res.detail.shopType,
-		takeOutPhone: res.detail.takeOutPhone || ''
+        areaId: res.detail.areaId || '',
+        audit: res.detail.audit,
+        busBeginTime: res.detail.busBeginTime || '',
+        busEndTime: res.detail.busEndTime || '',
+        cityId: res.detail.cityId || '',
+        fee: res.detail.fee || 0,
+        latitude: res.detail.latitude || 0,
+        logoUrl: res.detail.logoUrl,
+        longitude: res.detail.longitude || 0,
+        name: res.detail.name || '',
+        provinceId: res.detail.provinceId || '',
+        shopCategoryIdList: res.shopCategoryIdList || [],
+        shopFaceUrl: res.detail.shopFaceUrl || '',
+        shopInnerUrl: res.detail.shopInnerUrl || '',
+        shopName: res.detail.shopName || '',
+        shopType: res.detail.shopType,
+        takeOutPhone: res.detail.takeOutPhone || ''
       }
       this.logo = this.UPLOADURL + '/shopLogo/' + res.shopId + '.png'
       if (res.detail.busBeginTime == '00:00' & res.detail.busEndTime == '23:59:59') {
@@ -381,11 +375,11 @@ export default {
       } else {
         this.isAllDay = 'false';
       }
-      if(res.detail.latitude && res.detail.longitude){
-	      this.mapCenter = [res.detail.longitude, res.detail.latitude]
-	      this.markers = [{
-	        position: [res.detail.longitude, res.detail.latitude]
-	      }];
+      if (res.detail.latitude && res.detail.longitude) {
+        this.mapCenter = [res.detail.longitude, res.detail.latitude]
+        this.markers = [{
+          position: [res.detail.longitude, res.detail.latitude]
+        }];
       }
     })
   }
