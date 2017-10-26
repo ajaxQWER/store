@@ -9,11 +9,11 @@
         </el-form-item>
         <el-form-item label="所属银行" prop="bankNum">{{settlement.bankHouse}}</el-form-item>
         <el-form-item label="开户城市" prop="city">
-          <el-select v-model="settlement.provinceId" filterable placeholder="省" prop="type" @change="selectCity">
+          <el-select v-model.number="settlement.provinceId" filterable placeholder="省" prop="type" @change="selectCity">
             <el-option v-for="item in province" :key="item.provinceId" :label="item.provinceName" :value="item.provinceId">
             </el-option>
           </el-select>
-          <el-select v-model="settlement.cityId" filterable placeholder="市" prop="type">
+          <el-select v-model.number="settlement.cityId" filterable placeholder="市" prop="type">
             <el-option v-for="item in city" :key="item.cityId" :label="item.cityName" :value="item.cityId">
             </el-option>
           </el-select>
@@ -49,8 +49,8 @@ export default {
         bankHouse: "",
         bankNumber: "",
         openBank: "",
-        provinceId: 0,
-        cityId: 0
+        provinceId: '',
+        cityId: ''
       },
       province: [],
       city: []
