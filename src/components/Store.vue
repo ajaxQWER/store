@@ -15,7 +15,7 @@
         <el-form-item class="small-item" label="联系人姓名" prop="name">
           <el-input v-model="store.name"></el-input>
         </el-form-item>
-        <el-form-item label="店铺分类" prop="shopCategoryIdList">
+        <el-form-item label="店铺分类">
           <el-select class="normal-item" v-model="store.shopCategoryIdList" multiple :multiple-limit="5" placeholder="请选择店铺分类">
             <el-option v-for="item in shopCategory" :key="item.shopCategoryId" :label="item.shopCategoryName" :value="item.shopCategoryId"></el-option>
           </el-select>
@@ -24,8 +24,8 @@
           <el-radio class="radio" v-model="isAllDay" label="true">全天</el-radio>
           <el-radio class="radio" v-model="isAllDay" label="false">自定义</el-radio>
           <span v-if="isAllDay=='false'">
-        <el-time-select v-model="store.busBeginTime" placeholder="营业开始时间" prop="busBeginTime" :picker-options="{start: '00:00',end: '23:59',step: '00:30'}" @change="formatStartTime"></el-time-select>
-          <el-time-select v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" :picker-options="{start: '00:00',end: '23:59',step: '00:30'}" @change="formatEndTime"></el-time-select>
+        <el-time-select v-model="store.busBeginTime" placeholder="营业开始时间" prop="busBeginTime" :picker-options="{start: '00:00',end: '23:30',step: '00:30'}" @change="formatStartTime"></el-time-select>
+          <el-time-select v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" :picker-options="{start: '00:00',end: '23:30',step: '00:30'}" @change="formatEndTime"></el-time-select>
           <b>*店铺营业时间如未包含,请自行输入</b>
           </span>
         </el-form-item>
@@ -105,7 +105,7 @@
   </div>
 </template>
 <script>
-import { shopCategoryList, getProvinceList, getDistrictList, getCityListByProvinceId, saveShopBaseInfo, getShopBaseInfo, uploadFiles,setShopLogo } from '@/api/api'
+import { shopCategoryList, getProvinceList, getDistrictList, getCityListByProvinceId, saveShopBaseInfo, getShopBaseInfo, uploadFiles, setShopLogo } from '@/api/api'
 import steps from '@/components/steps/steps'
 import headers from '@/components/header/headers'
 export default {
@@ -118,24 +118,24 @@ export default {
     var that = this;
     return {
       store: {
-        shopId: sessionStorage.getItem('shopId'),
-        shopName: '',
-        takeOutPhone: '',
-        name: '',
-        provinceId: null,
-        cityId: null,
-        areaId: null,
-        busBeginTime: '',
-        busEndTime: '',
-        address: '',
-        longitude: 0,
-        latitude: 0,
-        shopType: 'RESERVE_TAKEOUT',
-        shopCategoryIdList: [],
-        shopFaceUrl: '',
-        shopInnerUrl: '',
-        logoUrl: '',
-        fee: ''
+        address: "",
+		areaId: '',
+		audit: "WAIT_AUDIT",
+		busBeginTime: '',
+		busEndTime: '',
+		cityId: '',
+		fee: 0,
+		latitude: 0,
+		logoUrl: "",
+		longitude: 0,
+		name: "",
+		provinceId: '',
+		shopCategoryIdList: [],
+		shopFaceUrl: "",
+		shopInnerUrl: "",
+		shopName: "",
+		shopType: "",
+		takeOutPhone: ""
       },
       logo: '',
       loginPhoneNumber: '',
@@ -207,9 +207,6 @@ export default {
         ],
         name: [
           { required: true, message: '请输入店铺联系人' }
-        ],
-        shopCategoryIdList: [
-          { type: 'array', required: true, message: '请选择店铺分类' }
         ],
         busBeginTime: [
           { required: true, message: '请选择营业开始时间' }
@@ -350,6 +347,7 @@ export default {
   created: function() {
     this.loginPhoneNumber = sessionStorage.getItem('user')
     shopCategoryList().then(res => {
+    	console.log(res)
       this.shopCategory = res.list;
     })
     getProvinceList().then(res => {
@@ -358,33 +356,37 @@ export default {
     getShopBaseInfo().then(res => {
       console.log(res)
       this.store = {
-        shopId: res.shopId,
-        shopName: res.shopName,
-        takeOutPhone: res.takeOutPhone,
-        name: res.name,
-        provinceId: res.provinceId,
-        cityId: res.cityId,
-        areaId: res.areaId,
-        busBeginTime: res.busBeginTime,
-        busEndTime: res.busEndTime,
-        address: res.address,
-        longitude: res.longitude,
-        latitude: res.latitude,
-        shopType: res.shopType,
-        shopCategoryIdList: res.shopCategoryIdList,
-        shopFaceUrl: res.shopFaceUrl,
-        shopInnerUrl: res.shopInnerUrl,
-        logoUrl: res.logoUrl,
-        fee: res.fee
+        address: res.detail.address || '',
+		areaId: res.detail.areaId || '',
+		audit: res.detail.audit,
+		busBeginTime: res.detail.busBeginTime || '',
+		busEndTime: res.detail.busEndTime || '',
+		cityId: res.detail.cityId ||'',
+		fee: res.detail.fee || 0,
+		latitude: res.detail.latitude || 0,
+		logoUrl: res.detail.logoUrl,
+		longitude: res.detail.longitude || 0,
+		name: res.detail.name || '',
+		provinceId: res.detail.provinceId || '',
+		shopCategoryIdList: res.shopCategoryIdList || [],
+		shopFaceUrl: res.detail.shopFaceUrl || '',
+		shopInnerUrl: res.detail.shopInnerUrl || '',
+		shopName: res.detail.shopName || '',
+		shopType: res.detail.shopType,
+		takeOutPhone: res.detail.takeOutPhone || ''
       }
       this.logo = this.UPLOADURL + '/shopLogo/' + res.shopId + '.png'
-      if (res.busBeginTime != '00:00' & res.busEndTime != '24:00') {
+      if (res.detail.busBeginTime == '00:00' & res.detail.busEndTime == '23:59:59') {
+        this.isAllDay = 'true';
+      } else {
         this.isAllDay = 'false';
       }
-      this.mapCenter = [res.longitude, res.latitude]
-      this.markers = [{
-        position: [res.longitude, res.latitude]
-      }];
+      if(res.detail.latitude && res.detail.longitude){
+	      this.mapCenter = [res.detail.longitude, res.detail.latitude]
+	      this.markers = [{
+	        position: [res.detail.longitude, res.detail.latitude]
+	      }];
+      }
     })
   }
 }

@@ -80,17 +80,17 @@ export const openStoreLoginBySMSCode = params => {
 };
 //商家基础信息
 export const saveShopBaseInfo = params => {
-    return ajax.put('seller/shopDetail', params);
+    return ajax.put('seller/openStore', params);
 };
 export const getShopBaseInfo = params => {
-    return ajax.get('seller/shopDetail', params);
+    return ajax.get('seller/openStore', params);
 };
 //商家资质信息
 export const saveShopQualificationInfo = params => {
-    return ajax.put('seller/shopDetail/qualificationInfo', params);
+    return ajax.put('seller/openStore/qualificationInfo', params);
 };
 export const getShopQualificationInfo = params => {
-    return ajax.get('seller/shopDetail/qualificationInfo', params);
+    return ajax.get('seller/openStore/qualificationInfo', params);
 };
 //获取银行卡信息
 export const getBankCardInfoByCardId = cardNumber => {
@@ -98,15 +98,15 @@ export const getBankCardInfoByCardId = cardNumber => {
 };
 //商家结算信息
 export const saveShopSettleInfo = params => {
-    return ajax.put('seller/shopDetail/settlement', params);
+    return ajax.put('seller/openStore/settlement', params);
 };
 export const getShopSettleInfo = params => {
-    return ajax.get('seller/shopDetail/settlement', params);
+    return ajax.get('seller/openStore/settlement', params);
 };
 
 //店铺logo
 export const setShopLogo = params => {
-    return ajax.post('seller/shopDetail/logo', params);
+    return ajax.post('seller/openStore/logo', params);
 };
 
 

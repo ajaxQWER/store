@@ -59,12 +59,20 @@ export default {
   created: function() {
     getShopSettleInfo().then(res=>{
         console.log(res)
-        this. settlement = {
-            bankHouse: res.bankHouse,
-            bankNumber: res.bankNumber,
-            openBank: res.openBank,
-            provinceId: res.provinceId,
-            cityId: res.cityId
+        if(res.bankHouse){
+          this.settlement.bankHouse = res.bankHouse
+        }
+        if(res.bankNumber){
+            this.settlement.bankNumber = res.bankNumber
+        }
+        if(res.openBank){
+            this.settlement.openBank = res.openBank
+        }
+        if(res.provinceId){
+            this.settlement.provinceId = res.provinceId
+        }
+        if(res.cityId){
+            this.settlement.cityId = res.cityId
         }
     })
     getProvinceList().then(res => {

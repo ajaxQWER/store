@@ -335,37 +335,77 @@ export default {
   created: function() {
     getShopQualificationInfo().then(res => {
       console.log(res)
-      this.qualification = {
-        document: {
-          documentNum: res.document.documentNum,
-          documentType: res.document.documentType,
-          fullFacePhotoUrl: res.document.fullFacePhotoUrl,
-          handFullFacePhotoUrl: res.document.handFullFacePhotoUrl,
-          readyName: res.document.readyName,
-          reverseSideAsUrl: res.document.reverseSideAsUrl
-        },
-        industry: {
-          beginTime: res.industry.beginTime,
-          endTime: res.industry.endTime,
-          foodUrl: res.industry.foodUrl,
-          intelligence: res.industry.intelligence,
-          legal: res.industry.legal,
-          licenseAddress: res.industry.licenseAddress,
-          licenseNumber: res.industry.licenseNumber,
-          longTerm: res.industry.longTerm,
-          unitName: res.industry.unitName
-        },
-        subject: {
-          beginTime: res.subject.beginTime,
-          businessUrl: res.subject.businessUrl,
-          endTime: res.subject.endTime,
-          legal: res.subject.legal,
-          longTerm: res.subject.longTerm,
-          regAddress: res.subject.regAddress,
-          regNumber: res.subject.regNumber,
-          subjectDocument: res.subject.subjectDocument,
-          unitName: res.subject.unitName
+      if(res.document){
+        this.qualification.document = {
+            documentNum: res.document.documentNum,
+            documentType: res.document.documentType,
+            fullFacePhotoUrl: res.document.fullFacePhotoUrl,
+            handFullFacePhotoUrl: res.document.handFullFacePhotoUrl,
+            readyName: res.document.readyName,
+            reverseSideAsUrl: res.document.reverseSideAsUrl
         }
+      }
+      if(res.industry){
+        this.qualification.industry = {
+            beginTime: res.industry.beginTime,
+            endTime: res.industry.endTime,
+            foodUrl: res.industry.foodUrl,
+            intelligence: res.industry.intelligence,
+            legal: res.industry.legal,
+            licenseAddress: res.industry.licenseAddress,
+            licenseNumber: res.industry.licenseNumber,
+            longTerm: res.industry.longTerm,
+            unitName: res.industry.unitName
+        }
+      }
+      if(res.subject){
+        this.qualification.subject = {
+            beginTime: res.subject.beginTime,
+            businessUrl: res.subject.businessUrl,
+            endTime: res.subject.endTime,
+            legal: res.subject.legal,
+            longTerm: res.subject.longTerm,
+            regAddress: res.subject.regAddress,
+            regNumber: res.subject.regNumber,
+            subjectDocument: res.subject.subjectDocument,
+            unitName: res.subject.unitName
+        }
+      }
+      return
+      if(res){
+        console.log(123)
+          this.qualification = {
+            document: {
+              documentNum: res.document.documentNum,
+              documentType: res.document.documentType,
+              fullFacePhotoUrl: res.document.fullFacePhotoUrl,
+              handFullFacePhotoUrl: res.document.handFullFacePhotoUrl,
+              readyName: res.document.readyName,
+              reverseSideAsUrl: res.document.reverseSideAsUrl
+            },
+            industry: {
+              beginTime: res.industry.beginTime,
+              endTime: res.industry.endTime,
+              foodUrl: res.industry.foodUrl,
+              intelligence: res.industry.intelligence,
+              legal: res.industry.legal,
+              licenseAddress: res.industry.licenseAddress,
+              licenseNumber: res.industry.licenseNumber,
+              longTerm: res.industry.longTerm,
+              unitName: res.industry.unitName
+            },
+            subject: {
+              beginTime: res.subject.beginTime,
+              businessUrl: res.subject.businessUrl,
+              endTime: res.subject.endTime,
+              legal: res.subject.legal,
+              longTerm: res.subject.longTerm,
+              regAddress: res.subject.regAddress,
+              regNumber: res.subject.regNumber,
+              subjectDocument: res.subject.subjectDocument,
+              unitName: res.subject.unitName
+            }
+          }
       }
     })
   }
