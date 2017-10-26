@@ -47,10 +47,10 @@
   				</div>
   			</div>
   			<div class="footer-info">
-  				<div>服务热线：028-88888888<br>服务时间：周一至周日 9:00-24:00</div>
-				<div>意见反馈：gjgxjj@qq.com</div>
+  				<div>服务热线：028-67673333<br>服务时间：周一至周日 9:00-24:00</div>
+				<div>意见反馈：gxdc@gjgxjj.com</div>
 				<div class="qr-code">
-					<img src="http://www.chinagjgx.com/mall/img/common/QR_code.jpg" alt=""><span>扫码关注共享点餐</span>
+					<img src="../assets/images/QR_code.jpg" alt=""><span>扫码关注共享点餐</span>
 				</div>
   			</div>
   		</el-row>
