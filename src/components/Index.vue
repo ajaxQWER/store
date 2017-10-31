@@ -52,6 +52,7 @@
 				<div class="qr-code">
 					<img src="../assets/images/QR_code.jpg" alt=""><span>扫码关注共享点餐</span>
 				</div>
+				<div class="copyright">鑫圆共享电子商务股份有限公司&copy;2017<br>蜀ICP备17032496号-4</div>
   			</div>
   		</el-row>
   	</el-row>
