@@ -5,19 +5,19 @@
     <el-row class="row qualification-content">
       <el-row class="license">
         <el-form :model="qualification" ref="license" label-width="100px">
-          <el-form-item class="normal-item" label="证件类型" prop="">
+          <el-form-item class="normal-item required" label="证件类型">
             <el-select v-model="qualification.document.documentType" placeholder="请选择证件类型">
               <el-option v-for="(item,index) in licenseObj" :key="index" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item class="normal-item" label="真实姓名" prop=" ">
+          <el-form-item class="normal-item required" label="真实姓名">
             <el-input v-model="qualification.document.readyName"></el-input>
           </el-form-item>
-          <el-form-item class="normal-item" label="证件号码" prop="idCardNum">
+          <el-form-item class="normal-item required" label="证件号码" prop="idCardNum">
             <el-input v-model="qualification.document.documentNum"></el-input>
           </el-form-item>
-          <el-form-item label="证件照片" prop="licensePhoto">
+          <el-form-item label="证件照片" prop="licensePhoto" class="required">
             <div class="photo-info">
               <div class="photo-title">正面照</div>
               <div class="photo-upload">
@@ -50,25 +50,25 @@
       </el-row>
       <el-row class="license">
         <el-form :model="qualification.subject" ref="subject" label-width="100px">
-          <el-form-item class="normal-item" label="主体资质" prop="">
+          <el-form-item class="normal-item required" label="主体资质">
             <el-select v-model="qualification.subject.subjectDocument" placeholder="请选择主体资质">
               <el-option v-for="(item,index) in certificateType" :key="index" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item class="large-item" label="单位名称" prop="">
+          <el-form-item class="large-item required" label="单位名称">
             <el-input v-model="qualification.subject.unitName"></el-input>
           </el-form-item>
-          <el-form-item class="normal-item" label="法定代表人" prop="">
+          <el-form-item class="normal-item required" label="法定代表人">
             <el-input v-model="qualification.subject.legal"></el-input>
           </el-form-item>
-          <el-form-item class="normal-item" label="注册号" prop="">
+          <el-form-item class="normal-item required" label="注册号">
             <el-input v-model="qualification.subject.regNumber"></el-input>
           </el-form-item>
-          <el-form-item class="large-item" label="注册地址" prop="">
+          <el-form-item class="large-item required" label="注册地址">
             <el-input v-model="qualification.subject.regAddress"></el-input>
           </el-form-item>
-          <el-form-item label="有效期" prop="">
+          <el-form-item label="有效期" class="required">
             <span>是否长期</span>
             <el-switch v-model="qualification.subject.longTerm" on-text="是" off-text="否"></el-switch>
             <span v-if="!qualification.subject.longTerm">
@@ -76,7 +76,7 @@
 				<el-date-picker v-model="qualification.subject.endTime" type="date" placeholder="到期时间" @change="formatEndTime1(qualification.subject.endTime)"></el-date-picker>
 			</span>
           </el-form-item>
-          <el-form-item label="资质照片" prop="">
+          <el-form-item label="资质照片" class="required">
             <div class="photo-info">
               <div class="photo-title">资质照片</div>
               <div class="photo-upload">
@@ -91,25 +91,25 @@
       </el-row>
       <el-row class="license">
         <el-form :model="qualification.industry" ref="industry" label-width="100px">
-          <el-form-item label="行业资质" prop="">
+          <el-form-item label="行业资质" class="required">
             <el-select v-model="qualification.industry.intelligence" placeholder="请选择行业资质">
               <el-option v-for="(item,index) in mainQualifications" :key="index" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item class="large-item" label="单位名称" prop="">
+          <el-form-item class="large-item required" label="单位名称">
             <el-input v-model="qualification.industry.unitName"></el-input>
           </el-form-item>
-          <el-form-item class="normal-item" label="法定代表人" prop="">
+          <el-form-item class="normal-item required" label="法定代表人">
             <el-input v-model="qualification.industry.legal"></el-input>
           </el-form-item>
-          <el-form-item class="large-item" label="许可证编号" prop="">
+          <el-form-item class="large-item required" label="许可证编号">
             <el-input v-model="qualification.industry.licenseNumber"></el-input>
           </el-form-item>
-          <el-form-item class="large-item" label="许可证地址" prop="">
+          <el-form-item class="large-item required" label="许可证地址">
             <el-input v-model="qualification.industry.licenseAddress"></el-input>
           </el-form-item>
-          <el-form-item label="有效期" prop="">
+          <el-form-item label="有效期" class="required">
             <span>是否长期</span>
             <el-switch v-model="qualification.industry.longTerm" on-text="是" off-text="否"></el-switch>
             <span v-if="!qualification.industry.longTerm">
@@ -118,7 +118,7 @@
 			</span>
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="资质照片" prop="">
+          <el-form-item label="资质照片" class="required">
             <div class="photo-info">
               <div class="photo-title">资质照片</div>
               <div class="photo-upload">

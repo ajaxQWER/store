@@ -4,11 +4,11 @@
     <steps></steps>
     <el-row class="row settlement-content">
       <el-form :model="settlement" ref="settlement" label-width="100px">
-        <el-form-item class="large-item" label="银行卡号" prop="bankNum">
+        <el-form-item class="large-item required" label="银行卡号" prop="bankNum">
           <el-input v-model="settlement.bankNumber" @blur="getBankCardInfo"></el-input>
         </el-form-item>
-        <el-form-item label="所属银行" prop="bankNum">{{settlement.bankHouse}}</el-form-item>
-        <el-form-item label="开户城市" prop="city">
+        <el-form-item class="required" label="所属银行" prop="bankNum">{{settlement.bankHouse}}</el-form-item>
+        <el-form-item label="开户城市" prop="city" class="required">
           <el-select v-model.number="settlement.provinceId" filterable placeholder="省" prop="type" @change="selectCity">
             <el-option v-for="item in province" :key="item.provinceId" :label="item.provinceName" :value="item.provinceId">
             </el-option>
@@ -18,7 +18,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item class="normal-item" label="开户支行" prop="bankNum">
+        <el-form-item class="normal-item required" label="开户支行" prop="bankNum">
           <el-input v-model="settlement.openBank"></el-input>
         </el-form-item>
       </el-form>

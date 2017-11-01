@@ -15,21 +15,21 @@
         <el-form-item class="small-item" label="联系人姓名" prop="name">
           <el-input v-model="store.name"></el-input>
         </el-form-item>
-        <el-form-item label="店铺分类">
+        <el-form-item label="店铺分类" class="required">
           <el-select class="normal-item" v-model="store.shopCategoryIdList" multiple :multiple-limit="5" placeholder="请选择店铺分类">
             <el-option v-for="item in shopCategory" :key="item.shopCategoryId" :label="item.shopCategoryName" :value="item.shopCategoryId"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="营业时间">
+        <el-form-item label="营业时间" class="required">
           <el-radio class="radio" v-model="isAllDay" label="true">全天</el-radio>
           <el-radio class="radio" v-model="isAllDay" label="false">自定义</el-radio>
           <span v-if="isAllDay=='false'">
         <el-time-select v-model="store.busBeginTime" placeholder="营业开始时间" prop="busBeginTime" :picker-options="{start: '00:00',end: '23:30',step: '00:30'}"></el-time-select>
           <el-time-select v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" :picker-options="{start: '00:00',end: '23:30',step: '00:30'}"></el-time-select>
-          <b>*店铺营业时间如未包含,请自行输入</b>
+          <b><span style="color:red;">*</span>店铺营业时间如未包含,请自行输入</b>
           </span>
         </el-form-item>
-        <el-form-item label="店铺类型">
+        <el-form-item label="店铺类型" class="required">
           <el-radio-group v-model="store.shopType">
             <el-radio class="radio" label="RESERVE">预定</el-radio>
             <el-radio class="radio" label="TAKEOUT">外卖</el-radio>
@@ -37,7 +37,7 @@
           </el-radio-group>
           <el-input v-if="store.shopType != 'RESERVE'" class="fee" v-model="store.fee" placeholder="配送费"></el-input>
         </el-form-item>
-        <el-form-item label="店铺位置">
+        <el-form-item label="店铺位置" class="required">
           <el-select v-model.number="store.provinceId" filterable placeholder="省" prop="type" @change="selectCity">
             <el-option v-for="item in provinceList" :key="item.provinceId" :label="item.provinceName" :value="item.provinceId">
             </el-option>
@@ -63,7 +63,7 @@
             </el-amap>
           </div>
         </el-form-item>
-        <el-form-item label="照片信息" prop="type">
+        <el-form-item label="照片信息" prop="type" class="required">
           <div class="photo-info">
             <div class="photo-title">店铺LOGO</div>
             <div class="photo-upload">

@@ -96,5 +96,9 @@ img.thumb[lazy=loading] {
   background: url(assets/images/loading.svg) no-repeat center center #eaeaea;
   background-size: cover;
 }
-
+.required .el-form-item__label:before {
+  content: '*';
+  color: #ff4949;
+  margin-right: 4px;
+}
 </style>
