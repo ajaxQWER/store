@@ -293,8 +293,6 @@ export default {
         this.store.busBeginTime = '00:00:00';
         this.store.busEndTime = '23:59:59';
       }
-      console.log(this.store)
-      return
       saveShopBaseInfo(this.store).then(res => {
         console.log(res)
         this.$router.push({ path: 'qualification', query: { step: '1' } })
