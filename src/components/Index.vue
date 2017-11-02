@@ -52,7 +52,15 @@
 				<div class="qr-code">
 					<img src="../assets/images/QR_code.jpg" alt=""><span>扫码关注共享点餐</span>
 				</div>
-				<div class="copyright">鑫圆共享电子商务股份有限公司&copy;2017<br>蜀ICP备17032496号-4</div>
+				
+  			</div>
+  		</el-row>
+  		<el-row>
+  			<div class="beian">
+	  			<div class="copyright">鑫圆共享电子商务股份有限公司&copy;2017<br>蜀ICP备17032496号-4<br>
+  				<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51019002001128" class="beian-link">
+	  				<img src="../assets/images/beian-gov.png"/>川公网安备 51019002001128号</a>
+	  			</div>
   			</div>
   		</el-row>
   	</el-row>
@@ -309,7 +317,7 @@ export default {
 	.footer{
 		background-color: #ccc;
 		padding-top: 60px;
-		padding-bottom: 80px;
+		padding-bottom: 60px;
 		color:  #666;
 	}
 	.footer-container{
@@ -347,7 +355,7 @@ export default {
 		width: 300px;
 		padding-left: 100px;
 	}
-	.footer-info div{
+	.footer-info div:not(:last-child){
 		line-height: 2;
 		margin-bottom: 20px;
 	}
@@ -453,5 +461,20 @@ export default {
 		font-size: 12px;
 		text-decoration: none;
 		color: #0bb745;
+	}
+	/*备案*/
+	.beian{
+		width: 300px;
+		margin: 30px auto;
+		color: #666;
+		text-align: center;
+		line-height: 1.5;
+	}
+	.beian-link{
+		text-decoration: none;
+		color: #666;
+	}
+	.beian-link img{
+		vertical-align: middle;
 	}
 </style>
