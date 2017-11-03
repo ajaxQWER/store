@@ -106,6 +106,11 @@ export const setShopLogo = params => {
     return ajax.post('seller/openStore/logo', params);
 };
 
+//短信验证码
+export const getPhoneCode = phoneNumber => {
+    return ajax.post('commons/phoneCode/' + phoneNumber);
+};
+
 
 
 

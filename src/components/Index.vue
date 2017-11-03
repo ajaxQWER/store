@@ -64,7 +64,7 @@
   			</div>
   		</el-row>
   	</el-row>
-  	<div class="modal" v-if="showDialog">
+  	<div class="modal" v-show="showDialog">
   		<div class="modal-dialog">
 	  		<div class="modal-body">
 	  			<span class="modal-close" @click="closeModal"></span>
@@ -88,7 +88,7 @@
   </el-row>
 </template>
 <script>
-import {openStoreLoginBySMSCode} from '@/api/api'
+import {openStoreLoginBySMSCode,getPhoneCode} from '@/api/api'
 export default {
   data: function() {
     return {
@@ -139,15 +139,21 @@ export default {
   	},
   	closeModal: function(){
   		this.showDialog = false;
-  		this.phoneNumber = '';
-  		this.verificationCode = '';
-  		this.isClickGetCode = false;
-  		this.canLogin = true;
   	},
   	getCode: function(e){
   		var _this = this;
-  		_this.isClickGetCode = true;
-  		var i = 10;
+  		if(this.phoneNumber.length == 11){
+  			getPhoneCode(this.phoneNumber).then(()=>{
+  				_this.isClickGetCode = true;
+  			})
+  		}else{
+  			this.$message({
+  				type: 'error',
+  				message: '请输入正确的手机号码'
+  			})
+  			return;
+  		}
+  		var i = 60;
   		var codeInterval = setInterval(function() {
   		  	i--;
 		  	if(i == 0){
@@ -177,6 +183,12 @@ export default {
   		}
   		openStoreLoginBySMSCode(param).then(res => {
   			console.log(res)
+  			this.showDialog = false;
+  			this.phoneNumber = '';
+  			this.verificationCode = '';
+  			this.isClickGetCode = false;
+  			this.canLogin = true;
+
   			sessionStorage.setItem('jwt', res.jwt);
   			sessionStorage.setItem('shopId', res.seller.shopId);
   			sessionStorage.setItem('user', this.phoneNumber);
