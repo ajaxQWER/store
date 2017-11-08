@@ -7,12 +7,15 @@
   					<img src="../assets/images/logo.png" alt=""><span>共享点餐</span>
   				</div>
   				<div class="right-item">
-  					<a href="">客户端下载</a>
-  					<a href="">在线客服</a>
+  					<a href="javascript:void(0);">客户端下载</a>
+  					<a href="javascript:void(0);">在线客服</a>
   				</div>
   			</div>
-  			<h2>加入共享点餐 开店赚大钱</h2>
-  			<ul>
+  			<!-- <h2>加入共享点餐 开店赚大钱</h2> -->
+  			<div class="tac">
+  				<img src="../assets/images/banner-text.png" alt="">
+  			</div>
+  			<!-- <ul>
   				<li v-for="(data,index) in datas" :key="index">
   					<div class="item">
   						<span class="number">{{data.number}}</span>
@@ -20,7 +23,7 @@
   					</div>
   					<div class="des">{{data.description}}</div>
   				</li>
-  			</ul>
+  			</ul> -->
   			<el-row class="open-store">
   				<el-button class="open-by-self-help" @click="showModal">自助开店</el-button>
   				<p class="tips">填写完整门店信息，24小时极速开店</p>
@@ -31,7 +34,7 @@
   		<div class="row">
 			<p class="invite">他们已入驻，你呢？</p>
 			<ul>
-				<li v-for="n in 8" :key="n"><img src="../assets/images/shop-icon.png" alt=""></li>
+				<li v-for="n in 8" :key="n"><img :src="'../static/images/shop-icon'+n+'.png'" alt=""></li>
 			</ul>
 		</div>
   	</el-row>
@@ -218,6 +221,7 @@ export default {
 		overflow: hidden;
 		zoom: 1;
 		line-height: 120px;
+		margin-bottom: 40px;
 	}
 	.left-item{
 		float: left;
