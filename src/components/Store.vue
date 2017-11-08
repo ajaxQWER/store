@@ -293,6 +293,13 @@ export default {
         this.store.busBeginTime = '00:00:00';
         this.store.busEndTime = '23:59:59';
       }
+      if(this.store.latitude == 0 && this.store.longitude == 0){
+        this.$message({
+          type: 'error',
+          message: '请地图上选择店铺位置'
+        })
+        return;
+      }
       saveShopBaseInfo(this.store).then(res => {
         console.log(res)
         this.$router.push({ path: 'qualification', query: { step: '1' } })
