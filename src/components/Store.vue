@@ -35,7 +35,16 @@
             <el-radio class="radio" label="TAKEOUT">外卖</el-radio>
             <el-radio class="radio" label="RESERVE_TAKEOUT">预定加外卖</el-radio>
           </el-radio-group>
-          <el-input v-if="store.shopType != 'RESERVE'" class="fee" v-model="store.fee" placeholder="配送费"></el-input>
+        </el-form-item>
+        <el-form-item label="配送信息" class="required">
+          <el-radio-group v-model="store.distributionType">
+            <el-radio class="radio" label="ANUBIS">蜂鸟配送</el-radio>
+            <el-radio class="radio" label="SELF_DELIVERY_BY_MERCHANTS">商家自送</el-radio>
+          </el-radio-group>
+          <span v-if="store.distributionType == 'SELF_DELIVERY_BY_MERCHANTS'">
+            配送距离 <el-input class="small-input fee" v-model="store.distributionScope" placeholder="配送距离"></el-input>米
+            配送费 <el-input class="small-input fee" v-model="store.fee" placeholder="配送费"></el-input>元
+          </span>
         </el-form-item>
         <el-form-item label="店铺位置" class="required">
           <el-select v-model.number="store.provinceId" filterable placeholder="省" prop="type" @change="selectCity">
@@ -125,6 +134,7 @@ export default {
         busEndTime: '',
         cityId: '',
         fee: 0,
+        distributionScope: 0,
         latitude: 0,
         logoUrl: "",
         longitude: 0,
@@ -135,6 +145,7 @@ export default {
         shopInnerUrl: "",
         shopName: "",
         shopType: "",
+        distributionType: 'ANUBIS',
         takeOutPhone: ""
       },
       logo: '',
@@ -362,6 +373,7 @@ export default {
         busEndTime: res.detail.busEndTime || '',
         cityId: res.detail.cityId || '',
         fee: res.detail.fee || 0,
+        distributionScope:  res.detail.distributionScope || 0,
         latitude: res.detail.latitude || 0,
         logoUrl: res.detail.logoUrl,
         longitude: res.detail.longitude || 0,
@@ -372,6 +384,7 @@ export default {
         shopInnerUrl: res.detail.shopInnerUrl || '',
         shopName: res.detail.shopName || '',
         shopType: res.detail.shopType,
+        distributionType: res.detail.distributionType,
         takeOutPhone: res.detail.takeOutPhone || ''
       }
       this.logo = this.UPLOADURL + '/shopLogo/' + res.shopId + '.png'
@@ -462,5 +475,7 @@ export default {
   height: 100%;
   display: block;
 }
-
+.small-input{
+  width: 80px;
+}
 </style>
