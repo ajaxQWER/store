@@ -2,7 +2,8 @@ import ElementUI from 'element-ui'
 import axios from 'axios';
 
 var ajax = axios.create({
-    baseURL: 'http://api.sf.chinagjgx.com',
+    // baseURL: 'http://api.gongxiangdiancan.com', //正式
+    baseURL: process.env.BASE_URL, //测试
     headers: {},
     withCredentials: true, //cookie
     crossDomain: true //跨域
@@ -90,7 +91,7 @@ export const getShopQualificationInfo = params => {
     return ajax.get('seller/openStore/qualificationInfo', params);
 };
 //获取银行卡信息
-export const getBankCardInfoByCardId = cardNumber => {
+export const getBankCardInfoByCardNumber = cardNumber => {
     return ajax.get('commons/bankCard/' + cardNumber);
 };
 //商家结算信息
