@@ -50,8 +50,8 @@ var toDecimal2 = function(num) {
 // Object.defineProperty(Vue.prototype, 'BASEURL', {value: 'http://api.gongxiangdiancan.com'});
 
 //测试
-Object.defineProperty(Vue.prototype, 'UPLOADURL', {value: 'http://uploadstest.gongxiangdiancan.com'});
-Object.defineProperty(Vue.prototype, 'BASEURL', {value: 'http://apitest.gongxiangdiancan.com'});
+Object.defineProperty(Vue.prototype, 'UPLOADURL', {value: process.env.UPLOAD_URL});
+Object.defineProperty(Vue.prototype, 'BASEURL', {value: process.env.BASE_URL});
 Object.defineProperty(Vue.prototype, 'moment', {value: moment});
 Object.defineProperty(Vue.prototype, 'moneyFormat', {value: toDecimal2});
 

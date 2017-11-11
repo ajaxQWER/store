@@ -3,7 +3,7 @@ import axios from 'axios';
 
 var ajax = axios.create({
     // baseURL: 'http://api.gongxiangdiancan.com', //正式
-    baseURL: 'http://apitest.gongxiangdiancan.com', //测试
+    baseURL: process.env.BASE_URL, //测试
     headers: {},
     withCredentials: true, //cookie
     crossDomain: true //跨域
