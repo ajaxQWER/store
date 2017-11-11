@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import { getProvinceList, getCityListByProvinceId, getBankCardInfoByCardId, saveShopSettleInfo, getShopSettleInfo } from '@/api/api'
+import { getProvinceList, getCityListByProvinceId, getBankCardInfoByCardNumber, saveShopSettleInfo, getShopSettleInfo } from '@/api/api'
 import steps from '@/components/steps/steps'
 import headers from '@/components/header/headers'
 export default {
@@ -91,17 +91,46 @@ export default {
         })
     },
     save: function() {
-        console.log(this.settlement)
-        // return;
+        if(!this.settlement.bankNumber){
+            this.$message({
+                type: 'error',
+                message: '请输入银行卡号'
+            })
+            return;
+        }
+        if(!this.settlement.provinceId){
+            this.$message({
+                type: 'error',
+                message: '请选择开户省份'
+            })
+            return;
+        }
+        if(!this.settlement.cityId){
+            this.$message({
+                type: 'error',
+                message: '请选择开户城市'
+            })
+            return;
+        }
+        if(!this.settlement.openBank){
+            this.$message({
+                type: 'error',
+                message: '请输入开户支行'
+            })
+            return;
+        }
         saveShopSettleInfo(this.settlement).then(res => {
             console.log(res)
             this.$router.push({path: 'waitAduit', query: {step: '3'}})
         })
     },
     getBankCardInfo: function(){
-        getBankCardInfoByCardId(this.settlement.bankNumber).then(res=>{
+        if(!this.settlement.bankNumber){
+            return;
+        }
+        getBankCardInfoByCardNumber(this.settlement.bankNumber).then(res=>{
             console.log(res)
-            this.settlement.bankHouse = res.bank
+            this.settlement.bankHouse = res.showapi_res_body.bankName
         })
     }
   }

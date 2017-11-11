@@ -45,9 +45,14 @@ var toDecimal2 = function(num) {
     return floatString;
 }
 
+//正常
+// Object.defineProperty(Vue.prototype, 'UPLOADURL', {value: 'http://uploads.gongxiangdiancan.com'});
+// Object.defineProperty(Vue.prototype, 'BASEURL', {value: 'http://api.gongxiangdiancan.com'});
+
+//测试
+Object.defineProperty(Vue.prototype, 'UPLOADURL', {value: 'http://uploadstest.gongxiangdiancan.com'});
+Object.defineProperty(Vue.prototype, 'BASEURL', {value: 'http://apitest.gongxiangdiancan.com'});
 Object.defineProperty(Vue.prototype, 'moment', {value: moment});
-Object.defineProperty(Vue.prototype, 'UPLOADURL', {value: 'http://uploads.sf.chinagjgx.com'});
-Object.defineProperty(Vue.prototype, 'BASEURL', {value: 'http://api.sf.chinagjgx.com'});
 Object.defineProperty(Vue.prototype, 'moneyFormat', {value: toDecimal2});
 
 const router = new VueRouter({
