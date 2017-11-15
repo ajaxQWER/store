@@ -15,6 +15,7 @@
     "font-awesome": "^4.7.0",
     "moment": "^2.18.1",
     "nprogress": "^0.2.0",
+    "portfinder": "^1.0.13",
     "vue": "^2.2.2",
     "vue-amap": "^0.3.1",
     "vue-lazyload": "^1.0.5",

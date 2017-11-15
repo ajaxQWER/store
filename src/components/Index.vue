@@ -15,15 +15,6 @@
   			<div class="tac">
   				<img src="../assets/images/banner-text.png" alt="">
   			</div>
-  			<!-- <ul>
-  				<li v-for="(data,index) in datas" :key="index">
-  					<div class="item">
-  						<span class="number">{{data.number}}</span>
-  						<span class="unit">{{data.unit}}</span>
-  					</div>
-  					<div class="des">{{data.description}}</div>
-  				</li>
-  			</ul> -->
   			<el-row class="open-store">
   				<el-button class="open-by-self-help" @click="showModal">自助开店</el-button>
   				<p class="tips">填写完整门店信息，24小时极速开店</p>
@@ -45,8 +36,10 @@
   				<div class="footer-nav-list" v-for="(item,index) in footer" :key="index">
   					<h4 class="footer-nav-title">{{item.title}}</h4>
   					<ul>
-  						<li v-for="(list,i) in item.lists" :key="i">{{list}}</li>
-  					</ul>
+                <li v-for="(list,i) in item.lists" :key="i">
+                  <router-link :to="list.link" class="link">{{list.title}}</router-link>
+                </li>
+            </ul>
   				</div>
   			</div>
   			<div class="footer-info">
@@ -55,7 +48,7 @@
 				<div class="qr-code">
 					<img src="../assets/images/QR_code.jpg" alt=""><span>扫码关注共享点餐</span>
 				</div>
-				
+
   			</div>
   		</el-row>
   		<el-row>
@@ -95,41 +88,24 @@ import {openStoreLoginBySMSCode,getPhoneCode} from '@/api/api'
 export default {
   data: function() {
     return {
-    	datas:[{
-    		number: '24',
-    		unit: '小时',
-    		description: '极速开店'
-    	},{
-    		number: '130',
-    		unit: '万',
-    		description: '优质商家'
-    	},{
-    		number: '2000',
-    		unit: '城市',
-    		description: '全国覆盖'
-    	},{
-    		number: '2.6',
-    		unit: '亿',
-    		description: '累计用户'
-    	}],
     	footer: [{
     		title: '用户帮助',
-    		lists: ['服务中心','常见问题']
+    		lists: [{link: '',title:'服务中心'},{link: '',title:'常见问题'}]
     	},{
     		title: '商务合作',
-    		lists: ['加盟指南','市场合作']
+    		lists: [{link: '/franchiseGuide',title:'加盟指南'},{link:'/marketPartnership',title:'市场合作'}]
     	},{
     		title: '关于我们',
-    		lists: ['共享点餐介绍','加入我们','联系我们','服务协议']
+    		lists: [{link: '/aboutUs',title:'共享点餐介绍'},{link: '/contactUs',title:'联系我们'},{link: '/agreement',title:'服务协议'}]
     	},{
     		title: '其他',
-    		lists: ['餐厅办证流程','餐厅经营卫生标准']
+    		lists: [{link: '',title:'餐厅办证流程'},{link: '',title:'餐厅经营卫生标准'}]
     	}],
     	loginRules: {
 
     	},
     	phoneNumber: '',
-		verificationCode: '',
+		  verificationCode: '',
     	checked: true,
     	showDialog: false,
     	isClickGetCode: false,
@@ -368,6 +344,10 @@ export default {
 		font-size: 14px;
 		margin: 10px 0;
 	}
+  .link{
+    text-decoration: none;
+    color:  #666;
+  }
 	.footer-info{
 		width: 300px;
 		padding-left: 100px;

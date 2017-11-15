@@ -6,6 +6,11 @@ import Store from '@/components/Store.vue'
 import Qualification from '@/components/Qualification.vue'
 import Settlement from '@/components/Settlement.vue'
 import Finish from '@/components/Finish.vue'
+import Agreement from '@/components/Agreement.vue'
+import AboutUs from '@/components/AboutUs.vue'
+import ContactUs from '@/components/ContactUs.vue'
+import FranchiseGuide from '@/components/FranchiseGuide.vue'
+import MarketPartnership from '@/components/MarketPartnership.vue'
 let routes = [{
     path: '/index',
     component: Index,
@@ -34,6 +39,26 @@ let routes = [{
     path: '/waitAduit',
     component: Finish,
     name: 'waitAduit'
+},  {
+  path: '/agreement',
+  component: Agreement,
+  name: 'agreement'
+},  {
+  path: '/aboutUs',
+  component: AboutUs,
+  name: 'aboutUs'
+},  {
+  path: '/contactUs',
+  component: ContactUs,
+  name: 'contactUs'
+},  {
+  path: '/franchiseGuide',
+  component: FranchiseGuide,
+  name: 'franchiseGuide'
+},  {
+  path: '/marketPartnership',
+  component: MarketPartnership,
+  name: 'marketPartnership'
 }, {
     path: '*',
     redirect: { path: '/404' }
