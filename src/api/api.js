@@ -113,6 +113,10 @@ export const getPhoneCode = phoneNumber => {
 };
 
 
+//获取服务协议
+export const getArticleById = () => {
+  return ajax.get('commons/article/1');
+};
 
 
 //文件上传 前台文件需要设置一个path属性
