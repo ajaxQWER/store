@@ -11,6 +11,9 @@
     <div class="content">
       <img src="../assets/images/franchise-guide.jpg" alt="">
     </div>
+    <div class="parten-foot">
+      <img src="../assets/images/guide-foot.png" alt="">
+    </div>
     <el-row class="footer">
       <el-row class="row footer-container">
         <div class="footer-nav">
@@ -82,23 +85,15 @@
     font-size: 16px;
     color: #fff;
   }
-  .us{
-     background-color: #e6e6e6;
-     overflow: hidden;
-   }
-  .us img{
-    display: block;
-    width: 100%;
-    margin-top: 20px;
+  .us,.parten-foot{
+    background-color: #f1f1f1;
+    overflow: hidden;
+    text-align: center;
   }
   .content{
     margin-top: 32px;
     background-color: #fff;
-  }
-  .content img{
-    display: block;
-    width: 1100px;
-    margin: 0 auto;
+    text-align: center;
   }
   .footer{
     background-color: #ccc;

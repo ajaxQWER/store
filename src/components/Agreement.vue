@@ -102,7 +102,7 @@
     overflow: hidden;
   }
   .wrap{
-    width: 1100px;
+    width: 57.3%;
     margin: 20px auto 40px;
   }
   .footer{
