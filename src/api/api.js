@@ -117,6 +117,10 @@ export const getPhoneCode = phoneNumber => {
 export const getArticleById = () => {
   return ajax.get('commons/article/1');
 };
+//获取常见问题
+export const getArticleByArticleCategoryIdId = () => {
+  return ajax.get('commons/article?articleCategoryId=1');
+};
 
 
 //文件上传 前台文件需要设置一个path属性
