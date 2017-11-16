@@ -19,7 +19,7 @@
         <el-col :span="24">
           <el-menu :default-active="activeIndex" class="el-menu-vertical-demo" @open="handleOpen"
                    background-color="rgba(241,241,241,0)">
-            <el-menu-item v-for="(item,index) in articles" :index="formatIndex(index)" @click="showContent(index)">
+            <el-menu-item v-for="(item,index) in articles" :key="index" :index="formatIndex(index)" @click="showContent(index)">
               <span slot="title">{{item.articleTitle}}</span>
             </el-menu-item>
           </el-menu>

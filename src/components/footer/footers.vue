@@ -50,7 +50,7 @@
         },{
           title: '其他',
           lists: [{link: '//support.gongxiangdiancan.com/process.pdf',title:'餐厅办证流程',target: true},{link: '//support.gongxiangdiancan.com/standard.pdf',
-            title:'餐厅经营卫生标准',target: true},{link: '',title:'法律声明',target: true}]
+            title:'餐厅经营卫生标准',target: true},{link: '/legalStatement',title:'法律声明'}]
         }]
       }
     }

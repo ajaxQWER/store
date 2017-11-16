@@ -115,6 +115,10 @@ export const getPhoneCode = phoneNumber => {
 
 //获取服务协议
 export const getArticleById = () => {
+  return ajax.get('commons/article/2');
+};
+//获取法律声明
+export const getStatementArticleById = () => {
   return ajax.get('commons/article/1');
 };
 //获取常见问题

@@ -12,6 +12,7 @@ import ContactUs from '@/components/ContactUs.vue'
 import FranchiseGuide from '@/components/FranchiseGuide.vue'
 import MarketPartnership from '@/components/MarketPartnership.vue'
 import Questions from '@/components/Questions.vue'
+import LegalStatement from '@/components/LegalStatement.vue'
 let routes = [{
     path: '/index',
     component: Index,
@@ -64,6 +65,10 @@ let routes = [{
   path: '/questions',
   component: Questions,
   name: 'questions'
+},  {
+  path: '/legalStatement',
+  component: LegalStatement,
+  name: 'legalStatement'
 }, {
     path: '*',
     redirect: { path: '/404' }
