@@ -204,7 +204,7 @@
   }
 
   @media (min-width: 1260px){
-    .header-content,.content{
+    .back,.header-content,.content{
       width: 1100px;
     }
   }
