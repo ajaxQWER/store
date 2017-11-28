@@ -68,7 +68,7 @@
                 <el-form-item>
                     <div class="amap-container">
                         <!-- <el-amap-search-box class="search-box" :on-search-result="onSearchResult"></el-amap-search-box> -->
-                        <el-amap vid="amapDemo" :plugin="plugin" class="amap" :zoom="zoom" :center="mapCenter" :events="events">
+                        <el-amap ref="amap" vid="amapDemo" :plugin="plugin" class="amap" :zoom="zoom" :center="mapCenter" :events="events">
                             <el-amap-marker v-for="(marker,index) in markers" :key="index" :position="marker.position" :events="marker.events"></el-amap-marker>
                         </el-amap>
                     </div>
@@ -318,8 +318,8 @@ export default {
                 console.log(status,result)
                 if (status === 'complete' && result.info === 'OK') {
                     var poiList = result.poiList.pois;
-                    that.mapCenter = [poiList[0]['location'].lng, poiList[0]['location'].lat];
-                    that.zoom = 16;
+                    var amap = that.$refs.amap.$$getInstance();
+                    amap.setZoomAndCenter(16,[poiList[0]['location'].lng, poiList[0]['location'].lat]);
                     that.markers = [];
                     poiList.forEach((item,index) => {
                         that.markers.push({
