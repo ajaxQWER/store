@@ -10,7 +10,7 @@
                     <el-input v-model="store.shopName"></el-input>
                 </el-form-item>
                 <el-form-item class="small-item" label="联系电话" prop="takeOutPhone">
-                    <el-input v-model="store.takeOutPhone"></el-input>
+                    <el-input v-model="store.takeOutPhone" :maxlength="11"></el-input>
                 </el-form-item>
                 <el-form-item class="small-item" label="联系人姓名" prop="name">
                     <el-input v-model="store.name"></el-input>
@@ -87,7 +87,7 @@
                         <div class="photo-title">门脸照</div>
                         <div class="photo-upload">
                             <el-upload class="upload-demo" ref="shopFaceUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadShopFaceUrl">
-                                <img v-if="store.shopFaceUrl" :src="UPLOADURL + store.shopFaceUrl" class="avatar">
+                                <img v-if="store.shopFaceUrl" :src="UPLOADURL + store.shopFaceUrl + '/shopDetail.png'" class="avatar">
                                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>
                         </div>
@@ -96,7 +96,7 @@
                         <div class="photo-title">店内照片</div>
                         <div class="photo-upload">
                             <el-upload class="upload-demo" ref="shopInnerUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadShopInnerUrl">
-                                <img v-if="store.shopInnerUrl" :src="UPLOADURL + store.shopInnerUrl" class="avatar">
+                                <img v-if="store.shopInnerUrl" :src="UPLOADURL + store.shopInnerUrl +'/shopDetail.png'" class="avatar">
                                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>
                         </div>
@@ -429,7 +429,7 @@ export default {
                 distributionType: res.detail.distributionType,
                 takeOutPhone: res.detail.takeOutPhone || ''
             }
-            this.logo = this.UPLOADURL + '/shopLogo/' + res.shopId + '.png'
+            this.logo = this.UPLOADURL + '/shopLogo/' + res.shopId + '.png/shopDetail.png'
             if (res.detail.busBeginTime == '00:00' & res.detail.busEndTime == '23:59:59') {
                 this.isAllDay = 'true';
             } else {

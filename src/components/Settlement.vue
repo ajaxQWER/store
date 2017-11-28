@@ -63,6 +63,9 @@ export default {
     created: function() {
         getShopSettleInfo().then(res => {
             console.log(res)
+            if (res.openName) {
+                this.settlement.openName = res.openName
+            }
             if (res.bankHouse) {
                 this.settlement.bankHouse = res.bankHouse
             }
