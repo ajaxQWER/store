@@ -365,7 +365,7 @@ export default {
             fd.append('file', file);
             setShopLogo(fd).then(data => {
                 this.logo = e.url;
-                this.store.logoUrl = "/shopLogo/" + this.store.shopId + '.png';
+                this.store.logoUrl = data;
             }).catch(err => {
                 console.log(err)
             })
@@ -417,7 +417,7 @@ export default {
                 fee: res.detail.fee || 0,
                 distributionScope: res.detail.distributionScope || 0,
                 latitude: res.detail.latitude || 0,
-                logoUrl: res.detail.logoUrl,
+                logoUrl: res.detail.logoUrl || '',
                 longitude: res.detail.longitude || 0,
                 name: res.detail.name || '',
                 provinceId: res.detail.provinceId || '',
@@ -429,7 +429,8 @@ export default {
                 distributionType: res.detail.distributionType,
                 takeOutPhone: res.detail.takeOutPhone || ''
             }
-            this.logo = this.UPLOADURL + '/shopLogo/' + res.shopId + '.png/shopDetail.png'
+            this.logo = res.detail.logoUrl ? this.UPLOADURL + res.detail.logoUrl : ''
+            console.log(this.logo)
             if (res.detail.busBeginTime == '00:00' & res.detail.busEndTime == '23:59:59') {
                 this.isAllDay = 'true';
             } else {
