@@ -2,7 +2,7 @@
 	<el-row class="steps">
 		<el-col class="row">
 			<div class="row step-bar">
-				<el-steps :active="active" finish-status="success" :align-center="true">
+				<el-steps :active="active" finish-status="success" :align-center="true" :center="true">
 					<el-step v-for="(step, index) in stepObj" :title="step.title" :status="step.status"  :key="index"></el-step>
 				</el-steps>
 			</div>
@@ -55,8 +55,8 @@ export default {
 		background-color: #626262;
 	}
 	.step-bar{
-		padding-left: 12.5%;
-		padding-top: 15px;
+		/*padding-left: 12.5%;*/
+		padding: 15px 0;
 	}
 	.el-step__head.is-text.is-finish {
 	    background-color: #0bb745;
