@@ -365,7 +365,7 @@ export default {
             fd.append('file', file);
             setShopLogo(fd).then(data => {
                 this.logo = e.url;
-                this.store.logoUrl = "/shopLogo/" + this.store.shopId + '.png';
+                this.store.logoUrl = data + '/shopDetail.png';
             }).catch(err => {
                 console.log(err)
             })
