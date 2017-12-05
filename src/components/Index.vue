@@ -47,7 +47,7 @@
   					<el-button class="modal-btn" @click="login" :disabled="canLogin">立即入驻</el-button>
   				</div>
   				<div class="protocol-tips">
-  					<label for="protocol"><input type="checkbox" id="protocol" class="protocol-checkbox" v-model="checked">我已阅读并已同意<a href="/agreement" target="_blank">《共享点餐网上订餐平台服务协议》</a></label>
+  					<label for="protocol"><input type="checkbox" id="protocol" class="protocol-checkbox" v-model="checked">我已阅读并已同意<a href="/notice" target="_blank">《共享点餐商家入驻告知书》</a></label>
   				</div>
 	  		</div>
   		</div>
@@ -67,7 +67,7 @@ export default {
 
     	},
     	phoneNumber: '',
-		  verificationCode: '',
+        verificationCode: '',
     	checked: true,
     	showDialog: false,
     	isClickGetCode: false,
@@ -113,7 +113,7 @@ export default {
   		if(!this.checked){
   			this.$message({
   				type: 'info',
-  				message: '请阅读并同意《共享点餐网上订餐平台服务协议》'
+  				message: '请阅读并同意《共享点餐商家入驻告知书》'
   			})
   			return;
   		}

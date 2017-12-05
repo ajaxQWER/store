@@ -7,6 +7,7 @@ import Qualification from '@/components/Qualification.vue'
 import Settlement from '@/components/Settlement.vue'
 import Finish from '@/components/Finish.vue'
 import Agreement from '@/components/Agreement.vue'
+import Notice from '@/components/Notice.vue'
 import AboutUs from '@/components/AboutUs.vue'
 import ContactUs from '@/components/ContactUs.vue'
 import FranchiseGuide from '@/components/FranchiseGuide.vue'
@@ -45,6 +46,10 @@ let routes = [{
   path: '/agreement',
   component: Agreement,
   name: 'agreement'
+},  {
+  path: '/notice',
+  component: Notice,
+  name: 'notice'
 },  {
   path: '/aboutUs',
   component: AboutUs,

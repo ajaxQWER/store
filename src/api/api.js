@@ -112,7 +112,10 @@ export const getPhoneCode = phoneNumber => {
     return ajax.post('commons/phoneCode/' + phoneNumber);
 };
 
-
+//商家入驻告知书
+export const getNoticeArticleById = () => {
+    return ajax.get('commons/article/11');
+};
 //获取服务协议
 export const getArticleById = () => {
   return ajax.get('commons/article/2');
