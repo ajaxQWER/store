@@ -36,13 +36,36 @@
 	  		<div class="modal-body">
 	  			<span class="modal-close" @click="closeModal"></span>
 	  			<h3>申请入驻共享点餐</h3>
-  					<div class="modal-input">
-  						<el-input v-model="phoneNumber" placeholder="请输入手机号" :maxlength="11" @change="checkValue"></el-input>
-  					</div>
-  					<div class="modal-input">
-  						<el-input class="verification-input" v-model="verificationCode" placeholder="请输入短信验证码" :maxlength="4" @change="checkValue"></el-input>
-  						<el-button class="get-code" @click="getCode" :disabled="isClickGetCode">获取验证码</el-button>
-  					</div>
+	  				<el-form label-width="80px">
+	  					<el-form-item label="手机号">
+		  					<div class="modal-input">
+		  						<el-input v-model="phoneNumber" placeholder="请输入手机号" :maxlength="11" @change="checkValue"></el-input>
+		  					</div>
+	  					</el-form-item>
+	  					<el-form-item label="主体资质">
+		  					<div class="modal-input">
+		  						<el-select v-model="subjectDocument" placeholder="请选择主体资质" class="select">
+		  						    <el-option
+		  						      v-for="(item,index) in subjectDocumentList"
+		  						      :key="index"
+		  						      :label="item.label"
+		  						      :value="item.value">
+		  						    </el-option>
+		  						  </el-select>
+		  					</div>
+		  				</el-form-item>
+	  					<el-form-item label="注册号">
+		  					<div class="modal-input">
+		  						<el-input v-model="regNumber" placeholder="请输入主体资质注册号" @change="checkValue"></el-input>
+		  					</div>
+	  					</el-form-item>
+	  					<el-form-item label="验证码">
+		  					<div class="modal-input">
+		  						<el-input class="verification-input" v-model="verificationCode" placeholder="请输入短信验证码" :maxlength="4" @change="checkValue"></el-input>
+		  						<el-button class="get-code" @click="getCode" :disabled="isClickGetCode">获取验证码</el-button>
+		  					</div>
+	  					</el-form-item>
+	  				</el-form>
   				<div class="modal-input">
   					<el-button class="modal-btn" @click="login" :disabled="canLogin">立即入驻</el-button>
   				</div>
@@ -68,10 +91,25 @@ export default {
     	},
     	phoneNumber: '',
         verificationCode: '',
+        subjectDocument: '',
+        regNumber: '',
     	checked: true,
     	showDialog: false,
     	isClickGetCode: false,
-    	canLogin: true
+    	canLogin: true,
+    	subjectDocumentList: [{
+            label: '营业执照',
+            value: 'BUSINESS_LICENSE'
+        }, {
+            label: '事业单位法人证书',
+            value: 'LEGAL_PERSON_CERTIFICATE_OF_INSTITUTION'
+        }, {
+            label: '民办非企业单位登记证书',
+            value: 'REGISTRATION_CERTIFICATE_OF_PRIVATE_NON_ENTERPRISE_UNITS'
+        }, {
+            label: '社会团体法人登记证书',
+            value: 'SOCIAL_ORGANIZATION_LEGAL_PERSON_REGISTRATION_CERTIFICATE'
+        }]
     }
   },
   methods: {
@@ -103,11 +141,11 @@ export default {
 		  		e.target.innerText = '获取验证码';
 		  		return;
 		  	}
-		  	e.target.innerText = i + 's后重新获取'
+		  	e.target.innerText = i + 's后重发'
   		}, 1000)
   	},
   	checkValue: function(){
-  		this.canLogin = (this.phoneNumber && this.phoneNumber.length == 11 ? (this.verificationCode && this.verificationCode.length == 4 ? false : true) : true)
+  		this.canLogin = (this.phoneNumber && this.phoneNumber.length == 11 && this.subjectDocument && this.regNumber ? (this.verificationCode && this.verificationCode.length == 4 ? false : true) : true)
   	},
   	login: function(){
   		if(!this.checked){
@@ -118,9 +156,10 @@ export default {
   			return;
   		}
   		var param = {
-  			code: this.verificationCode, //"8904",
-  			secretkey: "string",
-  			sellerName: this.phoneNumber //"18382130767"
+  			code: this.verificationCode,
+  			regNumber: this.regNumber,
+  			subjectDocument: this.subjectDocument,
+  			sellerName: this.phoneNumber
   		}
   		openStoreLoginBySMSCode(param).then(res => {
   			console.log(res)
@@ -379,20 +418,21 @@ export default {
 		background-color: #fff;
 	}
 	.modal-body h3{
-		font-size: 16px;
-		font-weight: normal;
+		font-size: 18px;
+		text-align: center;
+		/*font-weight: normal;*/
 	}
 	.modal-input{
-		padding: 15px 0;
+		/*padding: 15px 0;*/
 		overflow: hidden;
 		zoom: 1;
 	}
 	.verification-input{
-		width: 200px;
+		width: 140px;
 		float: left;
 	}
 	.get-code{
-		width: 120px;
+		width: 100px;
 		float: right;
 	}
 	.get-code.is-disabled{
@@ -404,6 +444,7 @@ export default {
 		background-color: #0bb745;
 		border: none;
 		color: #fff;
+		margin-bottom: 20px;
 	}
 	.modal-btn.is-disabled{
 		background-color: #eee;
@@ -435,5 +476,8 @@ export default {
 	}
 	.beian-link img{
 		vertical-align: middle;
+	}
+	.select{
+		width: 100%;
 	}
 </style>
