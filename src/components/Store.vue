@@ -47,11 +47,11 @@
           </span>
                 </el-form-item>
                 <el-form-item label="店铺位置" class="required">
-                    <el-select v-model.number="store.provinceId" filterable placeholder="省" prop="type" @change="selectCity">
+                    <el-select ref="province" v-model.number="store.provinceId" filterable placeholder="省" prop="type" @change="selectCity">
                         <el-option v-for="item in provinceList" :key="item.provinceId" :label="item.provinceName" :value="item.provinceId">
                         </el-option>
                     </el-select>
-                    <el-select v-model.number="store.cityId" filterable placeholder="市" prop="type" @change="selectDistrict">
+                    <el-select ref="city" v-model.number="store.cityId" filterable placeholder="市" prop="type" @change="selectDistrict">
                         <el-option v-for="item in cityList" :key="item.cityId" :label="item.cityName" :value="item.cityId">
                         </el-option>
                     </el-select>
@@ -130,10 +130,12 @@ export default {
             store: {
                 address: "",
                 areaId: '',
+                areaName: '',
                 audit: "WAIT_AUDIT",
                 busBeginTime: '',
                 busEndTime: '',
                 cityId: '',
+                cityName: '',
                 fee: 0,
                 distributionScope: 0,
                 latitude: 0,
@@ -141,6 +143,7 @@ export default {
                 longitude: 0,
                 name: "",
                 provinceId: '',
+                provinceName: '',
                 shopCategoryIdList: [],
                 shopFaceUrl: "",
                 shopInnerUrl: "",
@@ -286,17 +289,27 @@ export default {
                 return;
             }
             //行政区域搜索
-            var district = new AMap.DistrictSearch({
-                level: 'district',
-                subdistrict: 0,
-                showbiz: false
-            });
+            // var district = new AMap.DistrictSearch({
+            //     level: 'biz_area',
+            //     subdistrict: 0,
+            //     showbiz: false
+            // });
 
-            district.search(that.$refs.district.query, function(status, result) {
+            // district.search(that.$refs.district.query, function(status, result) {
+            //     console.log(result)
+            //     if (status === 'complete' && result.info === 'OK') {
+            //         var districtList = result.districtList;
+            //         that.mapCenter = [districtList[0]['center'].lng, districtList[0]['center'].lat];
+            //     }
+            // });
+
+            var geocoder = new AMap.Geocoder();
+
+            geocoder.getLocation(that.$refs.province.query+that.$refs.city.query+that.$refs.district.query, function(status, result) {
                 console.log(result)
                 if (status === 'complete' && result.info === 'OK') {
-                    var districtList = result.districtList;
-                    that.mapCenter = [districtList[0]['center'].lng, districtList[0]['center'].lat];
+                    var districtList = result.geocodes;
+                    that.mapCenter = [districtList[0]['location'].lng, districtList[0]['location'].lat];
                 }
             });
         },
@@ -353,6 +366,10 @@ export default {
                 })
                 return;
             }
+            this.store.provinceName = this.$refs.province.query;
+            this.store.cityName = this.$refs.city.query;
+            this.store.areaName = this.$refs.district.query;
+            console.log(this.store)
             saveShopBaseInfo(this.store).then(res => {
                 console.log(res)
                 this.$router.push({ path: 'qualification', query: { step: '1' } })
