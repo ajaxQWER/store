@@ -4,15 +4,15 @@
         <steps></steps>
         <el-row class="row store-content">
             <h2>店铺绑定手机号:{{loginPhoneNumber}}</h2>
-            <el-form :model="store" :rules="rules" ref="store" label-width="100px">
+            <el-form :model="store" ref="store" label-width="100px">
                 </el-form-item>
-                <el-form-item class="normal-item" label="店铺名称" prop="shopName">
+                <el-form-item class="normal-item required" label="店铺名称">
                     <el-input v-model="store.shopName"></el-input>
                 </el-form-item>
-                <el-form-item class="small-item" label="联系电话" prop="takeOutPhone">
+                <el-form-item class="small-item required" label="联系电话">
                     <el-input v-model="store.takeOutPhone" :maxlength="11"></el-input>
                 </el-form-item>
-                <el-form-item class="small-item" label="联系人姓名" prop="name">
+                <el-form-item class="small-item required" label="联系人姓名">
                     <el-input v-model="store.name"></el-input>
                 </el-form-item>
                 <el-form-item label="店铺分类" class="required">
@@ -212,27 +212,7 @@ export default {
             shopCategory: [],
             provinceList: [],
             cityList: [],
-            districtList: [],
-            rules: {
-                shopName: [
-                    { required: true, message: '请输入店铺名称' }
-                ],
-                takeOutPhone: [
-                    { required: true, message: '请输入店铺联系电话' }
-                ],
-                name: [
-                    { required: true, message: '请输入店铺联系人' }
-                ],
-                busBeginTime: [
-                    { required: true, message: '请选择营业开始时间' }
-                ],
-                busEndTime: [
-                    { required: true, message: '请选择营业结束时间' }
-                ],
-                address: [
-                    { required: true, message: '请输入详细地址' }
-                ]
-            }
+            districtList: []
         };
     },
     methods: {
@@ -355,14 +335,91 @@ export default {
             })
         },
         showStore: function() {
+            if(this.store.shopName == ''){
+                this.$message({
+                    type: 'error',
+                    message: '请输入店铺名称'
+                })
+                return;
+            }
+            if(this.store.takeOutPhone == ''){
+                this.$message({
+                    type: 'error',
+                    message: '请输入联系电话'
+                })
+                return;
+            }
+            if(this.store.name == ''){
+                this.$message({
+                    type: 'error',
+                    message: '联系人姓名'
+                })
+                return;
+            }
+            if(this.store.shopCategoryIdList.length == 0){
+                this.$message({
+                    type: 'error',
+                    message: '请选择店铺分类'
+                })
+                return;
+            }
             if (this.isAllDay == 'true') {
                 this.store.busBeginTime = '00:00:00';
                 this.store.busEndTime = '23:59:59';
+            }
+            if(this.store.busBeginTime == ''){
+                this.$message({
+                    type: 'error',
+                    message: '请输营业开始时间'
+                })
+                return;
+            }
+            if(this.store.busEndTime == ''){
+                this.$message({
+                    type: 'error',
+                    message: '请输营业结束时间'
+                })
+                return;
             }
             if (this.store.latitude == 0 && this.store.longitude == 0) {
                 this.$message({
                     type: 'error',
                     message: '请地图上选择店铺位置'
+                })
+                return;
+            }
+            if (this.store.areaId == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请选择店铺所在省-市-区'
+                })
+                return;
+            }
+            if (this.store.address == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请输入详细地址'
+                })
+                return;
+            }
+            if (this.store.logoUrl == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请上传店铺logo'
+                })
+                return;
+            }
+            if (this.store.shopFaceUrl == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请上传店铺门脸照'
+                })
+                return;
+            }
+            if (this.store.shopInnerUrl == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请上传店内照片'
                 })
                 return;
             }

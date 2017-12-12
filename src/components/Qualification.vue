@@ -72,9 +72,9 @@
                         <span>是否长期</span>
                         <el-switch v-model="qualification.subject.longTerm" on-text="是" off-text="否"></el-switch>
                         <span v-if="!qualification.subject.longTerm">
-                <el-date-picker v-model="qualification.subject.beginTime" type="date" placeholder="开始时间" @change="formatBeginTime1(qualification.subject.beginTime)"></el-date-picker>
-                <el-date-picker v-model="qualification.subject.endTime" type="date" placeholder="到期时间" @change="formatEndTime1(qualification.subject.endTime)"></el-date-picker>
-            </span>
+                            <el-date-picker v-model="qualification.subject.beginTime" type="date" placeholder="开始时间" @change="formatBeginTime1(qualification.subject.beginTime)"></el-date-picker>
+                            <el-date-picker v-model="qualification.subject.endTime" type="date" placeholder="到期时间" @change="formatEndTime1(qualification.subject.endTime)"></el-date-picker>
+                        </span>
                     </el-form-item>
                     <el-form-item label="资质照片" class="required">
                         <div class="photo-info">
@@ -113,10 +113,9 @@
                         <span>是否长期</span>
                         <el-switch v-model="qualification.industry.longTerm" on-text="是" off-text="否"></el-switch>
                         <span v-if="!qualification.industry.longTerm">
-                <el-date-picker v-model="qualification.industry.beginTime" type="date" placeholder="开始时间" @change="formatBeginTime2(qualification.industry.beginTime)"></el-date-picker>
-                <el-date-picker v-model="qualification.industry.endTime" type="date" placeholder="到期时间" @change="formatEndTime2(qualification.industry.endTime)"></el-date-picker>
-            </span>
-                        </el-date-picker>
+                            <el-date-picker v-model="qualification.industry.beginTime" type="date" placeholder="开始时间" @change="formatBeginTime2(qualification.industry.beginTime)"></el-date-picker>
+                            <el-date-picker v-model="qualification.industry.endTime" type="date" placeholder="到期时间" @change="formatEndTime2(qualification.industry.endTime)"></el-date-picker>
+                        </span>
                     </el-form-item>
                     <el-form-item label="资质照片" class="required">
                         <div class="photo-info">
@@ -317,13 +316,172 @@ export default {
             this.qualification.industry.endTime = this.moment(time).format('YYYY-MM-DD')
         },
         submitQualification: function() {
-            if (this.qualification.industry.longTerm) {
-                delete this.qualification.industry.beginTime;
-                delete this.qualification.industry.endTime;
+            // console.log(this.qualification.subject.longTerm)
+            // return
+            if (this.qualification.document.documentType == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请选择证件类型'
+                })
+                return;
+            }
+            if (this.qualification.document.readyName == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请输入真实姓名'
+                })
+                return;
+            }
+            if (this.qualification.document.documentNum == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请输入证件号码'
+                })
+                return;
+            }
+            if (this.qualification.document.fullFacePhotoUrl == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请上传证件正面照'
+                })
+                return;
+            }
+            if (this.qualification.document.reverseSideAsUrl == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请上传证件反面照'
+                })
+                return;
+            }
+            if (this.qualification.document.handFullFacePhotoUrl == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请上传手持证件照'
+                })
+                return;
+            }
+            if (this.qualification.subject.subjectDocument == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请选择主体资质'
+                })
+                return;
+            }
+            if (this.qualification.subject.unitName == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请输入单位名称'
+                })
+                return;
+            }
+            if (this.qualification.subject.legal == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请输入法定代表人'
+                })
+                return;
+            }
+            if (this.qualification.subject.regNumber == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请输入注册号'
+                })
+                return;
+            }
+            if (this.qualification.subject.regAddress == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请输入注册地址'
+                })
+                return;
             }
             if (this.qualification.subject.longTerm) {
                 delete this.qualification.subject.beginTime;
                 delete this.qualification.subject.endTime;
+            } else {
+                console.log(this.qualification.subject.beginTime)
+                if (!this.qualification.subject.beginTime) {
+                    this.$message({
+                        type: 'error',
+                        message: '请选择证件生效日期'
+                    })
+                    return;
+                }
+                if (!this.qualification.subject.endTime) {
+                    this.$message({
+                        type: 'error',
+                        message: '请选择证件失效日期'
+                    })
+                    return;
+                }
+            }
+            if (this.qualification.subject.businessUrl == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请上传主体资质照片'
+                })
+                return;
+            }
+            if (this.qualification.industry.intelligence == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请选择行业资质'
+                })
+                return;
+            }
+            if (this.qualification.industry.unitName == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请输入单位名称'
+                })
+                return;
+            }
+            if (this.qualification.industry.legal == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请输入法定代表人'
+                })
+                return;
+            }
+            if (this.qualification.industry.licenseNumber == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请输入许可证编号'
+                })
+                return;
+            }
+            if (this.qualification.industry.licenseAddress == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请输入许可证地址'
+                })
+                return;
+            }
+            if (this.qualification.industry.longTerm) {
+                delete this.qualification.industry.beginTime;
+                delete this.qualification.industry.endTime;
+            }else{
+                if(!this.qualification.industry.beginTime){
+                    this.$message({
+                        type: 'error',
+                        message: '请选择许可证生效日期'
+                    })
+                    return;
+                }
+                if(!this.qualification.industry.endTime){
+                    this.$message({
+                        type: 'error',
+                        message: '请选择许可证失效日期'
+                    })
+                    return;
+                }
+            }
+            if (this.qualification.industry.foodUrl == '') {
+                this.$message({
+                    type: 'error',
+                    message: '请上传行业资质照片'
+                })
+                return;
             }
             console.log(this.qualification)
             saveShopQualificationInfo(this.qualification).then(res => {
@@ -337,74 +495,38 @@ export default {
             console.log(res)
             if (res.document) {
                 this.qualification.document = {
-                    documentNum: res.document.documentNum,
-                    documentType: res.document.documentType,
-                    fullFacePhotoUrl: res.document.fullFacePhotoUrl,
-                    handFullFacePhotoUrl: res.document.handFullFacePhotoUrl,
-                    readyName: res.document.readyName,
-                    reverseSideAsUrl: res.document.reverseSideAsUrl
+                    documentNum: res.document.documentNum || '',
+                    documentType: res.document.documentType || '',
+                    fullFacePhotoUrl: res.document.fullFacePhotoUrl || '',
+                    handFullFacePhotoUrl: res.document.handFullFacePhotoUrl || '',
+                    readyName: res.document.readyName || '',
+                    reverseSideAsUrl: res.document.reverseSideAsUrl || ''
                 }
             }
             if (res.industry) {
                 this.qualification.industry = {
-                    beginTime: res.industry.beginTime,
-                    endTime: res.industry.endTime,
-                    foodUrl: res.industry.foodUrl,
-                    intelligence: res.industry.intelligence,
-                    legal: res.industry.legal,
-                    licenseAddress: res.industry.licenseAddress,
-                    licenseNumber: res.industry.licenseNumber,
-                    longTerm: res.industry.longTerm,
-                    unitName: res.industry.unitName
+                    beginTime: res.industry.beginTime || '',
+                    endTime: res.industry.endTime || '',
+                    foodUrl: res.industry.foodUrl || '',
+                    intelligence: res.industry.intelligence || '',
+                    legal: res.industry.legal || '',
+                    licenseAddress: res.industry.licenseAddress || '',
+                    licenseNumber: res.industry.licenseNumber || '',
+                    longTerm: res.industry.longTerm || true,
+                    unitName: res.industry.unitName || ''
                 }
             }
             if (res.subject) {
                 this.qualification.subject = {
-                    beginTime: res.subject.beginTime,
-                    businessUrl: res.subject.businessUrl,
-                    endTime: res.subject.endTime,
-                    legal: res.subject.legal,
-                    longTerm: res.subject.longTerm,
-                    regAddress: res.subject.regAddress,
-                    regNumber: res.subject.regNumber,
-                    subjectDocument: res.subject.subjectDocument,
-                    unitName: res.subject.unitName
-                }
-            }
-            return
-            if (res) {
-                console.log(123)
-                this.qualification = {
-                    document: {
-                        documentNum: res.document.documentNum,
-                        documentType: res.document.documentType,
-                        fullFacePhotoUrl: res.document.fullFacePhotoUrl,
-                        handFullFacePhotoUrl: res.document.handFullFacePhotoUrl,
-                        readyName: res.document.readyName,
-                        reverseSideAsUrl: res.document.reverseSideAsUrl
-                    },
-                    industry: {
-                        beginTime: res.industry.beginTime,
-                        endTime: res.industry.endTime,
-                        foodUrl: res.industry.foodUrl,
-                        intelligence: res.industry.intelligence,
-                        legal: res.industry.legal,
-                        licenseAddress: res.industry.licenseAddress,
-                        licenseNumber: res.industry.licenseNumber,
-                        longTerm: res.industry.longTerm,
-                        unitName: res.industry.unitName
-                    },
-                    subject: {
-                        beginTime: res.subject.beginTime,
-                        businessUrl: res.subject.businessUrl,
-                        endTime: res.subject.endTime,
-                        legal: res.subject.legal,
-                        longTerm: res.subject.longTerm,
-                        regAddress: res.subject.regAddress,
-                        regNumber: res.subject.regNumber,
-                        subjectDocument: res.subject.subjectDocument,
-                        unitName: res.subject.unitName
-                    }
+                    beginTime: res.subject.beginTime || '',
+                    businessUrl: res.subject.businessUrl || '',
+                    endTime: res.subject.endTime || '',
+                    legal: res.subject.legal || '',
+                    longTerm: res.subject.longTerm || true,
+                    regAddress: res.subject.regAddress || '',
+                    regNumber: res.subject.regNumber || '',
+                    subjectDocument: res.subject.subjectDocument || '',
+                    unitName: res.subject.unitName || ''
                 }
             }
         })
