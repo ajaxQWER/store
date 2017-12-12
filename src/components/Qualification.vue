@@ -91,25 +91,25 @@
             </el-row>
             <el-row class="license">
                 <el-form :model="qualification.industry" ref="industry" label-width="100px">
-                    <el-form-item label="行业资质" class="required">
+                    <el-form-item label="行业资质">
                         <el-select v-model="qualification.industry.intelligence" placeholder="请选择行业资质">
                             <el-option v-for="(item,index) in mainQualifications" :key="index" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item class="large-item required" label="单位名称">
+                    <el-form-item class="large-item" label="单位名称">
                         <el-input v-model="qualification.industry.unitName"></el-input>
                     </el-form-item>
-                    <el-form-item class="normal-item required" label="法定代表人">
+                    <el-form-item class="normal-item" label="法定代表人">
                         <el-input v-model="qualification.industry.legal"></el-input>
                     </el-form-item>
-                    <el-form-item class="large-item required" label="许可证编号">
+                    <el-form-item class="large-item" label="许可证编号">
                         <el-input v-model="qualification.industry.licenseNumber"></el-input>
                     </el-form-item>
-                    <el-form-item class="large-item required" label="许可证地址">
+                    <el-form-item class="large-item" label="许可证地址">
                         <el-input v-model="qualification.industry.licenseAddress"></el-input>
                     </el-form-item>
-                    <el-form-item label="有效期" class="required">
+                    <el-form-item label="有效期">
                         <span>是否长期</span>
                         <el-switch v-model="qualification.industry.longTerm" on-text="是" off-text="否"></el-switch>
                         <span v-if="!qualification.industry.longTerm">
@@ -117,7 +117,7 @@
                             <el-date-picker v-model="qualification.industry.endTime" type="date" placeholder="到期时间" @change="formatEndTime2(qualification.industry.endTime)"></el-date-picker>
                         </span>
                     </el-form-item>
-                    <el-form-item label="资质照片" class="required">
+                    <el-form-item label="资质照片">
                         <div class="photo-info">
                             <div class="photo-title">资质照片</div>
                             <div class="photo-upload">
@@ -422,67 +422,67 @@ export default {
                 })
                 return;
             }
-            if (this.qualification.industry.intelligence == '') {
-                this.$message({
-                    type: 'error',
-                    message: '请选择行业资质'
-                })
-                return;
-            }
-            if (this.qualification.industry.unitName == '') {
-                this.$message({
-                    type: 'error',
-                    message: '请输入单位名称'
-                })
-                return;
-            }
-            if (this.qualification.industry.legal == '') {
-                this.$message({
-                    type: 'error',
-                    message: '请输入法定代表人'
-                })
-                return;
-            }
-            if (this.qualification.industry.licenseNumber == '') {
-                this.$message({
-                    type: 'error',
-                    message: '请输入许可证编号'
-                })
-                return;
-            }
-            if (this.qualification.industry.licenseAddress == '') {
-                this.$message({
-                    type: 'error',
-                    message: '请输入许可证地址'
-                })
-                return;
-            }
-            if (this.qualification.industry.longTerm) {
-                delete this.qualification.industry.beginTime;
-                delete this.qualification.industry.endTime;
-            }else{
-                if(!this.qualification.industry.beginTime){
-                    this.$message({
-                        type: 'error',
-                        message: '请选择许可证生效日期'
-                    })
-                    return;
-                }
-                if(!this.qualification.industry.endTime){
-                    this.$message({
-                        type: 'error',
-                        message: '请选择许可证失效日期'
-                    })
-                    return;
-                }
-            }
-            if (this.qualification.industry.foodUrl == '') {
-                this.$message({
-                    type: 'error',
-                    message: '请上传行业资质照片'
-                })
-                return;
-            }
+            // if (this.qualification.industry.intelligence == '') {
+            //     this.$message({
+            //         type: 'error',
+            //         message: '请选择行业资质'
+            //     })
+            //     return;
+            // }
+            // if (this.qualification.industry.unitName == '') {
+            //     this.$message({
+            //         type: 'error',
+            //         message: '请输入单位名称'
+            //     })
+            //     return;
+            // }
+            // if (this.qualification.industry.legal == '') {
+            //     this.$message({
+            //         type: 'error',
+            //         message: '请输入法定代表人'
+            //     })
+            //     return;
+            // }
+            // if (this.qualification.industry.licenseNumber == '') {
+            //     this.$message({
+            //         type: 'error',
+            //         message: '请输入许可证编号'
+            //     })
+            //     return;
+            // }
+            // if (this.qualification.industry.licenseAddress == '') {
+            //     this.$message({
+            //         type: 'error',
+            //         message: '请输入许可证地址'
+            //     })
+            //     return;
+            // }
+            // if (this.qualification.industry.longTerm) {
+            //     delete this.qualification.industry.beginTime;
+            //     delete this.qualification.industry.endTime;
+            // }else{
+            //     if(!this.qualification.industry.beginTime){
+            //         this.$message({
+            //             type: 'error',
+            //             message: '请选择许可证生效日期'
+            //         })
+            //         return;
+            //     }
+            //     if(!this.qualification.industry.endTime){
+            //         this.$message({
+            //             type: 'error',
+            //             message: '请选择许可证失效日期'
+            //         })
+            //         return;
+            //     }
+            // }
+            // if (this.qualification.industry.foodUrl == '') {
+            //     this.$message({
+            //         type: 'error',
+            //         message: '请上传行业资质照片'
+            //     })
+            //     return;
+            // }
             console.log(this.qualification)
             saveShopQualificationInfo(this.qualification).then(res => {
                 console.log(res)
