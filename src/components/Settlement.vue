@@ -24,6 +24,17 @@
                 <el-form-item class="normal-item required" label="开户支行">
                     <el-input v-model="settlement.openBank"></el-input>
                 </el-form-item>
+                <el-form-item label="附件">
+                    <div class="photo-info">
+                        <div class="photo-title">上传附件</div>
+                        <div class="photo-upload" v-loading="uploadsLoding">
+                            <el-upload class="upload-demo" ref="handFullFacePhotoUrl" action="" :auto-upload="false" :show-file-list="false" accept="image/*" :on-change="uploadsAttachmentUrl">
+                                <img  v-if="settlement.attachmentUrl " :src="UPLOADURL + settlement.attachmentUrl + '/shopDetail.png'" class="avatar">
+                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                            </el-upload>
+                        </div>
+                    </div>
+                </el-form-item>
             </el-form>
         </el-row>
         <el-row class="btn-row row">
@@ -37,7 +48,7 @@
     </div>
 </template>
 <script>
-import { getProvinceList, getCityListByProvinceId, getBankCardInfoByCardNumber, saveShopSettleInfo, getShopSettleInfo } from '@/api/api'
+import { getProvinceList, getCityListByProvinceId, getBankCardInfoByCardNumber, saveShopSettleInfo, getShopSettleInfo, uploadFiles } from '@/api/api'
 import steps from '@/components/steps/steps'
 import headers from '@/components/header/headers'
 export default {
@@ -54,10 +65,12 @@ export default {
                 openBank: "",
                 provinceId: '',
                 cityId: '',
-                openName: ''
+                openName: '',
+                attachmentUrl: ''
             },
             province: [],
-            city: []
+            city: [],
+            uploadsLoding: false
         }
     },
     created: function() {
@@ -80,6 +93,9 @@ export default {
             }
             if (res.cityId) {
                 this.settlement.cityId = res.cityId
+            }
+            if (res.attachmentUrl) {
+                this.settlement.attachmentUrl = res.attachmentUrl
             }
         })
         getProvinceList().then(res => {
@@ -133,6 +149,7 @@ export default {
                 })
                 return;
             }
+            console.log(this.settlement)
             saveShopSettleInfo(this.settlement).then(res => {
                 console.log(res)
                 this.$router.push({ path: 'waitAduit', query: { step: '3' } })
@@ -145,6 +162,21 @@ export default {
             getBankCardInfoByCardNumber(this.settlement.bankNumber).then(res => {
                 console.log(res)
                 this.settlement.bankHouse = res.showapi_res_body.bankName
+            })
+        },
+        uploadsAttachmentUrl: function(e){
+            this.uploadsLoding = true;
+            var file = e.raw;
+            var fd = new FormData();
+            fd.append('file', file);
+            fd.path = '/settlement';
+            uploadFiles(fd).then(data => {
+                console.log(data)
+                this.settlement.attachmentUrl = data.originalUrl;
+                this.uploadsLoding = false;
+            }).catch(err => {
+                console.log(err)
+                this.uploadsLoding = false;
             })
         }
     }
@@ -167,4 +199,43 @@ export default {
     min-height: 650px;
 }
 
+.photo-title,
+.photo-upload {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.photo-title {
+    width: 90px;
+    height: 100%;
+    line-height: 90px;
+    text-align: center;
+    font-size: 12px;
+    background-color: #dedede;
+    color: #666;
+}
+
+.upload-demo {
+    width: 100px;
+    height: 60px;
+    /* height: 90px; */
+    margin-left: 10px;
+    background-color: #dedede;
+}
+
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 100px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
 </style>
