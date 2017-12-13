@@ -91,8 +91,8 @@ export default {
     	},
     	phoneNumber: '',
         verificationCode: '',
-        subjectDocument: '',
-        regNumber: '',
+        subjectDocument: null,
+        regNumber: null,
     	checked: true,
     	showDialog: false,
     	isClickGetCode: false,
@@ -145,7 +145,7 @@ export default {
   		}, 1000)
   	},
   	checkValue: function(){
-  		this.canLogin = (this.phoneNumber && this.phoneNumber.length == 11 && this.subjectDocument && this.regNumber ? (this.verificationCode && this.verificationCode.length == 4 ? false : true) : true)
+  		this.canLogin = (this.phoneNumber && this.phoneNumber.length == 11 ? (this.verificationCode && this.verificationCode.length == 4 ? false : true) : true)
   	},
   	login: function(){
   		if(!this.checked){

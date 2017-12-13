@@ -44,7 +44,7 @@ ajax.interceptors.response.use(function(res) {
 }, function(err) {
     console.error(err);
     ElementUI.Message.error({
-        message: '响应发生错误,请稍后再试!',
+        message: '网络错误,请稍后再试!',
         type: 'error'
     });
     //Do something with response error
