@@ -38,8 +38,8 @@
                 </el-form-item>
                 <el-form-item label="配送信息" class="required">
                     <el-radio-group v-model="store.distributionType">
-                        <el-radio class="radio" label="ANUBIS">蜂鸟配送</el-radio>
-                        <el-radio class="radio" label="SELF_DELIVERY_BY_MERCHANTS">商家自送</el-radio>
+                        <el-radio class="radio" label="ANUBIS" value="ANUBIS">蜂鸟配送</el-radio>
+                        <el-radio class="radio" label="SELF_DELIVERY_BY_MERCHANTS" value="SELF_DELIVERY_BY_MERCHANTS">商家自送</el-radio>
                     </el-radio-group>
                     <span v-if="store.distributionType == 'SELF_DELIVERY_BY_MERCHANTS'">
             配送距离 <el-input class="small-input fee" v-model="store.distributionScope" placeholder="配送距离"></el-input>米
@@ -360,6 +360,13 @@ export default {
                 this.$message({
                     type: 'error',
                     message: '请选择店铺分类'
+                })
+                return;
+            }
+            if(this.store.distributionType == 'SELF_DELIVERY_BY_MERCHANTS' && this.store.distributionScope == 0){
+                this.$message({
+                    type: 'error',
+                    message: '配送距离不能为0米'
                 })
                 return;
             }
