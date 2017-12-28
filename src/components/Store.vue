@@ -23,11 +23,43 @@
                 <el-form-item label="营业时间" class="required">
                     <el-radio class="radio" v-model="isAllDay" label="true">全天</el-radio>
                     <el-radio class="radio" v-model="isAllDay" label="false">自定义</el-radio>
-                    <span v-if="isAllDay=='false'">
-        <el-time-select v-model="store.busBeginTime" placeholder="营业开始时间" prop="busBeginTime" :picker-options="{start: '00:00',end: '23:30',step: '00:30'}"></el-time-select>
-          <el-time-select v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" :picker-options="{start: '00:00',end: '23:30',step: '00:30'}"></el-time-select>
-          <b><span style="color:red;">*</span>店铺营业时间如未包含,请自行输入</b>
-                    </span>
+                    <div class="inline-block" v-if="isAllDay=='false'">
+                        <span>营业开始时间
+                        </span>
+                        <el-select v-model="beginHour" placeholder="小时" filterable :clearable="true" class="time-select">
+                            <el-option
+                                  v-for="(item,index) in timeStartArr"
+                                  :key="index"
+                                  :label="item"
+                                  :value="item">
+                                </el-option>
+                        </el-select>
+                        <el-select v-model="beginMin" placeholder="分钟" filterable :clearable="true" class="time-select">
+                            <el-option
+                              v-for="(item,index) in timeEndArr"
+                              :key="index"
+                              :label="item"
+                              :value="item">
+                            </el-option>
+                        </el-select>-
+                        <span>营业结束时间</span>
+                        <el-select v-model="endHour" placeholder="小时" filterable :clearable="true" class="time-select">
+                            <el-option
+                                  v-for="(item,index) in timeStartArr"
+                                  :key="index"
+                                  :label="item"
+                                  :value="item">
+                                </el-option>
+                        </el-select>
+                        <el-select v-model="endMin" placeholder="分钟" filterable :clearable="true" class="time-select">
+                            <el-option
+                              v-for="(item,index) in timeEndArr"
+                              :key="index"
+                              :label="item"
+                              :value="item">
+                            </el-option>
+                        </el-select>
+                    </div>
                 </el-form-item>
                 <el-form-item label="店铺类型" class="required">
                     <el-radio-group v-model="store.shopType">
@@ -42,9 +74,9 @@
                         <el-radio class="radio" label="SELF_DELIVERY_BY_MERCHANTS">商家自送</el-radio>
                     </el-radio-group>
                     <span v-if="store.distributionType == 'SELF_DELIVERY_BY_MERCHANTS'">
-            配送距离 <el-input class="small-input fee" v-model="store.distributionScope" placeholder="配送距离"></el-input>米
-            配送费 <el-input class="small-input fee" v-model="store.fee" placeholder="配送费"></el-input>元
-          </span>
+                        配送距离 <el-input class="small-input fee" v-model="store.distributionScope" placeholder="配送距离"></el-input>米
+                        配送费 <el-input class="small-input fee" v-model="store.fee" placeholder="配送费"></el-input>元
+                      </span>
                 </el-form-item>
                 <el-form-item label="店铺位置" class="required">
                     <el-select ref="province" v-model.number="store.provinceId" filterable placeholder="省" prop="type" @change="selectCity">
@@ -152,6 +184,10 @@ export default {
                 distributionType: 'ANUBIS',
                 takeOutPhone: ""
             },
+            beginHour: '',
+            beginMin: '',
+            endHour: '',
+            endMin: '',
             logo: '',
             loginPhoneNumber: '',
             isAllDay: 'true',
@@ -161,6 +197,8 @@ export default {
             zoom: 14,
             mapCenter: [0, 0],
             markers: [],
+            timeStartArr: [],
+            timeEndArr: [],
             plugin: [{
                 pName: 'ToolBar',
                 position: 'RT'
@@ -212,7 +250,8 @@ export default {
             shopCategory: [],
             provinceList: [],
             cityList: [],
-            districtList: []
+            districtList: [],
+            busBeginTimeOptions: []
         };
     },
     methods: {
@@ -366,6 +405,9 @@ export default {
             if (this.isAllDay == 'true') {
                 this.store.busBeginTime = '00:00:00';
                 this.store.busEndTime = '23:59:59';
+            }else{
+                this.store.busBeginTime = this.beginHour + ':' + this.beginMin;
+                this.store.busEndTime = this.endHour + ':' + this.endMin;
             }
             if(this.store.busBeginTime == ''){
                 this.$message({
@@ -427,6 +469,7 @@ export default {
             this.store.cityName = this.$refs.city.query;
             this.store.areaName = this.$refs.district.query;
             console.log(this.store)
+            // return
             saveShopBaseInfo(this.store).then(res => {
                 console.log(res)
                 this.$router.push({ path: 'qualification', query: { step: '1' } })
@@ -471,6 +514,15 @@ export default {
 
     },
     created: function() {
+        // timeStartArr: [],
+        // timeEndArr: [],
+        for(var i = 0; i < 24; i++){
+            console.log(i<10?'0'+i:i)
+            this.timeStartArr.push(i<10?'0'+i:i)
+        }
+        for(var i = 0; i < 60; i++){
+            this.timeEndArr.push(i<10?'0'+i:i)
+        }
         this.loginPhoneNumber = sessionStorage.getItem('user')
         shopCategoryList().then(res => {
             console.log(res)
@@ -504,8 +556,8 @@ export default {
                 takeOutPhone: res.detail.takeOutPhone || ''
             }
             this.logo = res.detail.logoUrl ? this.UPLOADURL + res.detail.logoUrl : ''
-            console.log(this.logo)
-            if (res.detail.busBeginTime == '00:00' & res.detail.busEndTime == '23:59:59') {
+            // console.log(this.logo)
+            if (res.detail.busBeginTime.slice(0,5) == '00:00' & res.detail.busEndTime.slice(0,5) == '23:59') {
                 this.isAllDay = 'true';
             } else {
                 this.isAllDay = 'false';
@@ -516,7 +568,23 @@ export default {
                     position: [res.detail.longitude, res.detail.latitude]
                 }];
             }
+            var beginTime = res.detail.busBeginTime.slice(0,5).split(':');
+            var endTime = res.detail.busEndTime.slice(0,5).split(':');
+            this.beginHour = beginTime[0];
+            this.beginMin = beginTime[1];
+            this.endHour = endTime[0];
+            this.endMin = endTime[1];
         })
+        // for(var h = 0; h < 24; h ++){
+        //     for(var i = 0; i < 60; i ++){
+        //         this.busBeginTimeOptions.push({
+        //             label: h<10?'0'+h:h + ':' + i<10?'0'+i:i,
+        //             value: h<10?'0'+h:h + ':' + i<10?'0'+i:i
+        //         })
+        //     }
+        // }
+        // console.log(this.busBeginTimeOptions)
+        
     }
 }
 
@@ -602,5 +670,8 @@ export default {
 }
 .inline-block{
     display: inline-block;
+}
+.time-select{
+    width: 100px;
 }
 </style>
