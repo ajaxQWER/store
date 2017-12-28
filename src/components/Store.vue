@@ -21,12 +21,14 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="营业时间" class="required">
-                    <el-radio class="radio" v-model="isAllDay" label="true">全天</el-radio>
-                    <el-radio class="radio" v-model="isAllDay" label="false">自定义</el-radio>
+                    <el-radio-group v-model="isAllDay" @change="isAllDayChange">
+                        <el-radio class="radio" label="true">全天</el-radio>
+                        <el-radio class="radio" label="false">自定义</el-radio>
+                    </el-radio-group>
                     <span v-if="isAllDay=='false'">
-        <el-time-select v-model="store.busBeginTime" placeholder="营业开始时间" prop="busBeginTime" :picker-options="{start: '00:00',end: '23:30',step: '00:30'}"></el-time-select>
-          <el-time-select v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" :picker-options="{start: '00:00',end: '23:30',step: '00:30'}"></el-time-select>
-          <b><span style="color:red;">*</span>店铺营业时间如未包含,请自行输入</b>
+                        <el-time-picker v-model="store.busBeginTime" placeholder="营业开始时间" prop="busBeginTime" format="HH:mm"></el-time-picker>
+                        <el-time-picker v-model="store.busEndTime" placeholder="营业结束时间" prop="busEndTime" format="HH:mm"></el-time-picker>
+                        <b><span style="color:red;">*</span>店铺营业时间如未包含,请自行输入</b>
                     </span>
                 </el-form-item>
                 <el-form-item label="店铺类型" class="required">
@@ -42,9 +44,9 @@
                         <el-radio class="radio" label="SELF_DELIVERY_BY_MERCHANTS" value="SELF_DELIVERY_BY_MERCHANTS">商家自送</el-radio>
                     </el-radio-group>
                     <span v-if="store.distributionType == 'SELF_DELIVERY_BY_MERCHANTS'">
-            配送距离 <el-input class="small-input fee" v-model="store.distributionScope" placeholder="配送距离"></el-input>米
-            配送费 <el-input class="small-input fee" v-model="store.fee" placeholder="配送费"></el-input>元
-          </span>
+                        配送距离 <el-input class="small-input fee" v-model="store.distributionScope" placeholder="配送距离"></el-input>米
+                        配送费 <el-input class="small-input fee" v-model="store.fee" placeholder="配送费"></el-input>元
+                      </span>
                 </el-form-item>
                 <el-form-item label="店铺位置" class="required">
                     <el-select ref="province" v-model.number="store.provinceId" filterable placeholder="省" prop="type" @change="selectCity">
@@ -370,10 +372,6 @@ export default {
                 })
                 return;
             }
-            if (this.isAllDay == 'true') {
-                this.store.busBeginTime = '00:00';
-                this.store.busEndTime = '23:59';
-            }
             if(this.store.busBeginTime == ''){
                 this.$message({
                     type: 'error',
@@ -474,8 +472,16 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
+        },
+        isAllDayChange: function(val){
+            if (val == 'true') {
+                this.store.busBeginTime = '00:00';
+                this.store.busEndTime = '23:59';
+            }else{
+                this.store.busBeginTime = '';
+                this.store.busEndTime = '';
+            }
         }
-
     },
     created: function() {
         this.loginPhoneNumber = sessionStorage.getItem('user')
@@ -492,8 +498,8 @@ export default {
                 address: res.detail.address || '',
                 areaId: res.detail.areaId || '',
                 audit: res.detail.audit,
-                busBeginTime: res.detail.busBeginTime || '',
-                busEndTime: res.detail.busEndTime || '',
+                busBeginTime: res.detail.busBeginTime.slice(0,5) || '',
+                busEndTime: res.detail.busEndTime.slice(0,5) || '',
                 cityId: res.detail.cityId || '',
                 fee: res.detail.fee || 0,
                 distributionScope: res.detail.distributionScope || 0,
@@ -512,7 +518,7 @@ export default {
             }
             this.logo = res.detail.logoUrl ? this.UPLOADURL + res.detail.logoUrl : ''
             console.log(this.logo)
-            if (res.detail.busBeginTime == '00:00:00' & res.detail.busEndTime == '23:59:59') {
+            if (res.detail.busBeginTime == '00:00' && res.detail.busEndTime == '23:59') {
                 this.isAllDay = 'true';
             } else {
                 this.isAllDay = 'false';
