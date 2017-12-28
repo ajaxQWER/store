@@ -512,7 +512,7 @@ export default {
             }
             this.logo = res.detail.logoUrl ? this.UPLOADURL + res.detail.logoUrl : ''
             console.log(this.logo)
-            if (res.detail.busBeginTime == '00:00' & res.detail.busEndTime == '23:59:59') {
+            if (res.detail.busBeginTime == '00:00:00' & res.detail.busEndTime == '23:59:59') {
                 this.isAllDay = 'true';
             } else {
                 this.isAllDay = 'false';
