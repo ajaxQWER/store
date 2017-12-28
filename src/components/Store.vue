@@ -70,8 +70,8 @@
                 </el-form-item>
                 <el-form-item label="配送信息" class="required">
                     <el-radio-group v-model="store.distributionType">
-                        <el-radio class="radio" label="ANUBIS">蜂鸟配送</el-radio>
-                        <el-radio class="radio" label="SELF_DELIVERY_BY_MERCHANTS">商家自送</el-radio>
+                        <el-radio class="radio" label="ANUBIS" value="ANUBIS">蜂鸟配送</el-radio>
+                        <el-radio class="radio" label="SELF_DELIVERY_BY_MERCHANTS" value="SELF_DELIVERY_BY_MERCHANTS">商家自送</el-radio>
                     </el-radio-group>
                     <span v-if="store.distributionType == 'SELF_DELIVERY_BY_MERCHANTS'">
                         配送距离 <el-input class="small-input fee" v-model="store.distributionScope" placeholder="配送距离"></el-input>米
@@ -423,6 +423,14 @@ export default {
                 })
                 return;
             }
+            
+            if(this.store.distributionType == 'SELF_DELIVERY_BY_MERCHANTS' && this.store.distributionScope == 0){
+                this.$message({
+                    type: 'error',
+                    message: '配送距离不能为0米'
+                })
+                return;
+            }
             if (this.store.latitude == 0 && this.store.longitude == 0) {
                 this.$message({
                     type: 'error',
@@ -510,8 +518,16 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
+        },
+        isAllDayChange: function(val){
+            if (val == 'true') {
+                this.store.busBeginTime = '00:00';
+                this.store.busEndTime = '23:59';
+            }else{
+                this.store.busBeginTime = '';
+                this.store.busEndTime = '';
+            }
         }
-
     },
     created: function() {
         // timeStartArr: [],
@@ -537,8 +553,8 @@ export default {
                 address: res.detail.address || '',
                 areaId: res.detail.areaId || '',
                 audit: res.detail.audit,
-                busBeginTime: res.detail.busBeginTime || '',
-                busEndTime: res.detail.busEndTime || '',
+                busBeginTime: res.detail.busBeginTime.slice(0,5) || '',
+                busEndTime: res.detail.busEndTime.slice(0,5) || '',
                 cityId: res.detail.cityId || '',
                 fee: res.detail.fee || 0,
                 distributionScope: res.detail.distributionScope || 0,
