@@ -70,6 +70,7 @@
   					<el-button class="modal-btn" @click="login" :disabled="canLogin">立即入驻</el-button>
   				</div>
   				<div class="protocol-tips">
+                    <span class="tips">提示：<span>第二次登录不需要选择主体资质和输入主体资质注册号</span></span>
   					<label for="protocol"><input type="checkbox" id="protocol" class="protocol-checkbox" v-model="checked">我已阅读并已同意<a href="/notice" target="_blank">《共享点餐商家入驻告知书》</a></label>
   				</div>
 	  		</div>
@@ -480,4 +481,9 @@ export default {
 	.select{
 		width: 100%;
 	}
+
+    .tips{
+        font-size: 14px;
+        color: red;
+    }
 </style>
