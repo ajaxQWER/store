@@ -530,10 +530,7 @@ export default {
         }
     },
     created: function() {
-        // timeStartArr: [],
-        // timeEndArr: [],
         for(var i = 0; i < 24; i++){
-            console.log(i<10?'0'+i:i)
             this.timeStartArr.push(i<10?'0'+i:i)
         }
         for(var i = 0; i < 60; i++){
@@ -591,15 +588,6 @@ export default {
             this.endHour = endTime[0];
             this.endMin = endTime[1];
         })
-        // for(var h = 0; h < 24; h ++){
-        //     for(var i = 0; i < 60; i ++){
-        //         this.busBeginTimeOptions.push({
-        //             label: h<10?'0'+h:h + ':' + i<10?'0'+i:i,
-        //             value: h<10?'0'+h:h + ':' + i<10?'0'+i:i
-        //         })
-        //     }
-        // }
-        // console.log(this.busBeginTimeOptions)
         
     }
 }
