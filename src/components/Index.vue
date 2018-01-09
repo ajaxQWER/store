@@ -108,6 +108,9 @@ export default {
             }, {
                 label: '社会团体法人登记证书',
                 value: 'SOCIAL_ORGANIZATION_LEGAL_PERSON_REGISTRATION_CERTIFICATE'
+            }, {
+                label: '其他',
+                value: 'OTHER'
             }]
         }
     },

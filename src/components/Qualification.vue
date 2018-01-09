@@ -45,6 +45,15 @@
                                 </el-upload>
                             </div>
                         </div>
+                        <div class="photo-info">
+                            <div class="photo-title">附件</div>
+                            <div class="photo-upload">
+                                <el-upload class="upload-demo" ref="handFullFacePhotoUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadDocumentAttachmentUrl">
+                                    <img v-if="qualification.document.attachmentUrl" :src="UPLOADURL + qualification.document.attachmentUrl" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+                            </div>
+                        </div>
                     </el-form-item>
                 </el-form>
             </el-row>
@@ -82,6 +91,15 @@
                             <div class="photo-upload">
                                 <el-upload class="upload-demo" ref="handBusinessUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadHandBusinessUrl">
                                     <img v-if="qualification.subject.businessUrl" :src="UPLOADURL + qualification.subject.businessUrl + '/shopDetail.png'" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+                            </div>
+                        </div>
+                        <div class="photo-info">
+                            <div class="photo-title">附件</div>
+                            <div class="photo-upload">
+                                <el-upload class="upload-demo" ref="handBusinessUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadSubjectAttachmentUrl">
+                                    <img v-if="qualification.subject.attachmentUrl" :src="UPLOADURL + qualification.subject.attachmentUrl" class="avatar">
                                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                 </el-upload>
                             </div>
@@ -127,6 +145,15 @@
                                 </el-upload>
                             </div>
                         </div>
+                        <div class="photo-info">
+                            <div class="photo-title">附件</div>
+                            <div class="photo-upload">
+                                <el-upload class="upload-demo" ref="handFoodUrl" action="" :auto-upload="false" :show-file-list="false" :on-change="uploadIndustryAttachmentUrl">
+                                    <img v-if="qualification.industry.attachmentUrl" :src="UPLOADURL + qualification.industry.attachmentUrl" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+                            </div>
+                        </div>
                     </el-form-item>
                 </el-form>
             </el-row>
@@ -160,7 +187,8 @@ export default {
                     fullFacePhotoUrl: "",
                     handFullFacePhotoUrl: "",
                     readyName: "",
-                    reverseSideAsUrl: ""
+                    reverseSideAsUrl: "",
+                    attachmentUrl: null
                 },
                 industry: {
                     beginTime: '',
@@ -171,7 +199,8 @@ export default {
                     licenseAddress: "",
                     licenseNumber: "",
                     longTerm: true,
-                    unitName: ""
+                    unitName: "",
+                    attachmentUrl: null
                 },
                 subject: {
                     beginTime: '',
@@ -182,7 +211,8 @@ export default {
                     regAddress: "",
                     regNumber: "",
                     subjectDocument: "",
-                    unitName: ""
+                    unitName: "",
+                    attachmentUrl: null
                 }
             },
             licenseObj: [{
@@ -197,6 +227,9 @@ export default {
             }, {
                 label: '护照',
                 value: 'PASSPORT'
+            }, {
+                label: '其他',
+                value: 'OTHER'
             }],
             mainQualifications: [{
                 label: '餐饮服务许可证',
@@ -222,6 +255,9 @@ export default {
             }, {
                 label: '食品小作坊生产许可证',
                 value: 'FOOD_WORKSHOP_PRODUCTION_LICENSE'
+            }, {
+                label: '其他',
+                value: 'OTHER'
             }],
             certificateType: [{
                 label: '营业执照',
@@ -235,6 +271,9 @@ export default {
             }, {
                 label: '社会团体法人登记证书',
                 value: 'SOCIAL_ORGANIZATION_LEGAL_PERSON_REGISTRATION_CERTIFICATE'
+            }, {
+                label: '其他',
+                value: 'OTHER'
             }]
         }
     },
@@ -278,6 +317,19 @@ export default {
                 console.log(err)
             })
         },
+        //附件
+        uploadDocumentAttachmentUrl: function(e) {
+            var file = e.raw;
+            var fd = new FormData();
+            fd.append('file', file);
+            fd.path = '/qualification';
+            uploadFiles(fd).then(data => {
+                console.log(data);
+                this.qualification.document.attachmentUrl = data.originalUrl;
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         //主体资质照片上传
         uploadHandBusinessUrl: function(e) {
             var file = e.raw;
@@ -291,6 +343,18 @@ export default {
                 console.log(err)
             })
         },
+        uploadSubjectAttachmentUrl: function(e) {
+            var file = e.raw;
+            var fd = new FormData();
+            fd.append('file', file);
+            fd.path = '/qualification';
+            uploadFiles(fd).then(data => {
+                console.log(data);
+                this.qualification.subject.attachmentUrl = data.originalUrl;
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         uploadHandFoodUrl: function(e) {
             var file = e.raw;
             var fd = new FormData();
@@ -299,6 +363,18 @@ export default {
             uploadFiles(fd).then(data => {
                 console.log(data)
                 this.qualification.industry.foodUrl = data.originalUrl;
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        uploadIndustryAttachmentUrl: function(e) {
+            var file = e.raw;
+            var fd = new FormData();
+            fd.append('file', file);
+            fd.path = '/qualification';
+            uploadFiles(fd).then(data => {
+                console.log(data);
+                this.qualification.industry.attachmentUrl = data.originalUrl;
             }).catch(err => {
                 console.log(err)
             })
@@ -500,7 +576,8 @@ export default {
                     fullFacePhotoUrl: res.document.fullFacePhotoUrl || '',
                     handFullFacePhotoUrl: res.document.handFullFacePhotoUrl || '',
                     readyName: res.document.readyName || '',
-                    reverseSideAsUrl: res.document.reverseSideAsUrl || ''
+                    reverseSideAsUrl: res.document.reverseSideAsUrl || '',
+                    attachmentUrl: res.document.attachmentUrl || null,
                 }
             }
             if (res.industry) {
@@ -513,7 +590,8 @@ export default {
                     licenseAddress: res.industry.licenseAddress || '',
                     licenseNumber: res.industry.licenseNumber || '',
                     longTerm: res.industry.longTerm || true,
-                    unitName: res.industry.unitName || ''
+                    unitName: res.industry.unitName || '',
+                    attachmentUrl: res.industry.attachmentUrl || null,
                 }
             }
             if (res.subject) {
@@ -526,7 +604,8 @@ export default {
                     regAddress: res.subject.regAddress || '',
                     regNumber: res.subject.regNumber || '',
                     subjectDocument: res.subject.subjectDocument || '',
-                    unitName: res.subject.unitName || ''
+                    unitName: res.subject.unitName || '',
+                    attachmentUrl: res.subject.attachmentUrl || null,
                 }
             }
         })
