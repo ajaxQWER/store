@@ -160,29 +160,28 @@ export default {
         var that = this;
         return {
             store: {
-                address: "",
-                areaId: '',
-                areaName: '',
-                audit: "WAIT_AUDIT",
-                busBeginTime: '',
-                busEndTime: '',
-                cityId: '',
-                cityName: '',
-                fee: 0,
-                distributionScope: 0,
-                latitude: 0,
-                logoUrl: "",
-                longitude: 0,
-                name: "",
-                provinceId: '',
-                provinceName: '',
+                address: null,
+                areaId: null,
+                areaName: null,
+                busBeginTime: null,
+                busEndTime: null,
+                cityId: null,
+                cityName: null,
+                fee: null,
+                distributionScope: null,
+                latitude: null,
+                logoUrl: null,
+                longitude: null,
+                name: null,
+                provinceId: null,
+                provinceName: null,
                 shopCategoryIdList: [],
-                shopFaceUrl: "",
-                shopInnerUrl: "",
-                shopName: "",
-                shopType: "",
+                shopFaceUrl: null,
+                shopInnerUrl: null,
+                shopName: null,
+                shopType: null,
                 distributionType: 'ANUBIS',
-                takeOutPhone: ""
+                takeOutPhone: null
             },
             beginHour: '',
             beginMin: '',
@@ -374,28 +373,28 @@ export default {
             })
         },
         showStore: function() {
-            if(this.store.shopName == ''){
+            if(!this.store.shopName){
                 this.$message({
                     type: 'error',
                     message: '请输入店铺名称'
                 })
                 return;
             }
-            if(this.store.takeOutPhone == ''){
+            if(!this.store.takeOutPhone){
                 this.$message({
                     type: 'error',
                     message: '请输入联系电话'
                 })
                 return;
             }
-            if(this.store.name == ''){
+            if(!this.store.name){
                 this.$message({
                     type: 'error',
                     message: '联系人姓名'
                 })
                 return;
             }
-            if(this.store.shopCategoryIdList.length == 0){
+            if(!this.store.shopCategoryIdList.length){
                 this.$message({
                     type: 'error',
                     message: '请选择店铺分类'
@@ -409,14 +408,14 @@ export default {
                 this.store.busBeginTime = this.beginHour + ':' + this.beginMin;
                 this.store.busEndTime = this.endHour + ':' + this.endMin;
             }
-            if(this.store.busBeginTime == ''){
+            if(!this.store.busBeginTime){
                 this.$message({
                     type: 'error',
                     message: '请输营业开始时间'
                 })
                 return;
             }
-            if(this.store.busEndTime == ''){
+            if(!this.store.busEndTime){
                 this.$message({
                     type: 'error',
                     message: '请输营业结束时间'
@@ -431,42 +430,42 @@ export default {
                 })
                 return;
             }
-            if (this.store.latitude == 0 && this.store.longitude == 0) {
+            if (this.store.latitude == null && this.store.longitude == null) {
                 this.$message({
                     type: 'error',
                     message: '请地图上选择店铺位置'
                 })
                 return;
             }
-            if (this.store.areaId == '') {
+            if (!this.store.areaId) {
                 this.$message({
                     type: 'error',
                     message: '请选择店铺所在省-市-区'
                 })
                 return;
             }
-            if (this.store.address == '') {
+            if (!this.store.address) {
                 this.$message({
                     type: 'error',
                     message: '请输入详细地址'
                 })
                 return;
             }
-            if (this.store.logoUrl == '') {
+            if (!this.store.logoUrl) {
                 this.$message({
                     type: 'error',
                     message: '请上传店铺logo'
                 })
                 return;
             }
-            if (this.store.shopFaceUrl == '') {
+            if (!this.store.shopFaceUrl) {
                 this.$message({
                     type: 'error',
                     message: '请上传店铺门脸照'
                 })
                 return;
             }
-            if (this.store.shopInnerUrl == '') {
+            if (!this.store.shopInnerUrl) {
                 this.$message({
                     type: 'error',
                     message: '请上传店内照片'
@@ -524,8 +523,8 @@ export default {
                 this.store.busBeginTime = '00:00';
                 this.store.busEndTime = '23:59';
             }else{
-                this.store.busBeginTime = '';
-                this.store.busEndTime = '';
+                this.store.busBeginTime = null;
+                this.store.busEndTime = null;
             }
         }
     },
@@ -547,28 +546,27 @@ export default {
         getShopBaseInfo().then(res => {
             console.log(res)
             this.store = {
-                address: res.detail.address || '',
-                areaId: res.detail.areaId || '',
-                audit: res.detail.audit,
-                busBeginTime: res.detail.busBeginTime.slice(0,5) || '',
-                busEndTime: res.detail.busEndTime.slice(0,5) || '',
-                cityId: res.detail.cityId || '',
+                address: res.detail.address || null,
+                areaId: res.detail.areaId || null,
+                busBeginTime: res.detail.busBeginTime.slice(0,5) || null,
+                busEndTime: res.detail.busEndTime.slice(0,5) || null,
+                cityId: res.detail.cityId || null,
                 fee: res.detail.fee || 0,
                 distributionScope: res.detail.distributionScope || 0,
                 latitude: res.detail.latitude || 0,
-                logoUrl: res.detail.logoUrl || '',
+                logoUrl: res.detail.logoUrl || null,
                 longitude: res.detail.longitude || 0,
-                name: res.detail.name || '',
-                provinceId: res.detail.provinceId || '',
+                name: res.detail.name || null,
+                provinceId: res.detail.provinceId || null,
                 shopCategoryIdList: res.shopCategoryIdList || [],
-                shopFaceUrl: res.detail.shopFaceUrl || '',
-                shopInnerUrl: res.detail.shopInnerUrl || '',
-                shopName: res.detail.shopName || '',
+                shopFaceUrl: res.detail.shopFaceUrl || null,
+                shopInnerUrl: res.detail.shopInnerUrl || null,
+                shopName: res.detail.shopName || null,
                 shopType: res.detail.shopType,
                 distributionType: res.detail.distributionType,
-                takeOutPhone: res.detail.takeOutPhone || ''
+                takeOutPhone: res.detail.takeOutPhone || null
             }
-            this.logo = res.detail.logoUrl ? this.UPLOADURL + res.detail.logoUrl : ''
+            this.logo = res.detail.logoUrl ? this.UPLOADURL + res.detail.logoUrl : null
             // console.log(this.logo)
             if (res.detail.busBeginTime.slice(0,5) == '00:00' & res.detail.busEndTime.slice(0,5) == '23:59') {
                 this.isAllDay = 'true';
