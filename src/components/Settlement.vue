@@ -39,9 +39,7 @@
         </el-row>
         <el-row class="btn-row row">
             <el-col class="tac">
-                <router-link to="/qualification?step=1">
-                    <el-button size="large">返回上一步</el-button>
-                </router-link>
+                <el-button size="large" @click="back">返回上一步</el-button></router-link>
                 <el-button class="small-item" type="primary" size="large" @click="save">提交信息</el-button>
             </el-col>
         </el-row>
@@ -107,6 +105,9 @@ export default {
         })
     },
     methods: {
+        back: function () {
+            this.$router.back()
+        },
         selectCity: function() {
             getCityListByProvinceId(this.settlement.provinceId).then(res => {
                 console.log(res)

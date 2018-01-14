@@ -15,6 +15,9 @@ ajax.interceptors.request.use(function(config) {
     if (sessionStorage.getItem('jwt')) {
         config.headers.TOKEN = sessionStorage.getItem('jwt');
     }
+    if (sessionStorage.getItem('shopId')) {
+        config.headers['SHOP-ID'] = sessionStorage.getItem('shopId');
+    }
     return config;
 }, function(err) {
     console.error(err);
@@ -80,6 +83,9 @@ export const openStoreLoginBySMSCode = params => {
 export const saveShopBaseInfo = params => {
     return ajax.put('seller/openStore', params);
 };
+export const addShopBaseInfo = params => {
+    return ajax.post('seller/openStore', params);
+};
 export const getShopBaseInfo = params => {
     return ajax.get('seller/openStore', params);
 };
@@ -129,6 +135,11 @@ export const getArticleByArticleCategoryIdId = () => {
   return ajax.get('commons/article?articleCategoryId=1');
 };
 
+//2018-01-14
+//获取店铺列表
+export const getShopLists = () => {
+  return ajax.get('seller/shopList');
+};
 
 //文件上传 前台文件需要设置一个path属性
 export const uploadFiles = params => {

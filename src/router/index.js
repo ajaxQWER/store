@@ -1,4 +1,3 @@
-
 import NotFound from '@/components/404.vue'
 import Index from '@/components/Index.vue'
 import HelloWorld from '@/components/HelloWorld.vue'
@@ -14,6 +13,8 @@ import FranchiseGuide from '@/components/FranchiseGuide.vue'
 import MarketPartnership from '@/components/MarketPartnership.vue'
 import Questions from '@/components/Questions.vue'
 import LegalStatement from '@/components/LegalStatement.vue'
+import ShopList from '@/components/ShopList.vue'
+import Base from '@/components/Base.vue'
 let routes = [{
     path: '/index',
     component: Index,
@@ -38,42 +39,50 @@ let routes = [{
     path: '/settlement',
     component: Settlement,
     name: 'settlement'
-},  {
+}, {
     path: '/waitAduit',
     component: Finish,
     name: 'waitAduit'
-},  {
-  path: '/agreement',
-  component: Agreement,
-  name: 'agreement'
-},  {
-  path: '/notice',
-  component: Notice,
-  name: 'notice'
-},  {
-  path: '/aboutUs',
-  component: AboutUs,
-  name: 'aboutUs'
-},  {
-  path: '/contactUs',
-  component: ContactUs,
-  name: 'contactUs'
-},  {
-  path: '/franchiseGuide',
-  component: FranchiseGuide,
-  name: 'franchiseGuide'
-},  {
-  path: '/marketPartnership',
-  component: MarketPartnership,
-  name: 'marketPartnership'
-},  {
-  path: '/questions',
-  component: Questions,
-  name: 'questions'
-},  {
-  path: '/legalStatement',
-  component: LegalStatement,
-  name: 'legalStatement'
+}, {
+    path: '/agreement',
+    component: Agreement,
+    name: 'agreement'
+}, {
+    path: '/notice',
+    component: Notice,
+    name: 'notice'
+}, {
+    path: '/aboutUs',
+    component: AboutUs,
+    name: 'aboutUs'
+}, {
+    path: '/contactUs',
+    component: ContactUs,
+    name: 'contactUs'
+}, {
+    path: '/franchiseGuide',
+    component: FranchiseGuide,
+    name: 'franchiseGuide'
+}, {
+    path: '/marketPartnership',
+    component: MarketPartnership,
+    name: 'marketPartnership'
+}, {
+    path: '/questions',
+    component: Questions,
+    name: 'questions'
+}, {
+    path: '/legalStatement',
+    component: LegalStatement,
+    name: 'legalStatement'
+}, {
+    path: '/base',
+    component: Base,
+    name: 'base'
+},{
+    path: '/shopList',
+    component: ShopList,
+    name: 'shopList'
 }, {
     path: '*',
     redirect: { path: '/404' }

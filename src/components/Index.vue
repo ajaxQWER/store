@@ -7,8 +7,8 @@
                         <img src="../assets/images/logo.png" alt=""><span>共享点餐</span>
                     </div>
                     <div class="right-item">
-                        <a href="javascript:void(0);">客户端下载</a>
-                        <a href="javascript:void(0);">在线客服</a>
+                        <!-- <a href="javascript:void(0);">客户端下载</a> -->
+                        <a href="javascript:alert('关注微信公众号:共享经济点餐');">客服</a>
                     </div>
                 </div>
                 <!-- <h2>加入共享点餐 开店赚大钱</h2> -->
@@ -36,25 +36,25 @@
                 <div class="modal-body">
                     <span class="modal-close" @click="closeModal"></span>
                     <h3>申请入驻共享点餐</h3>
-                    <el-form label-width="80px">
+                    <el-form label-width="60px">
                         <el-form-item label="手机号">
                             <div class="modal-input">
                                 <el-input v-model="phoneNumber" placeholder="请输入手机号" :maxlength="11" @change="checkValue"></el-input>
                             </div>
                         </el-form-item>
-                        <el-form-item label="主体资质">
+                        <!-- <el-form-item label="主体资质">
                             <div class="modal-input">
                                 <el-select v-model="subjectDocument" placeholder="请选择主体资质" class="select">
                                     <el-option v-for="(item,index) in subjectDocumentList" :key="index" :label="item.label" :value="item.value">
                                     </el-option>
                                 </el-select>
                             </div>
-                        </el-form-item>
-                        <el-form-item label="注册号">
+                        </el-form-item> -->
+                        <!-- <el-form-item label="注册号">
                             <div class="modal-input">
                                 <el-input v-model="regNumber" placeholder="请输入主体资质注册号" @change="checkValue"></el-input>
                             </div>
-                        </el-form-item>
+                        </el-form-item> -->
                         <el-form-item label="验证码">
                             <div class="modal-input">
                                 <el-input class="verification-input" v-model="verificationCode" placeholder="请输入短信验证码" :maxlength="4" @change="checkValue"></el-input>
@@ -68,9 +68,9 @@
                     <div class="protocol-tips">
                         <input type="checkbox" id="protocol" class="protocol-checkbox" v-model="checked">我已阅读并已同意<a href="/notice" target="_blank">《共享点餐商家入驻告知书》</a></label>
                     </div>
-                    <div class="protocol-tips">
+                    <!-- <div class="protocol-tips">
                         <span class="tips">提示：已入驻商户第二次登录不需要选择主体资质和输入主体资质注册号</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -85,33 +85,30 @@ export default {
     },
     data: function() {
         return {
-            loginRules: {
-
-            },
             phoneNumber: '',
             verificationCode: '',
-            subjectDocument: null,
-            regNumber: null,
+            // subjectDocument: null,
+            // regNumber: null,
             checked: true,
             showDialog: false,
             isClickGetCode: false,
             canLogin: true,
-            subjectDocumentList: [{
-                label: '营业执照',
-                value: 'BUSINESS_LICENSE'
-            }, {
-                label: '事业单位法人证书',
-                value: 'LEGAL_PERSON_CERTIFICATE_OF_INSTITUTION'
-            }, {
-                label: '民办非企业单位登记证书',
-                value: 'REGISTRATION_CERTIFICATE_OF_PRIVATE_NON_ENTERPRISE_UNITS'
-            }, {
-                label: '社会团体法人登记证书',
-                value: 'SOCIAL_ORGANIZATION_LEGAL_PERSON_REGISTRATION_CERTIFICATE'
-            }, {
-                label: '其他',
-                value: 'OTHER'
-            }]
+            // subjectDocumentList: [{
+            //     label: '营业执照',
+            //     value: 'BUSINESS_LICENSE'
+            // }, {
+            //     label: '事业单位法人证书',
+            //     value: 'LEGAL_PERSON_CERTIFICATE_OF_INSTITUTION'
+            // }, {
+            //     label: '民办非企业单位登记证书',
+            //     value: 'REGISTRATION_CERTIFICATE_OF_PRIVATE_NON_ENTERPRISE_UNITS'
+            // }, {
+            //     label: '社会团体法人登记证书',
+            //     value: 'SOCIAL_ORGANIZATION_LEGAL_PERSON_REGISTRATION_CERTIFICATE'
+            // }, {
+            //     label: '其他',
+            //     value: 'OTHER'
+            // }]
         }
     },
     methods: {
@@ -159,14 +156,14 @@ export default {
             }
             var param = {
                 code: this.verificationCode,
-                regNumber: this.regNumber,
-                subjectDocument: this.subjectDocument,
+                // regNumber: this.regNumber,
+                // subjectDocument: this.subjectDocument,
                 sellerName: this.phoneNumber
             }
             openStoreLoginBySMSCode(param).then(res => {
                 console.log(res)
                 sessionStorage.setItem('jwt', res.jwt);
-                sessionStorage.setItem('shopId', res.seller.shopId);
+                // sessionStorage.setItem('shopId', res.seller.shopId);
                 sessionStorage.setItem('user', this.phoneNumber);
 
                 this.showDialog = false;

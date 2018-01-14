@@ -160,9 +160,7 @@
         </el-row>
         <el-row class="btn-row row">
             <el-col class="tac">
-                <router-link to="/store?step=0">
-                    <el-button size="large">返回上一步</el-button>
-                </router-link>
+                <el-button size="large" @click="back">返回上一步</el-button>
                 <el-button class="small-item" type="primary" size="large" @click="submitQualification">进行下一步</el-button>
             </el-col>
         </el-row>
@@ -278,6 +276,9 @@ export default {
         }
     },
     methods: {
+        back: function () {
+            this.$router.back()
+        },
         //上传身份证正面照
         uploadFullFacePhotoUrl: function(e) {
             var file = e.raw;
