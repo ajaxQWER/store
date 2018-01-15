@@ -172,7 +172,7 @@ export default {
                 this.isClickGetCode = false;
                 this.canLogin = true;
 
-                this.$router.push({ path: 'store', query: { step: '0' } })
+                this.$router.push('/shopList')
             })
         }
     }
