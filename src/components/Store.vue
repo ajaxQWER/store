@@ -6,6 +6,7 @@
             <el-form :model="store" ref="store" label-width="100px">
                 <el-form-item label="配送信息" class="required">
                     <el-radio-group v-model="store.distributionType">
+                        <!-- <el-radio class="radio" label="ARES" value="ARES">蜂鹰配送</el-radio> -->
                         <el-radio class="radio" label="ANUBIS" value="ANUBIS">蜂鸟配送</el-radio>
                         <el-radio class="radio" label="SELF_DELIVERY_BY_MERCHANTS" value="SELF_DELIVERY_BY_MERCHANTS">商家自送</el-radio>
                     </el-radio-group>

@@ -46,7 +46,8 @@
     </div>
 </template>
 <script>
-import { getProvinceList, getCityListByProvinceId, getBankCardInfoByCardNumber, saveShopSettleInfo, getShopSettleInfo, uploadFiles } from '@/api/api'
+import { getBankCardInfoByCardNumber, saveShopSettleInfo, getShopSettleInfo, uploadFiles } from '@/api/api'
+import { getProvinceList, getCityListByProvinceId } from '@/api/region'
 import steps from '@/components/steps/steps'
 import headers from '@/components/header/headers'
 export default {
@@ -100,9 +101,11 @@ export default {
             console.log(res)
             this.province = res;
         })
-        getCityListByProvinceId(this.settlement.provinceId).then(res => {
-            this.city = res;
-        })
+        if(this.settlement.provinceId){
+            getCityListByProvinceId(this.settlement.provinceId).then(res => {
+                this.city = res;
+            })
+        }
     },
     methods: {
         back: function () {
